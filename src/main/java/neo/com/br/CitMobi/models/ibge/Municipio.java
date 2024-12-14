@@ -6,7 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import neo.com.br.IbgeConsumer.models.record.DistritoRecord;
+import neo.com.br.CitMobi.models.records.ibge.DistritoRecord;
 
 @Entity
 @Table(name = "T_GLB_MUNICIPIO")

@@ -105,6 +105,27 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<!-- Flyway Maven Plugin for database migrations -->
+			<plugin>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>10.20.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>migrate</goal>
+							<goal>repair</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<!-- Flyway Database Configuration -->
+					<url>jdbc:mysql://localhost:3306/dbmobi</url>
+					<user>citAdm</user>
+					<password>1234</password>
+					<cleanDisabled>false</cleanDisabled>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 

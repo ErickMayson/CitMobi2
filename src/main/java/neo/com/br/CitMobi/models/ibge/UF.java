@@ -5,7 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import neo.com.br.IbgeConsumer.models.record.UfRecord;
+import neo.com.br.CitMobi.models.records.ibge.UfRecord;
 
 @Data
 @Entity(name = "T_GLB_UF")
