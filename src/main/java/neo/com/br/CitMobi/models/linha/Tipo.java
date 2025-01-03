@@ -1,9 +1,6 @@
 package neo.com.br.CitMobi.models.linha;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -12,6 +9,7 @@ import lombok.Data;
 public class Tipo {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "LIN_TIPO_ID")
     private Long tipoId;
 

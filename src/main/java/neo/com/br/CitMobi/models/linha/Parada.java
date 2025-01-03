@@ -30,7 +30,8 @@ public class Parada {
     @JoinColumn(name = "GLB_UF_SIGLA", nullable = false)
     private UF uf;
 
-    @Column(name = "LIN_TIPO_ID", nullable = false, length = 4)
+    @ManyToOne
+    @JoinColumn(name = "LIN_TIPO_ID", referencedColumnName = "LIN_TIPO_ID")
     private Tipo tipo;
 
 }

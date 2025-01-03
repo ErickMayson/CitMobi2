@@ -64,6 +64,11 @@
 
 		<dependency>
 			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-database-postgresql</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-mysql</artifactId>
 			<version>10.10.0</version>
 		</dependency>
@@ -88,6 +93,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
 
@@ -120,10 +130,10 @@
 				</executions>
 				<configuration>
 					<!-- Flyway Database Configuration -->
-					<url>jdbc:mysql://localhost:3306/dbmobi</url>
-					<user>citAdm</user>
+					<url>jdbc:mysql://localhost:5432/dbmobi</url>
+					<user>postgres</user>
 					<password>1234</password>
-					<cleanDisabled>false</cleanDisabled>
+					<cleanDisabled>true</cleanDisabled>
 				</configuration>
 			</plugin>
 		</plugins>
