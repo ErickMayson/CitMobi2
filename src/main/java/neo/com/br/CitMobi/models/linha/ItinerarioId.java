@@ -8,7 +8,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import neo.com.br.CitMobi.models.ibge.Municipio;
-import neo.com.br.CitMobi.models.ibge.UF;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -19,7 +18,7 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LinhaId implements Serializable {
+public class ItinerarioId implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -39,5 +38,13 @@ public class LinhaId implements Serializable {
     @NotBlank
     @Column(name = "LIN_LINHA_SENTIDO")
     private String linhaSentido;
+
+    @NotNull
+    @Column(name = "LIN_PARADA_ID")
+    private Long paradaId;
+
+    @NotNull
+    @Column(name = "LIN_ITINERARIO_SEQUENCIA")
+    private Integer sequencia;
 
 }
