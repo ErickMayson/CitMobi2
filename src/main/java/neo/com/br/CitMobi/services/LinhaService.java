@@ -38,7 +38,7 @@ public class LinhaService {
             Optional<Linha> existsLinha = linhaRepository.findById(novaLinha.getLinhaId());
             if(existsLinha.isPresent()) {
                 logger.error("Line already exists");
-                String message = "A linha " + novaLinha.getLinhaId().getLinhaId() + " - " + novaLinha.getLinhaId().getLinhaAtendimento() + " já existe.";
+                String message = "A linha " + novaLinha.getLinhaId().getLinhaId() + "-" + novaLinha.getLinhaId().getLinhaAtendimento() + " já existe.";
 
                 LinhaResponse errorResponse = new LinhaResponse("406", message, existsLinha.get());
                 return new ResponseEntity<>(errorResponse, HttpStatus.NOT_ACCEPTABLE);

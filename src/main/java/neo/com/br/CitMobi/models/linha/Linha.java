@@ -1,9 +1,6 @@
 package neo.com.br.CitMobi.models.linha;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
@@ -31,27 +28,31 @@ public class Linha {
     @Column(name = "GLB_OPERADOR_CNPJ")
     private String cnpjOperador;
 
+
     @NotBlank
     @Column(name = "LIN_LINHA_FLAGINTERMUNICIPAL")
-    private String flagIntermunicipal;
+    private String flagIntermunicipal; // CRIAR ENUM
 
     @NotBlank
     @Column(name = "LIN_LINHA_FLAGATENDEMETRO")
-    private String flagMetro;
+    private String flagMetro; // CRIAR ENUM
 
     @NotBlank
     @Column(name = "LIN_LINHA_FLAGATENDETREM")
-    private String flagTrem;
+    private String flagTrem; // CRIAR ENUM
+
+    @Column(name = "LIN_LINHA_FLAGATIVA")
+    private String flagAtiva; // FAZER ENUM A(TIVA) OU I(NATIVA) // TALVEZ SEJA MELHOR PADRONIZAR PARA S OU N.
 
     public Linha(String linhaId,
                  String linhaAtendimento,
                  Long municipio,
-                 String linhaDescricao, String cnpjOperador, String flagIntermunicipal,String flagMetro, String flagTrem) {
+                 String linhaDescricao, Operador operador, String flagIntermunicipal,String flagMetro, String flagTrem) {
         this.linhaId = new LinhaId(linhaId, linhaAtendimento, municipio);
         this.flagTrem = flagTrem;
         this.flagMetro = flagMetro;
         this.flagIntermunicipal = flagIntermunicipal;
-        this.cnpjOperador = cnpjOperador;
+        this.operador = operador;
         this.linhaDescricao = linhaDescricao;
     }
 
