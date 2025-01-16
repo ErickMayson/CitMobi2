@@ -28,7 +28,7 @@ public class Linha {
     private String linhaDescricao;
 
     @NotBlank
-    @Column(name = "GLB_OPERADOR_CNPJOPERADOR")
+    @Column(name = "GLB_OPERADOR_CNPJ")
     private String cnpjOperador;
 
     @NotBlank

@@ -10,3 +10,5 @@
 0:0:0:0:0:0:0:1 - - [16/Jan/2025:12:11:41 -0300] "POST /citMobi2/api/linha/createLinha HTTP/1.1" 201 287
 0:0:0:0:0:0:0:1 - - [16/Jan/2025:12:11:52 -0300] "POST /citMobi2/api/linha/createLinha HTTP/1.1" 201 287
 0:0:0:0:0:0:0:1 - - [16/Jan/2025:12:12:03 -0300] "POST /citMobi2/api/linha/createLinha HTTP/1.1" 400 96
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:17:13:24 -0300] "POST /citMobi2/api/linha/createLinha HTTP/1.1" 406 78
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:17:14:42 -0300] "POST /citMobi2/api/linha/createLinha HTTP/1.1" 406 312

@@ -4,12 +4,15 @@ import jakarta.validation.Valid;
 import neo.com.br.CitMobi.models.linha.Linha;
 import neo.com.br.CitMobi.models.records.linha.LinhaRecord;
 import neo.com.br.CitMobi.models.records.response.LinhaResponse;
+import neo.com.br.CitMobi.repository.LinhaRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.Optional;
 
 @Service
 public class LinhaService {
@@ -21,16 +24,27 @@ public class LinhaService {
 
     private static final Logger logger = LoggerFactory.getLogger(LinhaService.class);
 
+    private final LinhaRepository linhaRepository;
+
+    public LinhaService(LinhaRepository linhaRepository) {
+        this.linhaRepository = linhaRepository;
+    }
+
 
     public ResponseEntity<LinhaResponse> createNewLinha(@RequestBody LinhaRecord linhaRecord) {
         try {
-
-
-
-
             Linha novaLinha = linhaRecord.toLinha();
 
-            // Log the created Linha
+            Optional<Linha> existsLinha = linhaRepository.findById(novaLinha.getLinhaId());
+            if(existsLinha.isPresent()) {
+                logger.error("Line already exists");
+                String message = "A linha " + novaLinha.getLinhaId().getLinhaId() + " - " + novaLinha.getLinhaId().getLinhaAtendimento() + " já existe.";
+
+                LinhaResponse errorResponse = new LinhaResponse("406", message, existsLinha.get());
+                return new ResponseEntity<>(errorResponse, HttpStatus.NOT_ACCEPTABLE);
+            }
+
+
             logger.warn("Created Linha: {}", novaLinha);
 
             // Prepare the response
