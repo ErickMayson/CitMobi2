@@ -7,10 +7,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import neo.com.br.CitMobi.models.records.linha.LinhaRecord;
 
 // Criar uma unica linha e colocar itinerarios de ida e volta na tabela itinerario // Isso nem faz sentido
@@ -20,6 +17,7 @@ import neo.com.br.CitMobi.models.records.linha.LinhaRecord;
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class Linha {
 
     @EmbeddedId
@@ -48,8 +46,8 @@ public class Linha {
     public Linha(String linhaId,
                  String linhaAtendimento,
                  Long municipio,
-                 String linhaSentido, String flagTrem, String flagMetro, String flagIntermunicipal, String cnpjOperador, String linhaDescricao) {
-        this.linhaId = new LinhaId(linhaId, linhaAtendimento, municipio, linhaSentido);
+                 String linhaDescricao, String cnpjOperador, String flagIntermunicipal,String flagMetro, String flagTrem) {
+        this.linhaId = new LinhaId(linhaId, linhaAtendimento, municipio);
         this.flagTrem = flagTrem;
         this.flagMetro = flagMetro;
         this.flagIntermunicipal = flagIntermunicipal;
@@ -57,12 +55,12 @@ public class Linha {
         this.linhaDescricao = linhaDescricao;
     }
 
+
     public LinhaRecord toRecord() {
         return new LinhaRecord(
                 linhaId.getLinhaId(),
                 linhaId.getLinhaAtendimento(),
                 linhaId.getMunicipio(),
-                linhaId.getLinhaSentido(),
                 linhaDescricao,
                 cnpjOperador,
                 flagIntermunicipal,

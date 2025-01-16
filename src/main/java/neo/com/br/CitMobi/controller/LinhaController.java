@@ -2,6 +2,7 @@ package neo.com.br.CitMobi.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import jakarta.validation.Valid;
 import neo.com.br.CitMobi.models.records.linha.LinhaRecord;
@@ -10,9 +11,11 @@ import neo.com.br.CitMobi.services.LinhaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,11 +49,22 @@ public class LinhaController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/linha/createLinha", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<LinhaResponse> createLinha(@RequestBody LinhaRecord linha) {
-        if (linha.toString().isEmpty()) {
-            LinhaResponse errorResponse = new LinhaResponse("400", "Required fields are missing or invalid.", null);
+    public ResponseEntity<LinhaResponse> createLinha(@Valid @RequestBody LinhaRecord linha, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            // Collect validation errors into a string
+            String errorMessages = bindingResult.getAllErrors().stream()
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                    .collect(Collectors.joining(", "));
+
+            // Log the error messages
+            logger.error("Validation errors: {}", errorMessages);
+
+            // Return the error response with details
+            LinhaResponse errorResponse = new LinhaResponse("400", "Validation errors: " + errorMessages, null);
             return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
         }
+
+        // Proceed with the service call if no validation errors
         return linhaService.createNewLinha(linha);
     }
 

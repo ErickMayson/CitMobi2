@@ -36,8 +36,4 @@ public class LinhaId implements Serializable {
     @Column(name = "GLB_MUNICIPIO_COD")
     private Long municipio;
 
-    @NotBlank
-    @Column(name = "LIN_LINHA_SENTIDO")
-    private String linhaSentido;
-
 }

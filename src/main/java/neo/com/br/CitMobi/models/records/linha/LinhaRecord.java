@@ -11,8 +11,7 @@ public record LinhaRecord(
         String linhaAtendimento,
         @NotNull(message = "municipio is required")
         Long municipio,
-        @NotBlank(message = "linhaSentido is required")
-        String linhaSentido,
+        @NotBlank(message = "Adicionar os prefixos da linha.")
         String linhaDescricao,
         @NotBlank(message = "cnpjOperador is required")
         String cnpjOperador,
@@ -25,7 +24,7 @@ public record LinhaRecord(
 ) {
 
     public Linha toLinha() {
-        return new Linha(linhaId, linhaAtendimento, municipio, linhaSentido, linhaDescricao, cnpjOperador, flagIntermunicipal, flagMetro, flagTrem);
+        return new Linha(linhaId, linhaAtendimento, municipio, linhaDescricao, cnpjOperador, flagIntermunicipal, flagMetro, flagTrem);
     }
 
     @Override
@@ -34,7 +33,6 @@ public record LinhaRecord(
                 "linhaId='" + linhaId + '\'' +
                 ", linhaAtendimento='" + linhaAtendimento + '\'' +
                 ", municipio=" + municipio +
-                ", linhaSentido='" + linhaSentido + '\'' +
                 ", linhaDescricao='" + linhaDescricao + '\'' +
                 ", cnpjOperador='" + cnpjOperador + '\'' +
                 ", flagIntermunicipal='" + flagIntermunicipal + '\'' +

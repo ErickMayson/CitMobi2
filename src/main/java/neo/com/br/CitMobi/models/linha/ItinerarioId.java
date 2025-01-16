@@ -36,7 +36,7 @@ public class ItinerarioId implements Serializable {
     private Long municipio;
 
     @NotBlank
-    @Column(name = "LIN_LINHA_SENTIDO")
+    @Column(name = "LIN_ITINERARIO_SENTIDO")
     private String linhaSentido;
 
     @NotNull

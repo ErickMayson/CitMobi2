@@ -19,4 +19,6 @@ public class Itinerario {
     @EmbeddedId
     private ItinerarioId itinerarioId;
 
+    private String prefixo; //
+
 }
