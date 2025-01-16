@@ -51,20 +51,16 @@ public class LinhaController {
     @ResponseBody
     public ResponseEntity<LinhaResponse> createLinha(@Valid @RequestBody LinhaRecord linha, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            // Collect validation errors into a string
             String errorMessages = bindingResult.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .collect(Collectors.joining(", "));
 
-            // Log the error messages
             logger.error("Validation errors: {}", errorMessages);
 
-            // Return the error response with details
             LinhaResponse errorResponse = new LinhaResponse("400", "Validation errors: " + errorMessages, null);
             return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
         }
 
-        // Proceed with the service call if no validation errors
         return linhaService.createNewLinha(linha);
     }
 

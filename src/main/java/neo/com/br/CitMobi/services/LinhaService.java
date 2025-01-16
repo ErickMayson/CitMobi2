@@ -24,6 +24,10 @@ public class LinhaService {
 
     public ResponseEntity<LinhaResponse> createNewLinha(@RequestBody LinhaRecord linhaRecord) {
         try {
+
+
+
+
             Linha novaLinha = linhaRecord.toLinha();
 
             // Log the created Linha
