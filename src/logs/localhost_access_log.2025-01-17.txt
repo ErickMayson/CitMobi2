@@ -6,3 +6,8 @@
 0:0:0:0:0:0:0:1 - - [17/Jan/2025:14:18:55 -0300] "POST /citMobi2/api/linha/createLinha HTTP/1.1" 500 142
 0:0:0:0:0:0:0:1 - - [17/Jan/2025:14:21:51 -0300] "POST /citMobi2/api/linha/createLinha HTTP/1.1" 406 377
 0:0:0:0:0:0:0:1 - - [17/Jan/2025:14:30:37 -0300] "POST /citMobi2/api/linha/createLinha HTTP/1.1" 406 380
+0:0:0:0:0:0:0:1 - - [17/Jan/2025:15:36:12 -0300] "POST /citMobi2/api/linha/createLinha HTTP/1.1" 500 75
+0:0:0:0:0:0:0:1 - - [17/Jan/2025:15:40:02 -0300] "POST /citMobi2/api/linha/createLinha HTTP/1.1" 500 75
+0:0:0:0:0:0:0:1 - - [17/Jan/2025:15:46:39 -0300] "POST /citMobi2/api/linha/createLinha HTTP/1.1" 201 342
+0:0:0:0:0:0:0:1 - - [17/Jan/2025:15:49:15 -0300] "POST /citMobi2/api/linha/createLinha HTTP/1.1" 201 357
+0:0:0:0:0:0:0:1 - - [17/Jan/2025:16:00:49 -0300] "POST /citMobi2/api/linha/createLinha HTTP/1.1" 406 359

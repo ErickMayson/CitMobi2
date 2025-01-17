@@ -26,9 +26,22 @@ public record LinhaRecord(
 ) {
         // Envia logo o objeto do Operador
     public Linha toLinha() {
-        return new Linha(linhaId, linhaAtendimento, municipio, linhaDescricao,
+        return new Linha(linhaId.trim().toUpperCase(), linhaAtendimento.trim().toUpperCase(), municipio, linhaDescricao.trim().toUpperCase(),
                 operador != null ? new Operador(operador.cnpj(), operador.razao()) : null,
-                flagIntermunicipal, flagMetro, flagTrem);
+                flagIntermunicipal.trim().toUpperCase(), flagMetro.trim().toUpperCase(), flagTrem.trim().toUpperCase());
+    }
+
+    public LinhaRecord normalize() {
+        return new LinhaRecord(
+                linhaId.trim().toUpperCase(),
+                linhaAtendimento.trim().toUpperCase(),
+                municipio,
+                linhaDescricao.trim().toUpperCase(),
+                operador,
+                flagIntermunicipal.trim().toUpperCase(),
+                flagMetro.trim().toUpperCase(),
+                flagTrem.trim().toUpperCase()
+        );
     }
 
     @Override

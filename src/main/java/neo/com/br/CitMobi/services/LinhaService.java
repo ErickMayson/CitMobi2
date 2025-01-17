@@ -51,6 +51,8 @@ public class LinhaService {
 
             logger.warn("Created Linha: {}", novaLinha);
 
+            linhaRepository.save(novaLinha);
+
             // Prepare the response
             LinhaResponse response = new LinhaResponse("201", "Linha criada com sucesso!", novaLinha);
             return new ResponseEntity<>(response, HttpStatus.CREATED);

@@ -26,7 +26,7 @@ public class Linha {
     private String linhaDescricao;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "GLB_OPERADOR_CNPJ", insertable = false, updatable = false)
+    @JoinColumn(name = "GLB_OPERADOR_CNPJ")
     private Operador operador;
 
     @NotBlank
@@ -42,7 +42,7 @@ public class Linha {
     private String flagTrem; // CRIAR ENUM
 
     @Column(name = "LIN_LINHA_FLAGATIVA")
-    private String flagAtiva; // FAZER ENUM A(TIVA) OU I(NATIVA) // TALVEZ SEJA MELHOR PADRONIZAR PARA S OU N.
+    private String flagAtiva = "S"; // FAZER ENUM A(TIVA) OU I(NATIVA) // TALVEZ SEJA MELHOR PADRONIZAR PARA S OU N.
 
     public Linha(String linhaId,
                  String linhaAtendimento,
