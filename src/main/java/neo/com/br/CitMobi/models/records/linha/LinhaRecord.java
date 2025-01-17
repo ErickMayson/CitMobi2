@@ -4,6 +4,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import neo.com.br.CitMobi.models.linha.Linha;
 import neo.com.br.CitMobi.models.linha.Operador;
+import neo.com.br.CitMobi.models.records.glb.OperadorRecord;
+
 
 public record LinhaRecord(
         @NotBlank(message = "linhaId is required")
@@ -14,8 +16,7 @@ public record LinhaRecord(
         Long municipio,
         @NotBlank(message = "Adicionar os prefixos da linha.")
         String linhaDescricao,
-        @NotBlank(message = "cnpjOperador is required")
-        Operador operador,
+        OperadorRecord operador,
         @NotBlank(message = "flagIntermunicipal is required")
         String flagIntermunicipal,
         @NotBlank(message = "flagMetro is required")
@@ -25,7 +26,9 @@ public record LinhaRecord(
 ) {
         // Envia logo o objeto do Operador
     public Linha toLinha() {
-        return new Linha(linhaId, linhaAtendimento, municipio, linhaDescricao, operador, flagIntermunicipal, flagMetro, flagTrem);
+        return new Linha(linhaId, linhaAtendimento, municipio, linhaDescricao,
+                operador != null ? new Operador(operador.cnpj(), operador.razao()) : null,
+                flagIntermunicipal, flagMetro, flagTrem);
     }
 
     @Override
@@ -35,7 +38,7 @@ public record LinhaRecord(
                 ", linhaAtendimento='" + linhaAtendimento + '\'' +
                 ", municipio=" + municipio +
                 ", linhaDescricao='" + linhaDescricao + '\'' +
-                ", cnpjOperador='" + cnpjOperador + '\'' +
+                ", operador=" + operador +
                 ", flagIntermunicipal='" + flagIntermunicipal + '\'' +
                 ", flagMetro='" + flagMetro + '\'' +
                 ", flagTrem='" + flagTrem + '\'' +

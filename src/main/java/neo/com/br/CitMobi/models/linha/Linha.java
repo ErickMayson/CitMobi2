@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
 import lombok.*;
+import neo.com.br.CitMobi.models.records.glb.OperadorRecord;
 import neo.com.br.CitMobi.models.records.linha.LinhaRecord;
 
 // Criar uma unica linha e colocar itinerarios de ida e volta na tabela itinerario // Isso nem faz sentido
@@ -24,10 +25,9 @@ public class Linha {
     @Column(name = "LIN_LINHA_DESCRICAO")
     private String linhaDescricao;
 
-    @NotBlank
-    @Column(name = "GLB_OPERADOR_CNPJ")
-    private String cnpjOperador;
-
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "GLB_OPERADOR_CNPJ", insertable = false, updatable = false)
+    private Operador operador;
 
     @NotBlank
     @Column(name = "LIN_LINHA_FLAGINTERMUNICIPAL")
@@ -47,7 +47,7 @@ public class Linha {
     public Linha(String linhaId,
                  String linhaAtendimento,
                  Long municipio,
-                 String linhaDescricao, Operador operador, String flagIntermunicipal,String flagMetro, String flagTrem) {
+                 String linhaDescricao, Operador operador, String flagIntermunicipal, String flagMetro, String flagTrem) {
         this.linhaId = new LinhaId(linhaId, linhaAtendimento, municipio);
         this.flagTrem = flagTrem;
         this.flagMetro = flagMetro;
@@ -63,7 +63,7 @@ public class Linha {
                 linhaId.getLinhaAtendimento(),
                 linhaId.getMunicipio(),
                 linhaDescricao,
-                cnpjOperador,
+                new OperadorRecord(operador.getCnpj(), operador.getRazaoSocial()),
                 flagIntermunicipal,
                 flagMetro,
                 flagTrem

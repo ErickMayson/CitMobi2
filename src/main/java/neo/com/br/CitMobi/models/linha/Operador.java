@@ -18,7 +18,7 @@ public class Operador {
 
     @Id
     @Column(name = "GLB_OPERADOR_CNPJ")
-    private String cnpjOperador;
+    private String cnpj;
 
     @Column(name = "GLB_OPERADOR_RAZAOSOCIAL")
     private String razaoSocial;
