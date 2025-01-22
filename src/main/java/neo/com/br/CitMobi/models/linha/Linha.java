@@ -25,10 +25,6 @@ public class Linha {
     @Column(name = "LIN_LINHA_DESCRICAO")
     private String linhaDescricao;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "GLB_OPERADOR_CNPJ")
-    private Operador operador;
-
     @NotBlank
     @Column(name = "LIN_LINHA_FLAGINTERMUNICIPAL")
     private String flagIntermunicipal; // CRIAR ENUM
@@ -48,11 +44,10 @@ public class Linha {
                  String linhaAtendimento,
                  Long municipio,
                  String linhaDescricao, Operador operador, String flagIntermunicipal, String flagMetro, String flagTrem) {
-        this.linhaId = new LinhaId(linhaId, linhaAtendimento, municipio);
+        this.linhaId = new LinhaId(linhaId, linhaAtendimento, municipio, operador);
         this.flagTrem = flagTrem;
         this.flagMetro = flagMetro;
         this.flagIntermunicipal = flagIntermunicipal;
-        this.operador = operador;
         this.linhaDescricao = linhaDescricao;
     }
 
@@ -63,7 +58,7 @@ public class Linha {
                 linhaId.getLinhaAtendimento(),
                 linhaId.getMunicipio(),
                 linhaDescricao,
-                new OperadorRecord(operador.getCnpj(), operador.getRazaoSocial()),
+                new OperadorRecord(linhaId.getOperador().getCnpj(), linhaId.getOperador().getRazaoSocial()),
                 flagIntermunicipal,
                 flagMetro,
                 flagTrem

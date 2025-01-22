@@ -1,9 +1,6 @@
 package neo.com.br.CitMobi.models.linha;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -35,5 +32,9 @@ public class LinhaId implements Serializable {
     @NotNull
     @Column(name = "GLB_MUNICIPIO_COD")
     private Long municipio;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "GLB_OPERADOR_CNPJ")
+    private Operador operador;
 
 }

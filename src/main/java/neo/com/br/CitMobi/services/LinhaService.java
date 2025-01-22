@@ -40,9 +40,9 @@ public class LinhaService {
                 logger.error("Line already exists");
                 String message = "";
                 if(existsLinha.get().getFlagAtiva().equals("S")) {
-                    message = "A linha " + novaLinha.getLinhaId().getLinhaId() + "-" + novaLinha.getLinhaId().getLinhaAtendimento() + " já existe.";
+                    message = "A linha " + novaLinha.getLinhaId().getLinhaId() + "-" + novaLinha.getLinhaId().getLinhaAtendimento() + " " + novaLinha.getLinhaDescricao() + " já existe.";
                 } else {
-                    message = "A linha " + novaLinha.getLinhaId().getLinhaId() + "-" + novaLinha.getLinhaId().getLinhaAtendimento() + " está inativa.";
+                    message = "A linha " + novaLinha.getLinhaId().getLinhaId() + "-" + novaLinha.getLinhaId().getLinhaAtendimento() + " " + novaLinha.getLinhaDescricao() +  " está inativa.";
                 }
                 LinhaResponse errorResponse = new LinhaResponse("406", message, existsLinha.get());
                 return new ResponseEntity<>(errorResponse, HttpStatus.NOT_ACCEPTABLE);
@@ -60,6 +60,33 @@ public class LinhaService {
         } catch (Exception e) {
             logger.error("Error creating Linha: ", e);
             LinhaResponse errorResponse = new LinhaResponse("500", "Erro ao criar a linha.", null);
+            return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public ResponseEntity<LinhaResponse> editLinha(@RequestBody LinhaRecord linhaRecord) {
+        try {
+            Linha novaLinha = linhaRecord.toLinha();
+
+            Optional<Linha> existsLinha = linhaRepository.findByIdAndOperador(novaLinha.getLinhaId().getLinhaId(),novaLinha.getLinhaId().getLinhaAtendimento(),novaLinha.getLinhaId().getMunicipio(), novaLinha.getLinhaId().getOperador().getCnpj());
+
+            if (existsLinha.isEmpty()) {
+                logger.error("A linha procurada não existe");
+                String message = "";
+                message = "A linha " + novaLinha.getLinhaId().getLinhaId() + "-" + novaLinha.getLinhaId().getLinhaAtendimento() + " " + novaLinha.getLinhaDescricao() + " não existe.";
+                LinhaResponse errorResponse = new LinhaResponse("404", message, new Linha());
+                return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+            }
+
+
+
+            logger.warn("Created Linha: {}", novaLinha);
+
+            LinhaResponse response = new LinhaResponse("202", "Linha editada com sucesso!", novaLinha);
+            return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            logger.error("Error editing Linha: ", e);
+            LinhaResponse errorResponse = new LinhaResponse("500", "Erro ao editar a linha.", null);
             return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

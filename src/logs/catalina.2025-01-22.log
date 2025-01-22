@@ -1,0 +1,1231 @@
+22-Jan-2025 10:22:11.319 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version name:   Apache Tomcat/10.1.26
+22-Jan-2025 10:22:11.326 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Jul 7 2024 21:02:13 UTC
+22-Jan-2025 10:22:11.326 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version number: 10.1.26.0
+22-Jan-2025 10:22:11.326 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Windows 11
+22-Jan-2025 10:22:11.327 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            10.0
+22-Jan-2025 10:22:11.327 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          amd64
+22-Jan-2025 10:22:11.327 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             C:\Program Files\Java\jdk-17
+22-Jan-2025 10:22:11.327 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           17.0.11+7-LTS-207
+22-Jan-2025 10:22:11.327 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Oracle Corporation
+22-Jan-2025 10:22:11.327 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src
+22-Jan-2025 10:22:11.327 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         C:\Program Files\Apache Software Foundation\Tomcat 10.1
+22-Jan-2025 10:22:11.349 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.lang=ALL-UNNAMED
+22-Jan-2025 10:22:11.350 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.io=ALL-UNNAMED
+22-Jan-2025 10:22:11.350 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util=ALL-UNNAMED
+22-Jan-2025 10:22:11.350 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+22-Jan-2025 10:22:11.350 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+22-Jan-2025 10:22:11.350 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=C:\Program Files\Apache Software Foundation\Tomcat 10.1
+22-Jan-2025 10:22:11.350 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src
+22-Jan-2025 10:22:11.350 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src\temp
+22-Jan-2025 10:22:11.350 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src\conf\logging.properties
+22-Jan-2025 10:22:11.350 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+22-Jan-2025 10:22:11.350 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -javaagent:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2024.1.4\lib\idea_rt.jar=54699:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2024.1.4\bin
+22-Jan-2025 10:22:11.350 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dfile.encoding=UTF-8
+22-Jan-2025 10:22:11.366 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent The Apache Tomcat Native library which allows using OpenSSL was not found on the java.library.path: [C:\Program Files\Java\jdk-17\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Python312\Scripts\;C:\Python312\;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\app\TDV.Admin\product\11.2.0\client_1\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Java_Essentials\apache-maven-3.6.3\bin;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\Program Files\dotnet\;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\Erick.ferreira\.console-ninja\.bin;C:\Users\Erick.ferreira\AppData\Local\Microsoft\WindowsApps;C:\Users\Erick.ferreira\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\Java\jdk1.8.0_291\bin;C:\Users\Erick.ferreira\AppData\Roaming\npm;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2024.1.4\bin;;C:\Users\Erick.ferreira\.dotnet\tools;.]
+22-Jan-2025 10:22:11.890 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8085"]
+22-Jan-2025 10:22:11.920 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [923] milliseconds
+22-Jan-2025 10:22:12.024 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+22-Jan-2025 10:22:12.024 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/10.1.26]
+22-Jan-2025 10:22:12.054 INFO [main] org.apache.catalina.startup.HostConfig.deployDescriptor Deploying deployment descriptor [C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src\conf\Catalina\localhost\citMobi2.xml]
+22-Jan-2025 10:22:20.936 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+22-Jan-2025 10:22:33.348 SEVERE [main] org.apache.catalina.startup.HostConfig.deployDescriptor Error deploying deployment descriptor [C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src\conf\Catalina\localhost\citMobi2.xml]
+	java.lang.IllegalStateException: Error starting child
+		at org.apache.catalina.core.ContainerBase.addChildInternal(ContainerBase.java:602)
+		at org.apache.catalina.core.ContainerBase.addChild(ContainerBase.java:571)
+		at org.apache.catalina.core.StandardHost.addChild(StandardHost.java:654)
+		at org.apache.catalina.startup.HostConfig.deployDescriptor(HostConfig.java:635)
+		at org.apache.catalina.startup.HostConfig$DeployDescriptor.run(HostConfig.java:1889)
+		at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:123)
+		at org.apache.catalina.startup.HostConfig.deployDescriptors(HostConfig.java:530)
+		at org.apache.catalina.startup.HostConfig.deployApps(HostConfig.java:421)
+		at org.apache.catalina.startup.HostConfig.start(HostConfig.java:1629)
+		at org.apache.catalina.startup.HostConfig.lifecycleEvent(HostConfig.java:303)
+		at org.apache.catalina.util.LifecycleBase.fireLifecycleEvent(LifecycleBase.java:109)
+		at org.apache.catalina.util.LifecycleBase.setStateInternal(LifecycleBase.java:385)
+		at org.apache.catalina.util.LifecycleBase.setState(LifecycleBase.java:332)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:776)
+		at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:772)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1203)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1193)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:749)
+		at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:203)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardService.startInternal(StandardService.java:415)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:874)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.startup.Catalina.start(Catalina.java:757)
+		at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+		at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+		at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+		at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+		at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:345)
+		at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:473)
+	Caused by: org.apache.catalina.LifecycleException: Failed to start component [StandardEngine[Catalina].StandardHost[localhost].StandardContext[/citMobi2]]
+		at org.apache.catalina.util.LifecycleBase.handleSubClassException(LifecycleBase.java:402)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:179)
+		at org.apache.catalina.core.ContainerBase.addChildInternal(ContainerBase.java:599)
+		... 37 more
+	Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Failed to initialize dependency 'flywayInitializer' of LoadTimeWeaverAware bean 'entityManagerFactory': Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Validate failed: Migrations have failed validation
+Migration checksum mismatch for migration version 1
+-> Applied to database : 1385663469
+-> Resolved locally    : 2049901010
+Either revert the changes to the migration, or run repair to update the schema history.
+Migration checksum mismatch for migration version 2
+-> Applied to database : -1041252387
+-> Resolved locally    : -319127744
+Either revert the changes to the migration, or run repair to update the schema history.
+Need more flexibility with validation rules? Learn more: https://rd.gt/3AbJUZE
+		at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:326)
+		at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:205)
+		at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:954)
+		at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625)
+		at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+		at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+		at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+		at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
+		at org.springframework.boot.web.servlet.support.SpringBootServletInitializer.run(SpringBootServletInitializer.java:174)
+		at org.springframework.boot.web.servlet.support.SpringBootServletInitializer.createRootApplicationContext(SpringBootServletInitializer.java:154)
+		at org.springframework.boot.web.servlet.support.SpringBootServletInitializer.onStartup(SpringBootServletInitializer.java:96)
+		at org.springframework.web.SpringServletContainerInitializer.onStartup(SpringServletContainerInitializer.java:171)
+		at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4414)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		... 38 more
+	Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Validate failed: Migrations have failed validation
+Migration checksum mismatch for migration version 1
+-> Applied to database : 1385663469
+-> Resolved locally    : 2049901010
+Either revert the changes to the migration, or run repair to update the schema history.
+Migration checksum mismatch for migration version 2
+-> Applied to database : -1041252387
+-> Resolved locally    : -319127744
+Either revert the changes to the migration, or run repair to update the schema history.
+Need more flexibility with validation rules? Learn more: https://rd.gt/3AbJUZE
+		at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1806)
+		at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+		at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+		at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+		at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+		at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+		at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+		at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:313)
+		... 51 more
+	Caused by: org.flywaydb.core.api.exception.FlywayValidateException: Validate failed: Migrations have failed validation
+Migration checksum mismatch for migration version 1
+-> Applied to database : 1385663469
+-> Resolved locally    : 2049901010
+Either revert the changes to the migration, or run repair to update the schema history.
+Migration checksum mismatch for migration version 2
+-> Applied to database : -1041252387
+-> Resolved locally    : -319127744
+Either revert the changes to the migration, or run repair to update the schema history.
+Need more flexibility with validation rules? Learn more: https://rd.gt/3AbJUZE
+		at org.flywaydb.core.Flyway.lambda$migrate$0(Flyway.java:160)
+		at org.flywaydb.core.FlywayExecutor.execute(FlywayExecutor.java:205)
+		at org.flywaydb.core.Flyway.migrate(Flyway.java:147)
+		at org.springframework.boot.autoconfigure.flyway.FlywayMigrationInitializer.afterPropertiesSet(FlywayMigrationInitializer.java:66)
+		at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1853)
+		at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1802)
+		... 58 more
+22-Jan-2025 10:22:33.356 INFO [main] org.apache.catalina.startup.HostConfig.deployDescriptor Deployment of deployment descriptor [C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src\conf\Catalina\localhost\citMobi2.xml] has finished in [21.303] ms
+22-Jan-2025 10:22:33.362 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8085"]
+22-Jan-2025 10:22:33.413 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [21492] milliseconds
+22-Jan-2025 10:24:31.870 INFO [Thread-3] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["http-nio-8085"]
+22-Jan-2025 10:24:32.258 INFO [Thread-3] org.apache.catalina.core.StandardService.stopInternal Stopping service [Catalina]
+22-Jan-2025 10:24:32.260 INFO [Thread-3] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["http-nio-8085"]
+22-Jan-2025 10:24:32.266 INFO [Thread-3] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["http-nio-8085"]
+22-Jan-2025 10:24:32.272 WARNING [Thread-3] org.apache.catalina.loader.WebappClassLoaderBase.clearReferencesJdbc The web application [citMobi2] registered the JDBC driver [org.postgresql.Driver] but failed to unregister it when the web application was stopped. To prevent a memory leak, the JDBC Driver has been forcibly unregistered.
+22-Jan-2025 10:24:35.061 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version name:   Apache Tomcat/10.1.26
+22-Jan-2025 10:24:35.068 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Jul 7 2024 21:02:13 UTC
+22-Jan-2025 10:24:35.068 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version number: 10.1.26.0
+22-Jan-2025 10:24:35.068 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Windows 11
+22-Jan-2025 10:24:35.068 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            10.0
+22-Jan-2025 10:24:35.070 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          amd64
+22-Jan-2025 10:24:35.070 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             C:\Program Files\Java\jdk-17
+22-Jan-2025 10:24:35.070 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           17.0.11+7-LTS-207
+22-Jan-2025 10:24:35.070 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Oracle Corporation
+22-Jan-2025 10:24:35.070 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src
+22-Jan-2025 10:24:35.070 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         C:\Program Files\Apache Software Foundation\Tomcat 10.1
+22-Jan-2025 10:24:35.099 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.lang=ALL-UNNAMED
+22-Jan-2025 10:24:35.099 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.io=ALL-UNNAMED
+22-Jan-2025 10:24:35.099 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util=ALL-UNNAMED
+22-Jan-2025 10:24:35.099 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+22-Jan-2025 10:24:35.099 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+22-Jan-2025 10:24:35.099 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=C:\Program Files\Apache Software Foundation\Tomcat 10.1
+22-Jan-2025 10:24:35.099 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src
+22-Jan-2025 10:24:35.099 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src\temp
+22-Jan-2025 10:24:35.100 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src\conf\logging.properties
+22-Jan-2025 10:24:35.100 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+22-Jan-2025 10:24:35.100 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -javaagent:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2024.1.4\lib\idea_rt.jar=54828:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2024.1.4\bin
+22-Jan-2025 10:24:35.100 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dfile.encoding=UTF-8
+22-Jan-2025 10:24:35.116 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent The Apache Tomcat Native library which allows using OpenSSL was not found on the java.library.path: [C:\Program Files\Java\jdk-17\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Python312\Scripts\;C:\Python312\;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\app\TDV.Admin\product\11.2.0\client_1\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Java_Essentials\apache-maven-3.6.3\bin;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\Program Files\dotnet\;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\Erick.ferreira\.console-ninja\.bin;C:\Users\Erick.ferreira\AppData\Local\Microsoft\WindowsApps;C:\Users\Erick.ferreira\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\Java\jdk1.8.0_291\bin;C:\Users\Erick.ferreira\AppData\Roaming\npm;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2024.1.4\bin;;C:\Users\Erick.ferreira\.dotnet\tools;.]
+22-Jan-2025 10:24:35.548 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8085"]
+22-Jan-2025 10:24:35.575 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [828] milliseconds
+22-Jan-2025 10:24:35.653 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+22-Jan-2025 10:24:35.654 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/10.1.26]
+22-Jan-2025 10:24:35.674 INFO [main] org.apache.catalina.startup.HostConfig.deployDescriptor Deploying deployment descriptor [C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src\conf\Catalina\localhost\citMobi2.xml]
+22-Jan-2025 10:24:44.569 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+22-Jan-2025 10:24:57.086 SEVERE [main] org.apache.catalina.startup.HostConfig.deployDescriptor Error deploying deployment descriptor [C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src\conf\Catalina\localhost\citMobi2.xml]
+	java.lang.IllegalStateException: Error starting child
+		at org.apache.catalina.core.ContainerBase.addChildInternal(ContainerBase.java:602)
+		at org.apache.catalina.core.ContainerBase.addChild(ContainerBase.java:571)
+		at org.apache.catalina.core.StandardHost.addChild(StandardHost.java:654)
+		at org.apache.catalina.startup.HostConfig.deployDescriptor(HostConfig.java:635)
+		at org.apache.catalina.startup.HostConfig$DeployDescriptor.run(HostConfig.java:1889)
+		at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:123)
+		at org.apache.catalina.startup.HostConfig.deployDescriptors(HostConfig.java:530)
+		at org.apache.catalina.startup.HostConfig.deployApps(HostConfig.java:421)
+		at org.apache.catalina.startup.HostConfig.start(HostConfig.java:1629)
+		at org.apache.catalina.startup.HostConfig.lifecycleEvent(HostConfig.java:303)
+		at org.apache.catalina.util.LifecycleBase.fireLifecycleEvent(LifecycleBase.java:109)
+		at org.apache.catalina.util.LifecycleBase.setStateInternal(LifecycleBase.java:385)
+		at org.apache.catalina.util.LifecycleBase.setState(LifecycleBase.java:332)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:776)
+		at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:772)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1203)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1193)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:749)
+		at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:203)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardService.startInternal(StandardService.java:415)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:874)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.startup.Catalina.start(Catalina.java:757)
+		at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+		at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+		at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+		at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+		at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:345)
+		at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:473)
+	Caused by: org.apache.catalina.LifecycleException: Failed to start component [StandardEngine[Catalina].StandardHost[localhost].StandardContext[/citMobi2]]
+		at org.apache.catalina.util.LifecycleBase.handleSubClassException(LifecycleBase.java:402)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:179)
+		at org.apache.catalina.core.ContainerBase.addChildInternal(ContainerBase.java:599)
+		... 37 more
+	Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Failed to initialize dependency 'flywayInitializer' of LoadTimeWeaverAware bean 'entityManagerFactory': Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Validate failed: Migrations have failed validation
+Migration checksum mismatch for migration version 1
+-> Applied to database : 1385663469
+-> Resolved locally    : 2049901010
+Either revert the changes to the migration, or run repair to update the schema history.
+Migration checksum mismatch for migration version 2
+-> Applied to database : -1041252387
+-> Resolved locally    : -319127744
+Either revert the changes to the migration, or run repair to update the schema history.
+Need more flexibility with validation rules? Learn more: https://rd.gt/3AbJUZE
+		at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:326)
+		at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:205)
+		at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:954)
+		at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625)
+		at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+		at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+		at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+		at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
+		at org.springframework.boot.web.servlet.support.SpringBootServletInitializer.run(SpringBootServletInitializer.java:174)
+		at org.springframework.boot.web.servlet.support.SpringBootServletInitializer.createRootApplicationContext(SpringBootServletInitializer.java:154)
+		at org.springframework.boot.web.servlet.support.SpringBootServletInitializer.onStartup(SpringBootServletInitializer.java:96)
+		at org.springframework.web.SpringServletContainerInitializer.onStartup(SpringServletContainerInitializer.java:171)
+		at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4414)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		... 38 more
+	Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Validate failed: Migrations have failed validation
+Migration checksum mismatch for migration version 1
+-> Applied to database : 1385663469
+-> Resolved locally    : 2049901010
+Either revert the changes to the migration, or run repair to update the schema history.
+Migration checksum mismatch for migration version 2
+-> Applied to database : -1041252387
+-> Resolved locally    : -319127744
+Either revert the changes to the migration, or run repair to update the schema history.
+Need more flexibility with validation rules? Learn more: https://rd.gt/3AbJUZE
+		at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1806)
+		at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+		at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+		at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+		at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+		at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+		at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+		at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:313)
+		... 51 more
+	Caused by: org.flywaydb.core.api.exception.FlywayValidateException: Validate failed: Migrations have failed validation
+Migration checksum mismatch for migration version 1
+-> Applied to database : 1385663469
+-> Resolved locally    : 2049901010
+Either revert the changes to the migration, or run repair to update the schema history.
+Migration checksum mismatch for migration version 2
+-> Applied to database : -1041252387
+-> Resolved locally    : -319127744
+Either revert the changes to the migration, or run repair to update the schema history.
+Need more flexibility with validation rules? Learn more: https://rd.gt/3AbJUZE
+		at org.flywaydb.core.Flyway.lambda$migrate$0(Flyway.java:160)
+		at org.flywaydb.core.FlywayExecutor.execute(FlywayExecutor.java:205)
+		at org.flywaydb.core.Flyway.migrate(Flyway.java:147)
+		at org.springframework.boot.autoconfigure.flyway.FlywayMigrationInitializer.afterPropertiesSet(FlywayMigrationInitializer.java:66)
+		at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1853)
+		at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1802)
+		... 58 more
+22-Jan-2025 10:24:57.094 INFO [main] org.apache.catalina.startup.HostConfig.deployDescriptor Deployment of deployment descriptor [C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src\conf\Catalina\localhost\citMobi2.xml] has finished in [21.420] ms
+22-Jan-2025 10:24:57.099 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8085"]
+22-Jan-2025 10:24:57.142 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [21566] milliseconds
+22-Jan-2025 10:25:20.576 INFO [Thread-3] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["http-nio-8085"]
+22-Jan-2025 10:25:20.830 INFO [Thread-3] org.apache.catalina.core.StandardService.stopInternal Stopping service [Catalina]
+22-Jan-2025 10:25:20.831 INFO [Thread-3] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["http-nio-8085"]
+22-Jan-2025 10:25:20.835 INFO [Thread-3] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["http-nio-8085"]
+22-Jan-2025 10:25:20.839 WARNING [Thread-3] org.apache.catalina.loader.WebappClassLoaderBase.clearReferencesJdbc The web application [citMobi2] registered the JDBC driver [org.postgresql.Driver] but failed to unregister it when the web application was stopped. To prevent a memory leak, the JDBC Driver has been forcibly unregistered.
+22-Jan-2025 10:25:27.421 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version name:   Apache Tomcat/10.1.26
+22-Jan-2025 10:25:27.429 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Jul 7 2024 21:02:13 UTC
+22-Jan-2025 10:25:27.429 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version number: 10.1.26.0
+22-Jan-2025 10:25:27.429 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Windows 11
+22-Jan-2025 10:25:27.429 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            10.0
+22-Jan-2025 10:25:27.429 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          amd64
+22-Jan-2025 10:25:27.429 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             C:\Program Files\Java\jdk-17
+22-Jan-2025 10:25:27.429 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           17.0.11+7-LTS-207
+22-Jan-2025 10:25:27.429 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Oracle Corporation
+22-Jan-2025 10:25:27.429 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src
+22-Jan-2025 10:25:27.431 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         C:\Program Files\Apache Software Foundation\Tomcat 10.1
+22-Jan-2025 10:25:27.452 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.lang=ALL-UNNAMED
+22-Jan-2025 10:25:27.452 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.io=ALL-UNNAMED
+22-Jan-2025 10:25:27.452 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util=ALL-UNNAMED
+22-Jan-2025 10:25:27.452 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+22-Jan-2025 10:25:27.452 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+22-Jan-2025 10:25:27.453 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=C:\Program Files\Apache Software Foundation\Tomcat 10.1
+22-Jan-2025 10:25:27.453 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src
+22-Jan-2025 10:25:27.453 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src\temp
+22-Jan-2025 10:25:27.453 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src\conf\logging.properties
+22-Jan-2025 10:25:27.453 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+22-Jan-2025 10:25:27.453 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -javaagent:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2024.1.4\lib\idea_rt.jar=54951:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2024.1.4\bin
+22-Jan-2025 10:25:27.453 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dfile.encoding=UTF-8
+22-Jan-2025 10:25:27.466 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent The Apache Tomcat Native library which allows using OpenSSL was not found on the java.library.path: [C:\Program Files\Java\jdk-17\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Python312\Scripts\;C:\Python312\;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\app\TDV.Admin\product\11.2.0\client_1\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Java_Essentials\apache-maven-3.6.3\bin;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\Program Files\dotnet\;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\Erick.ferreira\.console-ninja\.bin;C:\Users\Erick.ferreira\AppData\Local\Microsoft\WindowsApps;C:\Users\Erick.ferreira\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\Java\jdk1.8.0_291\bin;C:\Users\Erick.ferreira\AppData\Roaming\npm;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2024.1.4\bin;;C:\Users\Erick.ferreira\.dotnet\tools;.]
+22-Jan-2025 10:25:27.909 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8085"]
+22-Jan-2025 10:25:27.938 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [807] milliseconds
+22-Jan-2025 10:25:28.015 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+22-Jan-2025 10:25:28.016 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/10.1.26]
+22-Jan-2025 10:25:28.032 INFO [main] org.apache.catalina.startup.HostConfig.deployDescriptor Deploying deployment descriptor [C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src\conf\Catalina\localhost\citMobi2.xml]
+22-Jan-2025 10:25:36.661 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+22-Jan-2025 10:25:49.646 SEVERE [main] org.apache.catalina.startup.HostConfig.deployDescriptor Error deploying deployment descriptor [C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src\conf\Catalina\localhost\citMobi2.xml]
+	java.lang.IllegalStateException: Error starting child
+		at org.apache.catalina.core.ContainerBase.addChildInternal(ContainerBase.java:602)
+		at org.apache.catalina.core.ContainerBase.addChild(ContainerBase.java:571)
+		at org.apache.catalina.core.StandardHost.addChild(StandardHost.java:654)
+		at org.apache.catalina.startup.HostConfig.deployDescriptor(HostConfig.java:635)
+		at org.apache.catalina.startup.HostConfig$DeployDescriptor.run(HostConfig.java:1889)
+		at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:123)
+		at org.apache.catalina.startup.HostConfig.deployDescriptors(HostConfig.java:530)
+		at org.apache.catalina.startup.HostConfig.deployApps(HostConfig.java:421)
+		at org.apache.catalina.startup.HostConfig.start(HostConfig.java:1629)
+		at org.apache.catalina.startup.HostConfig.lifecycleEvent(HostConfig.java:303)
+		at org.apache.catalina.util.LifecycleBase.fireLifecycleEvent(LifecycleBase.java:109)
+		at org.apache.catalina.util.LifecycleBase.setStateInternal(LifecycleBase.java:385)
+		at org.apache.catalina.util.LifecycleBase.setState(LifecycleBase.java:332)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:776)
+		at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:772)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1203)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1193)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:749)
+		at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:203)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardService.startInternal(StandardService.java:415)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:874)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.startup.Catalina.start(Catalina.java:757)
+		at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+		at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+		at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+		at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+		at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:345)
+		at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:473)
+	Caused by: org.apache.catalina.LifecycleException: Failed to start component [StandardEngine[Catalina].StandardHost[localhost].StandardContext[/citMobi2]]
+		at org.apache.catalina.util.LifecycleBase.handleSubClassException(LifecycleBase.java:402)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:179)
+		at org.apache.catalina.core.ContainerBase.addChildInternal(ContainerBase.java:599)
+		... 37 more
+	Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Failed to initialize dependency 'flywayInitializer' of LoadTimeWeaverAware bean 'entityManagerFactory': Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Migration V1__create_tables.sql failed
+--------------------------------------
+SQL State  : 42830
+Error Code : 0
+Message    : ERRO: não há restrição de unicidade que corresponde com as colunas informadas na tabela referenciada "t_lin_linha"
+Location   : db/migration/V1__create_tables.sql (C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\target\classes\db\migration\V1__create_tables.sql)
+Line       : 75
+Statement  : CREATE TABLE T_LIN_ITINERARIO (
+   LIN_LINHA_ID varchar(30) NOT NULL,
+   LIN_LINHA_ATENDIMENTO varchar(15) NOT NULL,
+   LIN_LINHA_PREFIXO varchar(255) NOT NULL,
+   LIN_PARADA_ID bigserial NOT NULL,
+   GLB_MUNICIPIO_COD bigint NOT NULL,
+   LIN_ITINERARIO_SENTIDO varchar(12) NOT NULL,
+   LIN_ITINERARIO_SEQUENCIA INT NOT NULL,
+   PRIMARY KEY(LIN_PARADA_ID,LIN_ITINERARIO_SEQUENCIA,LIN_LINHA_ID,LIN_LINHA_ATENDIMENTO,GLB_MUNICIPIO_COD,LIN_ITINERARIO_SENTIDO),
+   FOREIGN KEY(GLB_MUNICIPIO_COD) REFERENCES T_GLB_MUNICIPIO(GLB_MUNICIPIO_COD),
+   FOREIGN KEY (LIN_PARADA_ID, GLB_MUNICIPIO_COD) REFERENCES T_LIN_PARADA(LIN_PARADA_ID, GLB_MUNICIPIO_COD),
+   FOREIGN KEY (LIN_LINHA_ID, LIN_LINHA_ATENDIMENTO, GLB_MUNICIPIO_COD)
+   REFERENCES T_LIN_LINHA(LIN_LINHA_ID, LIN_LINHA_ATENDIMENTO, GLB_MUNICIPIO_COD)
+)
+
+		at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:326)
+		at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:205)
+		at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:954)
+		at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625)
+		at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+		at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+		at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+		at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
+		at org.springframework.boot.web.servlet.support.SpringBootServletInitializer.run(SpringBootServletInitializer.java:174)
+		at org.springframework.boot.web.servlet.support.SpringBootServletInitializer.createRootApplicationContext(SpringBootServletInitializer.java:154)
+		at org.springframework.boot.web.servlet.support.SpringBootServletInitializer.onStartup(SpringBootServletInitializer.java:96)
+		at org.springframework.web.SpringServletContainerInitializer.onStartup(SpringServletContainerInitializer.java:171)
+		at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4414)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		... 38 more
+	Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Migration V1__create_tables.sql failed
+--------------------------------------
+SQL State  : 42830
+Error Code : 0
+Message    : ERRO: não há restrição de unicidade que corresponde com as colunas informadas na tabela referenciada "t_lin_linha"
+Location   : db/migration/V1__create_tables.sql (C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\target\classes\db\migration\V1__create_tables.sql)
+Line       : 75
+Statement  : CREATE TABLE T_LIN_ITINERARIO (
+   LIN_LINHA_ID varchar(30) NOT NULL,
+   LIN_LINHA_ATENDIMENTO varchar(15) NOT NULL,
+   LIN_LINHA_PREFIXO varchar(255) NOT NULL,
+   LIN_PARADA_ID bigserial NOT NULL,
+   GLB_MUNICIPIO_COD bigint NOT NULL,
+   LIN_ITINERARIO_SENTIDO varchar(12) NOT NULL,
+   LIN_ITINERARIO_SEQUENCIA INT NOT NULL,
+   PRIMARY KEY(LIN_PARADA_ID,LIN_ITINERARIO_SEQUENCIA,LIN_LINHA_ID,LIN_LINHA_ATENDIMENTO,GLB_MUNICIPIO_COD,LIN_ITINERARIO_SENTIDO),
+   FOREIGN KEY(GLB_MUNICIPIO_COD) REFERENCES T_GLB_MUNICIPIO(GLB_MUNICIPIO_COD),
+   FOREIGN KEY (LIN_PARADA_ID, GLB_MUNICIPIO_COD) REFERENCES T_LIN_PARADA(LIN_PARADA_ID, GLB_MUNICIPIO_COD),
+   FOREIGN KEY (LIN_LINHA_ID, LIN_LINHA_ATENDIMENTO, GLB_MUNICIPIO_COD)
+   REFERENCES T_LIN_LINHA(LIN_LINHA_ID, LIN_LINHA_ATENDIMENTO, GLB_MUNICIPIO_COD)
+)
+
+		at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1806)
+		at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+		at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+		at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+		at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+		at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+		at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+		at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:313)
+		... 51 more
+	Caused by: org.flywaydb.core.internal.command.DbMigrate$FlywayMigrateException: Migration V1__create_tables.sql failed
+--------------------------------------
+SQL State  : 42830
+Error Code : 0
+Message    : ERRO: não há restrição de unicidade que corresponde com as colunas informadas na tabela referenciada "t_lin_linha"
+Location   : db/migration/V1__create_tables.sql (C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\target\classes\db\migration\V1__create_tables.sql)
+Line       : 75
+Statement  : CREATE TABLE T_LIN_ITINERARIO (
+   LIN_LINHA_ID varchar(30) NOT NULL,
+   LIN_LINHA_ATENDIMENTO varchar(15) NOT NULL,
+   LIN_LINHA_PREFIXO varchar(255) NOT NULL,
+   LIN_PARADA_ID bigserial NOT NULL,
+   GLB_MUNICIPIO_COD bigint NOT NULL,
+   LIN_ITINERARIO_SENTIDO varchar(12) NOT NULL,
+   LIN_ITINERARIO_SEQUENCIA INT NOT NULL,
+   PRIMARY KEY(LIN_PARADA_ID,LIN_ITINERARIO_SEQUENCIA,LIN_LINHA_ID,LIN_LINHA_ATENDIMENTO,GLB_MUNICIPIO_COD,LIN_ITINERARIO_SENTIDO),
+   FOREIGN KEY(GLB_MUNICIPIO_COD) REFERENCES T_GLB_MUNICIPIO(GLB_MUNICIPIO_COD),
+   FOREIGN KEY (LIN_PARADA_ID, GLB_MUNICIPIO_COD) REFERENCES T_LIN_PARADA(LIN_PARADA_ID, GLB_MUNICIPIO_COD),
+   FOREIGN KEY (LIN_LINHA_ID, LIN_LINHA_ATENDIMENTO, GLB_MUNICIPIO_COD)
+   REFERENCES T_LIN_LINHA(LIN_LINHA_ID, LIN_LINHA_ATENDIMENTO, GLB_MUNICIPIO_COD)
+)
+
+		at org.flywaydb.core.internal.command.DbMigrate.doMigrateGroup(DbMigrate.java:382)
+		at org.flywaydb.core.internal.command.DbMigrate.lambda$applyMigrations$1(DbMigrate.java:272)
+		at org.flywaydb.core.internal.jdbc.TransactionalExecutionTemplate.execute(TransactionalExecutionTemplate.java:55)
+		at org.flywaydb.core.internal.command.DbMigrate.applyMigrations(DbMigrate.java:271)
+		at org.flywaydb.core.internal.command.DbMigrate.migrateGroup(DbMigrate.java:244)
+		at org.flywaydb.core.internal.command.DbMigrate.lambda$migrateAll$0(DbMigrate.java:139)
+		at org.flywaydb.database.postgresql.PostgreSQLAdvisoryLockTemplate.execute(PostgreSQLAdvisoryLockTemplate.java:73)
+		at org.flywaydb.database.postgresql.PostgreSQLAdvisoryLockTemplate.lambda$execute$0(PostgreSQLAdvisoryLockTemplate.java:56)
+		at org.flywaydb.core.internal.jdbc.TransactionalExecutionTemplate.execute(TransactionalExecutionTemplate.java:55)
+		at org.flywaydb.database.postgresql.PostgreSQLAdvisoryLockTemplate.execute(PostgreSQLAdvisoryLockTemplate.java:56)
+		at org.flywaydb.database.postgresql.PostgreSQLConnection.lock(PostgreSQLConnection.java:96)
+		at org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory.lock(JdbcTableSchemaHistory.java:145)
+		at org.flywaydb.core.internal.command.DbMigrate.migrateAll(DbMigrate.java:139)
+		at org.flywaydb.core.internal.command.DbMigrate.migrate(DbMigrate.java:97)
+		at org.flywaydb.core.Flyway.lambda$migrate$0(Flyway.java:202)
+		at org.flywaydb.core.FlywayExecutor.execute(FlywayExecutor.java:205)
+		at org.flywaydb.core.Flyway.migrate(Flyway.java:147)
+		at org.springframework.boot.autoconfigure.flyway.FlywayMigrationInitializer.afterPropertiesSet(FlywayMigrationInitializer.java:66)
+		at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1853)
+		at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1802)
+		... 58 more
+	Caused by: org.flywaydb.core.internal.sqlscript.FlywaySqlScriptException: Migration V1__create_tables.sql failed
+--------------------------------------
+SQL State  : 42830
+Error Code : 0
+Message    : ERRO: não há restrição de unicidade que corresponde com as colunas informadas na tabela referenciada "t_lin_linha"
+Location   : db/migration/V1__create_tables.sql (C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\target\classes\db\migration\V1__create_tables.sql)
+Line       : 75
+Statement  : CREATE TABLE T_LIN_ITINERARIO (
+   LIN_LINHA_ID varchar(30) NOT NULL,
+   LIN_LINHA_ATENDIMENTO varchar(15) NOT NULL,
+   LIN_LINHA_PREFIXO varchar(255) NOT NULL,
+   LIN_PARADA_ID bigserial NOT NULL,
+   GLB_MUNICIPIO_COD bigint NOT NULL,
+   LIN_ITINERARIO_SENTIDO varchar(12) NOT NULL,
+   LIN_ITINERARIO_SEQUENCIA INT NOT NULL,
+   PRIMARY KEY(LIN_PARADA_ID,LIN_ITINERARIO_SEQUENCIA,LIN_LINHA_ID,LIN_LINHA_ATENDIMENTO,GLB_MUNICIPIO_COD,LIN_ITINERARIO_SENTIDO),
+   FOREIGN KEY(GLB_MUNICIPIO_COD) REFERENCES T_GLB_MUNICIPIO(GLB_MUNICIPIO_COD),
+   FOREIGN KEY (LIN_PARADA_ID, GLB_MUNICIPIO_COD) REFERENCES T_LIN_PARADA(LIN_PARADA_ID, GLB_MUNICIPIO_COD),
+   FOREIGN KEY (LIN_LINHA_ID, LIN_LINHA_ATENDIMENTO, GLB_MUNICIPIO_COD)
+   REFERENCES T_LIN_LINHA(LIN_LINHA_ID, LIN_LINHA_ATENDIMENTO, GLB_MUNICIPIO_COD)
+)
+
+		at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.handleException(DefaultSqlScriptExecutor.java:252)
+		at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.executeStatement(DefaultSqlScriptExecutor.java:214)
+		at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.execute(DefaultSqlScriptExecutor.java:133)
+		at org.flywaydb.core.internal.resolver.sql.SqlMigrationExecutor.executeOnce(SqlMigrationExecutor.java:65)
+		at org.flywaydb.core.internal.resolver.sql.SqlMigrationExecutor.lambda$execute$0(SqlMigrationExecutor.java:57)
+		at org.flywaydb.core.internal.database.DefaultExecutionStrategy.execute(DefaultExecutionStrategy.java:27)
+		at org.flywaydb.core.internal.resolver.sql.SqlMigrationExecutor.execute(SqlMigrationExecutor.java:56)
+		at org.flywaydb.core.internal.command.DbMigrate.doMigrateGroup(DbMigrate.java:374)
+		... 77 more
+	Caused by: org.postgresql.util.PSQLException: ERRO: não há restrição de unicidade que corresponde com as colunas informadas na tabela referenciada "t_lin_linha"
+		at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2733)
+		at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2420)
+		at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:372)
+		at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:517)
+		at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:434)
+		at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:356)
+		at org.postgresql.jdbc.PgStatement.executeCachedSql(PgStatement.java:341)
+		at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:317)
+		at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:312)
+		at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94)
+		at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
+		at org.flywaydb.core.internal.jdbc.JdbcTemplate.executeStatement(JdbcTemplate.java:210)
+		at org.flywaydb.core.internal.sqlscript.ParsedSqlStatement.execute(ParsedSqlStatement.java:89)
+		at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.executeStatement(DefaultSqlScriptExecutor.java:206)
+		... 83 more
+22-Jan-2025 10:25:49.698 INFO [main] org.apache.catalina.startup.HostConfig.deployDescriptor Deployment of deployment descriptor [C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src\conf\Catalina\localhost\citMobi2.xml] has finished in [21.623] ms
+22-Jan-2025 10:25:49.708 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8085"]
+22-Jan-2025 10:25:49.753 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [21814] milliseconds
+22-Jan-2025 10:45:32.043 INFO [Thread-3] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["http-nio-8085"]
+22-Jan-2025 10:45:32.220 INFO [Thread-3] org.apache.catalina.core.StandardService.stopInternal Stopping service [Catalina]
+22-Jan-2025 10:45:32.221 INFO [Thread-3] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["http-nio-8085"]
+22-Jan-2025 10:45:32.226 INFO [Thread-3] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["http-nio-8085"]
+22-Jan-2025 10:45:32.229 WARNING [Thread-3] org.apache.catalina.loader.WebappClassLoaderBase.clearReferencesJdbc The web application [citMobi2] registered the JDBC driver [org.postgresql.Driver] but failed to unregister it when the web application was stopped. To prevent a memory leak, the JDBC Driver has been forcibly unregistered.
+22-Jan-2025 10:45:34.011 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version name:   Apache Tomcat/10.1.26
+22-Jan-2025 10:45:34.016 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Jul 7 2024 21:02:13 UTC
+22-Jan-2025 10:45:34.016 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version number: 10.1.26.0
+22-Jan-2025 10:45:34.016 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Windows 11
+22-Jan-2025 10:45:34.016 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            10.0
+22-Jan-2025 10:45:34.017 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          amd64
+22-Jan-2025 10:45:34.017 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             C:\Program Files\Java\jdk-17
+22-Jan-2025 10:45:34.017 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           17.0.11+7-LTS-207
+22-Jan-2025 10:45:34.017 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Oracle Corporation
+22-Jan-2025 10:45:34.017 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src
+22-Jan-2025 10:45:34.017 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         C:\Program Files\Apache Software Foundation\Tomcat 10.1
+22-Jan-2025 10:45:34.036 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.lang=ALL-UNNAMED
+22-Jan-2025 10:45:34.036 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.io=ALL-UNNAMED
+22-Jan-2025 10:45:34.036 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util=ALL-UNNAMED
+22-Jan-2025 10:45:34.036 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+22-Jan-2025 10:45:34.036 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+22-Jan-2025 10:45:34.036 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=C:\Program Files\Apache Software Foundation\Tomcat 10.1
+22-Jan-2025 10:45:34.036 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src
+22-Jan-2025 10:45:34.037 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src\temp
+22-Jan-2025 10:45:34.037 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src\conf\logging.properties
+22-Jan-2025 10:45:34.037 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+22-Jan-2025 10:45:34.037 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -javaagent:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2024.1.4\lib\idea_rt.jar=55355:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2024.1.4\bin
+22-Jan-2025 10:45:34.037 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dfile.encoding=UTF-8
+22-Jan-2025 10:45:34.046 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent The Apache Tomcat Native library which allows using OpenSSL was not found on the java.library.path: [C:\Program Files\Java\jdk-17\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Python312\Scripts\;C:\Python312\;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\app\TDV.Admin\product\11.2.0\client_1\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Java_Essentials\apache-maven-3.6.3\bin;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\Program Files\dotnet\;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\Erick.ferreira\.console-ninja\.bin;C:\Users\Erick.ferreira\AppData\Local\Microsoft\WindowsApps;C:\Users\Erick.ferreira\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\Java\jdk1.8.0_291\bin;C:\Users\Erick.ferreira\AppData\Roaming\npm;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2024.1.4\bin;;C:\Users\Erick.ferreira\.dotnet\tools;.]
+22-Jan-2025 10:45:34.335 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8085"]
+22-Jan-2025 10:45:34.360 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [565] milliseconds
+22-Jan-2025 10:45:34.425 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+22-Jan-2025 10:45:34.425 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/10.1.26]
+22-Jan-2025 10:45:34.446 INFO [main] org.apache.catalina.startup.HostConfig.deployDescriptor Deploying deployment descriptor [C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src\conf\Catalina\localhost\citMobi2.xml]
+22-Jan-2025 10:45:41.081 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+22-Jan-2025 10:45:50.918 SEVERE [main] org.apache.catalina.startup.HostConfig.deployDescriptor Error deploying deployment descriptor [C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src\conf\Catalina\localhost\citMobi2.xml]
+	java.lang.IllegalStateException: Error starting child
+		at org.apache.catalina.core.ContainerBase.addChildInternal(ContainerBase.java:602)
+		at org.apache.catalina.core.ContainerBase.addChild(ContainerBase.java:571)
+		at org.apache.catalina.core.StandardHost.addChild(StandardHost.java:654)
+		at org.apache.catalina.startup.HostConfig.deployDescriptor(HostConfig.java:635)
+		at org.apache.catalina.startup.HostConfig$DeployDescriptor.run(HostConfig.java:1889)
+		at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:123)
+		at org.apache.catalina.startup.HostConfig.deployDescriptors(HostConfig.java:530)
+		at org.apache.catalina.startup.HostConfig.deployApps(HostConfig.java:421)
+		at org.apache.catalina.startup.HostConfig.start(HostConfig.java:1629)
+		at org.apache.catalina.startup.HostConfig.lifecycleEvent(HostConfig.java:303)
+		at org.apache.catalina.util.LifecycleBase.fireLifecycleEvent(LifecycleBase.java:109)
+		at org.apache.catalina.util.LifecycleBase.setStateInternal(LifecycleBase.java:385)
+		at org.apache.catalina.util.LifecycleBase.setState(LifecycleBase.java:332)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:776)
+		at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:772)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1203)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1193)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:749)
+		at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:203)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardService.startInternal(StandardService.java:415)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:874)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.startup.Catalina.start(Catalina.java:757)
+		at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+		at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+		at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+		at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+		at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:345)
+		at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:473)
+	Caused by: org.apache.catalina.LifecycleException: Failed to start component [StandardEngine[Catalina].StandardHost[localhost].StandardContext[/citMobi2]]
+		at org.apache.catalina.util.LifecycleBase.handleSubClassException(LifecycleBase.java:402)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:179)
+		at org.apache.catalina.core.ContainerBase.addChildInternal(ContainerBase.java:599)
+		... 37 more
+	Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Failed to initialize dependency 'flywayInitializer' of LoadTimeWeaverAware bean 'entityManagerFactory': Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Migration V1__create_tables.sql failed
+--------------------------------------
+SQL State  : 42830
+Error Code : 0
+Message    : ERRO: não há restrição de unicidade que corresponde com as colunas informadas na tabela referenciada "t_lin_linha"
+Location   : db/migration/V1__create_tables.sql (C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\target\classes\db\migration\V1__create_tables.sql)
+Line       : 75
+Statement  : CREATE TABLE T_LIN_ITINERARIO (
+   LIN_LINHA_ID varchar(30) NOT NULL,
+   LIN_LINHA_ATENDIMENTO varchar(15) NOT NULL,
+   LIN_LINHA_PREFIXO varchar(255) NOT NULL,
+   GLB_OPERADOR_CNPJ VARCHAR(18) NOT NULL,
+   LIN_PARADA_ID bigserial NOT NULL,
+   GLB_MUNICIPIO_COD bigint NOT NULL,
+   LIN_ITINERARIO_SENTIDO varchar(12) NOT NULL,
+   LIN_ITINERARIO_SEQUENCIA INT NOT NULL,
+   PRIMARY KEY(LIN_PARADA_ID,LIN_ITINERARIO_SEQUENCIA,LIN_LINHA_ID,LIN_LINHA_ATENDIMENTO, GLB_OPERADOR_CNPJ, GLB_MUNICIPIO_COD,LIN_ITINERARIO_SENTIDO),
+   FOREIGN KEY(GLB_MUNICIPIO_COD) REFERENCES T_GLB_MUNICIPIO(GLB_MUNICIPIO_COD),
+   FOREIGN KEY(GLB_OPERADOR_CNPJ) REFERENCES T_GLB_OPERADOR(GLB_OPERADOR_CNPJ),
+   FOREIGN KEY (LIN_PARADA_ID, GLB_MUNICIPIO_COD) REFERENCES T_LIN_PARADA(LIN_PARADA_ID, GLB_MUNICIPIO_COD),
+   FOREIGN KEY (LIN_LINHA_ID, LIN_LINHA_ATENDIMENTO, GLB_MUNICIPIO_COD) REFERENCES T_LIN_LINHA(LIN_LINHA_ID, LIN_LINHA_ATENDIMENTO, GLB_MUNICIPIO_COD)
+)
+
+		at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:326)
+		at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:205)
+		at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:954)
+		at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625)
+		at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+		at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+		at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+		at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
+		at org.springframework.boot.web.servlet.support.SpringBootServletInitializer.run(SpringBootServletInitializer.java:174)
+		at org.springframework.boot.web.servlet.support.SpringBootServletInitializer.createRootApplicationContext(SpringBootServletInitializer.java:154)
+		at org.springframework.boot.web.servlet.support.SpringBootServletInitializer.onStartup(SpringBootServletInitializer.java:96)
+		at org.springframework.web.SpringServletContainerInitializer.onStartup(SpringServletContainerInitializer.java:171)
+		at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4414)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		... 38 more
+	Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Migration V1__create_tables.sql failed
+--------------------------------------
+SQL State  : 42830
+Error Code : 0
+Message    : ERRO: não há restrição de unicidade que corresponde com as colunas informadas na tabela referenciada "t_lin_linha"
+Location   : db/migration/V1__create_tables.sql (C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\target\classes\db\migration\V1__create_tables.sql)
+Line       : 75
+Statement  : CREATE TABLE T_LIN_ITINERARIO (
+   LIN_LINHA_ID varchar(30) NOT NULL,
+   LIN_LINHA_ATENDIMENTO varchar(15) NOT NULL,
+   LIN_LINHA_PREFIXO varchar(255) NOT NULL,
+   GLB_OPERADOR_CNPJ VARCHAR(18) NOT NULL,
+   LIN_PARADA_ID bigserial NOT NULL,
+   GLB_MUNICIPIO_COD bigint NOT NULL,
+   LIN_ITINERARIO_SENTIDO varchar(12) NOT NULL,
+   LIN_ITINERARIO_SEQUENCIA INT NOT NULL,
+   PRIMARY KEY(LIN_PARADA_ID,LIN_ITINERARIO_SEQUENCIA,LIN_LINHA_ID,LIN_LINHA_ATENDIMENTO, GLB_OPERADOR_CNPJ, GLB_MUNICIPIO_COD,LIN_ITINERARIO_SENTIDO),
+   FOREIGN KEY(GLB_MUNICIPIO_COD) REFERENCES T_GLB_MUNICIPIO(GLB_MUNICIPIO_COD),
+   FOREIGN KEY(GLB_OPERADOR_CNPJ) REFERENCES T_GLB_OPERADOR(GLB_OPERADOR_CNPJ),
+   FOREIGN KEY (LIN_PARADA_ID, GLB_MUNICIPIO_COD) REFERENCES T_LIN_PARADA(LIN_PARADA_ID, GLB_MUNICIPIO_COD),
+   FOREIGN KEY (LIN_LINHA_ID, LIN_LINHA_ATENDIMENTO, GLB_MUNICIPIO_COD) REFERENCES T_LIN_LINHA(LIN_LINHA_ID, LIN_LINHA_ATENDIMENTO, GLB_MUNICIPIO_COD)
+)
+
+		at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1806)
+		at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+		at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+		at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+		at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+		at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+		at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+		at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:313)
+		... 51 more
+	Caused by: org.flywaydb.core.internal.command.DbMigrate$FlywayMigrateException: Migration V1__create_tables.sql failed
+--------------------------------------
+SQL State  : 42830
+Error Code : 0
+Message    : ERRO: não há restrição de unicidade que corresponde com as colunas informadas na tabela referenciada "t_lin_linha"
+Location   : db/migration/V1__create_tables.sql (C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\target\classes\db\migration\V1__create_tables.sql)
+Line       : 75
+Statement  : CREATE TABLE T_LIN_ITINERARIO (
+   LIN_LINHA_ID varchar(30) NOT NULL,
+   LIN_LINHA_ATENDIMENTO varchar(15) NOT NULL,
+   LIN_LINHA_PREFIXO varchar(255) NOT NULL,
+   GLB_OPERADOR_CNPJ VARCHAR(18) NOT NULL,
+   LIN_PARADA_ID bigserial NOT NULL,
+   GLB_MUNICIPIO_COD bigint NOT NULL,
+   LIN_ITINERARIO_SENTIDO varchar(12) NOT NULL,
+   LIN_ITINERARIO_SEQUENCIA INT NOT NULL,
+   PRIMARY KEY(LIN_PARADA_ID,LIN_ITINERARIO_SEQUENCIA,LIN_LINHA_ID,LIN_LINHA_ATENDIMENTO, GLB_OPERADOR_CNPJ, GLB_MUNICIPIO_COD,LIN_ITINERARIO_SENTIDO),
+   FOREIGN KEY(GLB_MUNICIPIO_COD) REFERENCES T_GLB_MUNICIPIO(GLB_MUNICIPIO_COD),
+   FOREIGN KEY(GLB_OPERADOR_CNPJ) REFERENCES T_GLB_OPERADOR(GLB_OPERADOR_CNPJ),
+   FOREIGN KEY (LIN_PARADA_ID, GLB_MUNICIPIO_COD) REFERENCES T_LIN_PARADA(LIN_PARADA_ID, GLB_MUNICIPIO_COD),
+   FOREIGN KEY (LIN_LINHA_ID, LIN_LINHA_ATENDIMENTO, GLB_MUNICIPIO_COD) REFERENCES T_LIN_LINHA(LIN_LINHA_ID, LIN_LINHA_ATENDIMENTO, GLB_MUNICIPIO_COD)
+)
+
+		at org.flywaydb.core.internal.command.DbMigrate.doMigrateGroup(DbMigrate.java:382)
+		at org.flywaydb.core.internal.command.DbMigrate.lambda$applyMigrations$1(DbMigrate.java:272)
+		at org.flywaydb.core.internal.jdbc.TransactionalExecutionTemplate.execute(TransactionalExecutionTemplate.java:55)
+		at org.flywaydb.core.internal.command.DbMigrate.applyMigrations(DbMigrate.java:271)
+		at org.flywaydb.core.internal.command.DbMigrate.migrateGroup(DbMigrate.java:244)
+		at org.flywaydb.core.internal.command.DbMigrate.lambda$migrateAll$0(DbMigrate.java:139)
+		at org.flywaydb.database.postgresql.PostgreSQLAdvisoryLockTemplate.execute(PostgreSQLAdvisoryLockTemplate.java:73)
+		at org.flywaydb.database.postgresql.PostgreSQLAdvisoryLockTemplate.lambda$execute$0(PostgreSQLAdvisoryLockTemplate.java:56)
+		at org.flywaydb.core.internal.jdbc.TransactionalExecutionTemplate.execute(TransactionalExecutionTemplate.java:55)
+		at org.flywaydb.database.postgresql.PostgreSQLAdvisoryLockTemplate.execute(PostgreSQLAdvisoryLockTemplate.java:56)
+		at org.flywaydb.database.postgresql.PostgreSQLConnection.lock(PostgreSQLConnection.java:96)
+		at org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory.lock(JdbcTableSchemaHistory.java:145)
+		at org.flywaydb.core.internal.command.DbMigrate.migrateAll(DbMigrate.java:139)
+		at org.flywaydb.core.internal.command.DbMigrate.migrate(DbMigrate.java:97)
+		at org.flywaydb.core.Flyway.lambda$migrate$0(Flyway.java:202)
+		at org.flywaydb.core.FlywayExecutor.execute(FlywayExecutor.java:205)
+		at org.flywaydb.core.Flyway.migrate(Flyway.java:147)
+		at org.springframework.boot.autoconfigure.flyway.FlywayMigrationInitializer.afterPropertiesSet(FlywayMigrationInitializer.java:66)
+		at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1853)
+		at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1802)
+		... 58 more
+	Caused by: org.flywaydb.core.internal.sqlscript.FlywaySqlScriptException: Migration V1__create_tables.sql failed
+--------------------------------------
+SQL State  : 42830
+Error Code : 0
+Message    : ERRO: não há restrição de unicidade que corresponde com as colunas informadas na tabela referenciada "t_lin_linha"
+Location   : db/migration/V1__create_tables.sql (C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\target\classes\db\migration\V1__create_tables.sql)
+Line       : 75
+Statement  : CREATE TABLE T_LIN_ITINERARIO (
+   LIN_LINHA_ID varchar(30) NOT NULL,
+   LIN_LINHA_ATENDIMENTO varchar(15) NOT NULL,
+   LIN_LINHA_PREFIXO varchar(255) NOT NULL,
+   GLB_OPERADOR_CNPJ VARCHAR(18) NOT NULL,
+   LIN_PARADA_ID bigserial NOT NULL,
+   GLB_MUNICIPIO_COD bigint NOT NULL,
+   LIN_ITINERARIO_SENTIDO varchar(12) NOT NULL,
+   LIN_ITINERARIO_SEQUENCIA INT NOT NULL,
+   PRIMARY KEY(LIN_PARADA_ID,LIN_ITINERARIO_SEQUENCIA,LIN_LINHA_ID,LIN_LINHA_ATENDIMENTO, GLB_OPERADOR_CNPJ, GLB_MUNICIPIO_COD,LIN_ITINERARIO_SENTIDO),
+   FOREIGN KEY(GLB_MUNICIPIO_COD) REFERENCES T_GLB_MUNICIPIO(GLB_MUNICIPIO_COD),
+   FOREIGN KEY(GLB_OPERADOR_CNPJ) REFERENCES T_GLB_OPERADOR(GLB_OPERADOR_CNPJ),
+   FOREIGN KEY (LIN_PARADA_ID, GLB_MUNICIPIO_COD) REFERENCES T_LIN_PARADA(LIN_PARADA_ID, GLB_MUNICIPIO_COD),
+   FOREIGN KEY (LIN_LINHA_ID, LIN_LINHA_ATENDIMENTO, GLB_MUNICIPIO_COD) REFERENCES T_LIN_LINHA(LIN_LINHA_ID, LIN_LINHA_ATENDIMENTO, GLB_MUNICIPIO_COD)
+)
+
+		at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.handleException(DefaultSqlScriptExecutor.java:252)
+		at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.executeStatement(DefaultSqlScriptExecutor.java:214)
+		at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.execute(DefaultSqlScriptExecutor.java:133)
+		at org.flywaydb.core.internal.resolver.sql.SqlMigrationExecutor.executeOnce(SqlMigrationExecutor.java:65)
+		at org.flywaydb.core.internal.resolver.sql.SqlMigrationExecutor.lambda$execute$0(SqlMigrationExecutor.java:57)
+		at org.flywaydb.core.internal.database.DefaultExecutionStrategy.execute(DefaultExecutionStrategy.java:27)
+		at org.flywaydb.core.internal.resolver.sql.SqlMigrationExecutor.execute(SqlMigrationExecutor.java:56)
+		at org.flywaydb.core.internal.command.DbMigrate.doMigrateGroup(DbMigrate.java:374)
+		... 77 more
+	Caused by: org.postgresql.util.PSQLException: ERRO: não há restrição de unicidade que corresponde com as colunas informadas na tabela referenciada "t_lin_linha"
+		at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2733)
+		at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2420)
+		at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:372)
+		at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:517)
+		at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:434)
+		at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:356)
+		at org.postgresql.jdbc.PgStatement.executeCachedSql(PgStatement.java:341)
+		at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:317)
+		at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:312)
+		at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94)
+		at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
+		at org.flywaydb.core.internal.jdbc.JdbcTemplate.executeStatement(JdbcTemplate.java:210)
+		at org.flywaydb.core.internal.sqlscript.ParsedSqlStatement.execute(ParsedSqlStatement.java:89)
+		at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.executeStatement(DefaultSqlScriptExecutor.java:206)
+		... 83 more
+22-Jan-2025 10:45:50.923 INFO [main] org.apache.catalina.startup.HostConfig.deployDescriptor Deployment of deployment descriptor [C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src\conf\Catalina\localhost\citMobi2.xml] has finished in [16.478] ms
+22-Jan-2025 10:45:50.928 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8085"]
+22-Jan-2025 10:45:50.958 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [16597] milliseconds
+22-Jan-2025 10:47:05.643 INFO [Thread-3] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["http-nio-8085"]
+22-Jan-2025 10:47:05.819 INFO [Thread-3] org.apache.catalina.core.StandardService.stopInternal Stopping service [Catalina]
+22-Jan-2025 10:47:05.820 INFO [Thread-3] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["http-nio-8085"]
+22-Jan-2025 10:47:05.824 INFO [Thread-3] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["http-nio-8085"]
+22-Jan-2025 10:47:05.827 WARNING [Thread-3] org.apache.catalina.loader.WebappClassLoaderBase.clearReferencesJdbc The web application [citMobi2] registered the JDBC driver [org.postgresql.Driver] but failed to unregister it when the web application was stopped. To prevent a memory leak, the JDBC Driver has been forcibly unregistered.
+22-Jan-2025 10:47:12.979 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version name:   Apache Tomcat/10.1.26
+22-Jan-2025 10:47:12.985 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Jul 7 2024 21:02:13 UTC
+22-Jan-2025 10:47:12.985 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version number: 10.1.26.0
+22-Jan-2025 10:47:12.985 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Windows 11
+22-Jan-2025 10:47:12.985 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            10.0
+22-Jan-2025 10:47:12.985 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          amd64
+22-Jan-2025 10:47:12.986 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             C:\Program Files\Java\jdk-17
+22-Jan-2025 10:47:12.986 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           17.0.11+7-LTS-207
+22-Jan-2025 10:47:12.986 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Oracle Corporation
+22-Jan-2025 10:47:12.986 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src
+22-Jan-2025 10:47:12.986 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         C:\Program Files\Apache Software Foundation\Tomcat 10.1
+22-Jan-2025 10:47:13.000 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.lang=ALL-UNNAMED
+22-Jan-2025 10:47:13.000 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.io=ALL-UNNAMED
+22-Jan-2025 10:47:13.001 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util=ALL-UNNAMED
+22-Jan-2025 10:47:13.001 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+22-Jan-2025 10:47:13.001 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+22-Jan-2025 10:47:13.001 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=C:\Program Files\Apache Software Foundation\Tomcat 10.1
+22-Jan-2025 10:47:13.001 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src
+22-Jan-2025 10:47:13.001 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src\temp
+22-Jan-2025 10:47:13.001 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src\conf\logging.properties
+22-Jan-2025 10:47:13.001 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+22-Jan-2025 10:47:13.001 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -javaagent:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2024.1.4\lib\idea_rt.jar=55385:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2024.1.4\bin
+22-Jan-2025 10:47:13.001 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dfile.encoding=UTF-8
+22-Jan-2025 10:47:13.012 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent The Apache Tomcat Native library which allows using OpenSSL was not found on the java.library.path: [C:\Program Files\Java\jdk-17\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Python312\Scripts\;C:\Python312\;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\app\TDV.Admin\product\11.2.0\client_1\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Java_Essentials\apache-maven-3.6.3\bin;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\Program Files\dotnet\;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\Erick.ferreira\.console-ninja\.bin;C:\Users\Erick.ferreira\AppData\Local\Microsoft\WindowsApps;C:\Users\Erick.ferreira\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\Java\jdk1.8.0_291\bin;C:\Users\Erick.ferreira\AppData\Roaming\npm;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2024.1.4\bin;;C:\Users\Erick.ferreira\.dotnet\tools;.]
+22-Jan-2025 10:47:13.300 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8085"]
+22-Jan-2025 10:47:13.329 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [580] milliseconds
+22-Jan-2025 10:47:13.390 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+22-Jan-2025 10:47:13.390 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/10.1.26]
+22-Jan-2025 10:47:13.403 INFO [main] org.apache.catalina.startup.HostConfig.deployDescriptor Deploying deployment descriptor [C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src\conf\Catalina\localhost\citMobi2.xml]
+22-Jan-2025 10:47:19.780 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+22-Jan-2025 10:47:29.292 SEVERE [main] org.apache.catalina.startup.HostConfig.deployDescriptor Error deploying deployment descriptor [C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src\conf\Catalina\localhost\citMobi2.xml]
+	java.lang.IllegalStateException: Error starting child
+		at org.apache.catalina.core.ContainerBase.addChildInternal(ContainerBase.java:602)
+		at org.apache.catalina.core.ContainerBase.addChild(ContainerBase.java:571)
+		at org.apache.catalina.core.StandardHost.addChild(StandardHost.java:654)
+		at org.apache.catalina.startup.HostConfig.deployDescriptor(HostConfig.java:635)
+		at org.apache.catalina.startup.HostConfig$DeployDescriptor.run(HostConfig.java:1889)
+		at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:123)
+		at org.apache.catalina.startup.HostConfig.deployDescriptors(HostConfig.java:530)
+		at org.apache.catalina.startup.HostConfig.deployApps(HostConfig.java:421)
+		at org.apache.catalina.startup.HostConfig.start(HostConfig.java:1629)
+		at org.apache.catalina.startup.HostConfig.lifecycleEvent(HostConfig.java:303)
+		at org.apache.catalina.util.LifecycleBase.fireLifecycleEvent(LifecycleBase.java:109)
+		at org.apache.catalina.util.LifecycleBase.setStateInternal(LifecycleBase.java:385)
+		at org.apache.catalina.util.LifecycleBase.setState(LifecycleBase.java:332)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:776)
+		at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:772)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1203)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1193)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:749)
+		at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:203)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardService.startInternal(StandardService.java:415)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:874)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.startup.Catalina.start(Catalina.java:757)
+		at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+		at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+		at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+		at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+		at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:345)
+		at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:473)
+	Caused by: org.apache.catalina.LifecycleException: Failed to start component [StandardEngine[Catalina].StandardHost[localhost].StandardContext[/citMobi2]]
+		at org.apache.catalina.util.LifecycleBase.handleSubClassException(LifecycleBase.java:402)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:179)
+		at org.apache.catalina.core.ContainerBase.addChildInternal(ContainerBase.java:599)
+		... 37 more
+	Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Failed to initialize dependency 'flywayInitializer' of LoadTimeWeaverAware bean 'entityManagerFactory': Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Migration V2__INSERT_MOCK.sql failed
+------------------------------------
+SQL State  : 42601
+Error Code : 0
+Message    : ERRO: erro de sintaxe em ou próximo a "INSERT"
+  Posição: 349
+Location   : db/migration/V2__INSERT_MOCK.sql (C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\target\classes\db\migration\V2__INSERT_MOCK.sql)
+Line       : 25
+Statement  : INSERT INTO T_LIN_LINHA (LIN_LINHA_ID, LIN_LINHA_ATENDIMENTO, GLB_MUNICIPIO_COD, LIN_LINHA_DESCRICAO, GLB_OPERADOR_CNPJ, LIN_LINHA_FLAGINTERMUNICIPAL, LIN_LINHA_FLAGATENDEMETRO, LIN_LINHA_FLAGATENDETREM, LIN_LINHA_FLAGATIVA)
+VALUES('3301', '10', 3550308, 'TERMINAL SÃO MIGUEL - TERMINAL PARQUE DOM PEDRO II', '31974104000120', 'N', 'N', 'N', 'S')
+
+INSERT INTO T_LIN_LINHA (LIN_LINHA_ID, LIN_LINHA_ATENDIMENTO, GLB_MUNICIPIO_COD, LIN_LINHA_DESCRICAO, GLB_OPERADOR_CNPJ, LIN_LINHA_FLAGINTERMUNICIPAL, LIN_LINHA_FLAGATENDEMETRO, LIN_LINHA_FLAGATENDETREM, LIN_LINHA_FLAGATIVA)
+VALUES('9051', '10', 3550308, 'TERM. PINHEIROS - LAPA', '01751967000178', 'N', 'N', 'N', 'S')
+
+INSERT INTO T_LIN_LINHA (LIN_LINHA_ID, LIN_LINHA_ATENDIMENTO, GLB_MUNICIPIO_COD, LIN_LINHA_DESCRICAO, GLB_OPERADOR_CNPJ, LIN_LINHA_FLAGINTERMUNICIPAL, LIN_LINHA_FLAGATENDEMETRO, LIN_LINHA_FLAGATENDETREM, LIN_LINHA_FLAGATIVA)
+VALUES('9051', '10', 3550308, 'TERM. PINHEIROS - LAPA', '60870847000159', 'N', 'N', 'N', 'S')
+
+		at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:326)
+		at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:205)
+		at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:954)
+		at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625)
+		at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+		at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+		at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+		at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
+		at org.springframework.boot.web.servlet.support.SpringBootServletInitializer.run(SpringBootServletInitializer.java:174)
+		at org.springframework.boot.web.servlet.support.SpringBootServletInitializer.createRootApplicationContext(SpringBootServletInitializer.java:154)
+		at org.springframework.boot.web.servlet.support.SpringBootServletInitializer.onStartup(SpringBootServletInitializer.java:96)
+		at org.springframework.web.SpringServletContainerInitializer.onStartup(SpringServletContainerInitializer.java:171)
+		at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4414)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		... 38 more
+	Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Migration V2__INSERT_MOCK.sql failed
+------------------------------------
+SQL State  : 42601
+Error Code : 0
+Message    : ERRO: erro de sintaxe em ou próximo a "INSERT"
+  Posição: 349
+Location   : db/migration/V2__INSERT_MOCK.sql (C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\target\classes\db\migration\V2__INSERT_MOCK.sql)
+Line       : 25
+Statement  : INSERT INTO T_LIN_LINHA (LIN_LINHA_ID, LIN_LINHA_ATENDIMENTO, GLB_MUNICIPIO_COD, LIN_LINHA_DESCRICAO, GLB_OPERADOR_CNPJ, LIN_LINHA_FLAGINTERMUNICIPAL, LIN_LINHA_FLAGATENDEMETRO, LIN_LINHA_FLAGATENDETREM, LIN_LINHA_FLAGATIVA)
+VALUES('3301', '10', 3550308, 'TERMINAL SÃO MIGUEL - TERMINAL PARQUE DOM PEDRO II', '31974104000120', 'N', 'N', 'N', 'S')
+
+INSERT INTO T_LIN_LINHA (LIN_LINHA_ID, LIN_LINHA_ATENDIMENTO, GLB_MUNICIPIO_COD, LIN_LINHA_DESCRICAO, GLB_OPERADOR_CNPJ, LIN_LINHA_FLAGINTERMUNICIPAL, LIN_LINHA_FLAGATENDEMETRO, LIN_LINHA_FLAGATENDETREM, LIN_LINHA_FLAGATIVA)
+VALUES('9051', '10', 3550308, 'TERM. PINHEIROS - LAPA', '01751967000178', 'N', 'N', 'N', 'S')
+
+INSERT INTO T_LIN_LINHA (LIN_LINHA_ID, LIN_LINHA_ATENDIMENTO, GLB_MUNICIPIO_COD, LIN_LINHA_DESCRICAO, GLB_OPERADOR_CNPJ, LIN_LINHA_FLAGINTERMUNICIPAL, LIN_LINHA_FLAGATENDEMETRO, LIN_LINHA_FLAGATENDETREM, LIN_LINHA_FLAGATIVA)
+VALUES('9051', '10', 3550308, 'TERM. PINHEIROS - LAPA', '60870847000159', 'N', 'N', 'N', 'S')
+
+		at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1806)
+		at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+		at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+		at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+		at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+		at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+		at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+		at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:313)
+		... 51 more
+	Caused by: org.flywaydb.core.internal.command.DbMigrate$FlywayMigrateException: Migration V2__INSERT_MOCK.sql failed
+------------------------------------
+SQL State  : 42601
+Error Code : 0
+Message    : ERRO: erro de sintaxe em ou próximo a "INSERT"
+  Posição: 349
+Location   : db/migration/V2__INSERT_MOCK.sql (C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\target\classes\db\migration\V2__INSERT_MOCK.sql)
+Line       : 25
+Statement  : INSERT INTO T_LIN_LINHA (LIN_LINHA_ID, LIN_LINHA_ATENDIMENTO, GLB_MUNICIPIO_COD, LIN_LINHA_DESCRICAO, GLB_OPERADOR_CNPJ, LIN_LINHA_FLAGINTERMUNICIPAL, LIN_LINHA_FLAGATENDEMETRO, LIN_LINHA_FLAGATENDETREM, LIN_LINHA_FLAGATIVA)
+VALUES('3301', '10', 3550308, 'TERMINAL SÃO MIGUEL - TERMINAL PARQUE DOM PEDRO II', '31974104000120', 'N', 'N', 'N', 'S')
+
+INSERT INTO T_LIN_LINHA (LIN_LINHA_ID, LIN_LINHA_ATENDIMENTO, GLB_MUNICIPIO_COD, LIN_LINHA_DESCRICAO, GLB_OPERADOR_CNPJ, LIN_LINHA_FLAGINTERMUNICIPAL, LIN_LINHA_FLAGATENDEMETRO, LIN_LINHA_FLAGATENDETREM, LIN_LINHA_FLAGATIVA)
+VALUES('9051', '10', 3550308, 'TERM. PINHEIROS - LAPA', '01751967000178', 'N', 'N', 'N', 'S')
+
+INSERT INTO T_LIN_LINHA (LIN_LINHA_ID, LIN_LINHA_ATENDIMENTO, GLB_MUNICIPIO_COD, LIN_LINHA_DESCRICAO, GLB_OPERADOR_CNPJ, LIN_LINHA_FLAGINTERMUNICIPAL, LIN_LINHA_FLAGATENDEMETRO, LIN_LINHA_FLAGATENDETREM, LIN_LINHA_FLAGATIVA)
+VALUES('9051', '10', 3550308, 'TERM. PINHEIROS - LAPA', '60870847000159', 'N', 'N', 'N', 'S')
+
+		at org.flywaydb.core.internal.command.DbMigrate.doMigrateGroup(DbMigrate.java:382)
+		at org.flywaydb.core.internal.command.DbMigrate.lambda$applyMigrations$1(DbMigrate.java:272)
+		at org.flywaydb.core.internal.jdbc.TransactionalExecutionTemplate.execute(TransactionalExecutionTemplate.java:55)
+		at org.flywaydb.core.internal.command.DbMigrate.applyMigrations(DbMigrate.java:271)
+		at org.flywaydb.core.internal.command.DbMigrate.migrateGroup(DbMigrate.java:244)
+		at org.flywaydb.core.internal.command.DbMigrate.lambda$migrateAll$0(DbMigrate.java:139)
+		at org.flywaydb.database.postgresql.PostgreSQLAdvisoryLockTemplate.execute(PostgreSQLAdvisoryLockTemplate.java:73)
+		at org.flywaydb.database.postgresql.PostgreSQLAdvisoryLockTemplate.lambda$execute$0(PostgreSQLAdvisoryLockTemplate.java:56)
+		at org.flywaydb.core.internal.jdbc.TransactionalExecutionTemplate.execute(TransactionalExecutionTemplate.java:55)
+		at org.flywaydb.database.postgresql.PostgreSQLAdvisoryLockTemplate.execute(PostgreSQLAdvisoryLockTemplate.java:56)
+		at org.flywaydb.database.postgresql.PostgreSQLConnection.lock(PostgreSQLConnection.java:96)
+		at org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory.lock(JdbcTableSchemaHistory.java:145)
+		at org.flywaydb.core.internal.command.DbMigrate.migrateAll(DbMigrate.java:139)
+		at org.flywaydb.core.internal.command.DbMigrate.migrate(DbMigrate.java:97)
+		at org.flywaydb.core.Flyway.lambda$migrate$0(Flyway.java:202)
+		at org.flywaydb.core.FlywayExecutor.execute(FlywayExecutor.java:205)
+		at org.flywaydb.core.Flyway.migrate(Flyway.java:147)
+		at org.springframework.boot.autoconfigure.flyway.FlywayMigrationInitializer.afterPropertiesSet(FlywayMigrationInitializer.java:66)
+		at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1853)
+		at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1802)
+		... 58 more
+	Caused by: org.flywaydb.core.internal.sqlscript.FlywaySqlScriptException: Migration V2__INSERT_MOCK.sql failed
+------------------------------------
+SQL State  : 42601
+Error Code : 0
+Message    : ERRO: erro de sintaxe em ou próximo a "INSERT"
+  Posição: 349
+Location   : db/migration/V2__INSERT_MOCK.sql (C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\target\classes\db\migration\V2__INSERT_MOCK.sql)
+Line       : 25
+Statement  : INSERT INTO T_LIN_LINHA (LIN_LINHA_ID, LIN_LINHA_ATENDIMENTO, GLB_MUNICIPIO_COD, LIN_LINHA_DESCRICAO, GLB_OPERADOR_CNPJ, LIN_LINHA_FLAGINTERMUNICIPAL, LIN_LINHA_FLAGATENDEMETRO, LIN_LINHA_FLAGATENDETREM, LIN_LINHA_FLAGATIVA)
+VALUES('3301', '10', 3550308, 'TERMINAL SÃO MIGUEL - TERMINAL PARQUE DOM PEDRO II', '31974104000120', 'N', 'N', 'N', 'S')
+
+INSERT INTO T_LIN_LINHA (LIN_LINHA_ID, LIN_LINHA_ATENDIMENTO, GLB_MUNICIPIO_COD, LIN_LINHA_DESCRICAO, GLB_OPERADOR_CNPJ, LIN_LINHA_FLAGINTERMUNICIPAL, LIN_LINHA_FLAGATENDEMETRO, LIN_LINHA_FLAGATENDETREM, LIN_LINHA_FLAGATIVA)
+VALUES('9051', '10', 3550308, 'TERM. PINHEIROS - LAPA', '01751967000178', 'N', 'N', 'N', 'S')
+
+INSERT INTO T_LIN_LINHA (LIN_LINHA_ID, LIN_LINHA_ATENDIMENTO, GLB_MUNICIPIO_COD, LIN_LINHA_DESCRICAO, GLB_OPERADOR_CNPJ, LIN_LINHA_FLAGINTERMUNICIPAL, LIN_LINHA_FLAGATENDEMETRO, LIN_LINHA_FLAGATENDETREM, LIN_LINHA_FLAGATIVA)
+VALUES('9051', '10', 3550308, 'TERM. PINHEIROS - LAPA', '60870847000159', 'N', 'N', 'N', 'S')
+
+		at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.handleException(DefaultSqlScriptExecutor.java:252)
+		at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.executeStatement(DefaultSqlScriptExecutor.java:214)
+		at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.execute(DefaultSqlScriptExecutor.java:133)
+		at org.flywaydb.core.internal.resolver.sql.SqlMigrationExecutor.executeOnce(SqlMigrationExecutor.java:65)
+		at org.flywaydb.core.internal.resolver.sql.SqlMigrationExecutor.lambda$execute$0(SqlMigrationExecutor.java:57)
+		at org.flywaydb.core.internal.database.DefaultExecutionStrategy.execute(DefaultExecutionStrategy.java:27)
+		at org.flywaydb.core.internal.resolver.sql.SqlMigrationExecutor.execute(SqlMigrationExecutor.java:56)
+		at org.flywaydb.core.internal.command.DbMigrate.doMigrateGroup(DbMigrate.java:374)
+		... 77 more
+	Caused by: org.postgresql.util.PSQLException: ERRO: erro de sintaxe em ou próximo a "INSERT"
+  Posição: 349
+		at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2733)
+		at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2420)
+		at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:372)
+		at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:517)
+		at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:434)
+		at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:356)
+		at org.postgresql.jdbc.PgStatement.executeCachedSql(PgStatement.java:341)
+		at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:317)
+		at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:312)
+		at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94)
+		at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
+		at org.flywaydb.core.internal.jdbc.JdbcTemplate.executeStatement(JdbcTemplate.java:210)
+		at org.flywaydb.core.internal.sqlscript.ParsedSqlStatement.execute(ParsedSqlStatement.java:89)
+		at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.executeStatement(DefaultSqlScriptExecutor.java:206)
+		... 83 more
+22-Jan-2025 10:47:29.303 INFO [main] org.apache.catalina.startup.HostConfig.deployDescriptor Deployment of deployment descriptor [C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src\conf\Catalina\localhost\citMobi2.xml] has finished in [15.900] ms
+22-Jan-2025 10:47:29.307 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8085"]
+22-Jan-2025 10:47:29.340 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [16010] milliseconds
+22-Jan-2025 10:48:34.372 INFO [Thread-3] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["http-nio-8085"]
+22-Jan-2025 10:48:34.589 INFO [Thread-3] org.apache.catalina.core.StandardService.stopInternal Stopping service [Catalina]
+22-Jan-2025 10:48:34.591 INFO [Thread-3] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["http-nio-8085"]
+22-Jan-2025 10:48:34.597 INFO [Thread-3] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["http-nio-8085"]
+22-Jan-2025 10:48:34.600 WARNING [Thread-3] org.apache.catalina.loader.WebappClassLoaderBase.clearReferencesJdbc The web application [citMobi2] registered the JDBC driver [org.postgresql.Driver] but failed to unregister it when the web application was stopped. To prevent a memory leak, the JDBC Driver has been forcibly unregistered.
+22-Jan-2025 10:48:36.745 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version name:   Apache Tomcat/10.1.26
+22-Jan-2025 10:48:36.750 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Jul 7 2024 21:02:13 UTC
+22-Jan-2025 10:48:36.750 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version number: 10.1.26.0
+22-Jan-2025 10:48:36.751 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Windows 11
+22-Jan-2025 10:48:36.751 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            10.0
+22-Jan-2025 10:48:36.751 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          amd64
+22-Jan-2025 10:48:36.751 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             C:\Program Files\Java\jdk-17
+22-Jan-2025 10:48:36.751 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           17.0.11+7-LTS-207
+22-Jan-2025 10:48:36.751 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Oracle Corporation
+22-Jan-2025 10:48:36.751 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src
+22-Jan-2025 10:48:36.751 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         C:\Program Files\Apache Software Foundation\Tomcat 10.1
+22-Jan-2025 10:48:36.767 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.lang=ALL-UNNAMED
+22-Jan-2025 10:48:36.767 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.io=ALL-UNNAMED
+22-Jan-2025 10:48:36.767 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util=ALL-UNNAMED
+22-Jan-2025 10:48:36.767 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+22-Jan-2025 10:48:36.768 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+22-Jan-2025 10:48:36.768 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=C:\Program Files\Apache Software Foundation\Tomcat 10.1
+22-Jan-2025 10:48:36.768 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src
+22-Jan-2025 10:48:36.768 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src\temp
+22-Jan-2025 10:48:36.768 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src\conf\logging.properties
+22-Jan-2025 10:48:36.768 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+22-Jan-2025 10:48:36.768 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -javaagent:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2024.1.4\lib\idea_rt.jar=55413:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2024.1.4\bin
+22-Jan-2025 10:48:36.768 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dfile.encoding=UTF-8
+22-Jan-2025 10:48:36.777 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent The Apache Tomcat Native library which allows using OpenSSL was not found on the java.library.path: [C:\Program Files\Java\jdk-17\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Python312\Scripts\;C:\Python312\;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\app\TDV.Admin\product\11.2.0\client_1\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Java_Essentials\apache-maven-3.6.3\bin;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\Program Files\dotnet\;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\Erick.ferreira\.console-ninja\.bin;C:\Users\Erick.ferreira\AppData\Local\Microsoft\WindowsApps;C:\Users\Erick.ferreira\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\Java\jdk1.8.0_291\bin;C:\Users\Erick.ferreira\AppData\Roaming\npm;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2024.1.4\bin;;C:\Users\Erick.ferreira\.dotnet\tools;.]
+22-Jan-2025 10:48:37.083 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8085"]
+22-Jan-2025 10:48:37.109 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [603] milliseconds
+22-Jan-2025 10:48:37.173 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+22-Jan-2025 10:48:37.174 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/10.1.26]
+22-Jan-2025 10:48:37.192 INFO [main] org.apache.catalina.startup.HostConfig.deployDescriptor Deploying deployment descriptor [C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src\conf\Catalina\localhost\citMobi2.xml]
+22-Jan-2025 10:48:43.516 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+22-Jan-2025 10:48:53.104 SEVERE [main] org.apache.catalina.startup.HostConfig.deployDescriptor Error deploying deployment descriptor [C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src\conf\Catalina\localhost\citMobi2.xml]
+	java.lang.IllegalStateException: Error starting child
+		at org.apache.catalina.core.ContainerBase.addChildInternal(ContainerBase.java:602)
+		at org.apache.catalina.core.ContainerBase.addChild(ContainerBase.java:571)
+		at org.apache.catalina.core.StandardHost.addChild(StandardHost.java:654)
+		at org.apache.catalina.startup.HostConfig.deployDescriptor(HostConfig.java:635)
+		at org.apache.catalina.startup.HostConfig$DeployDescriptor.run(HostConfig.java:1889)
+		at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:123)
+		at org.apache.catalina.startup.HostConfig.deployDescriptors(HostConfig.java:530)
+		at org.apache.catalina.startup.HostConfig.deployApps(HostConfig.java:421)
+		at org.apache.catalina.startup.HostConfig.start(HostConfig.java:1629)
+		at org.apache.catalina.startup.HostConfig.lifecycleEvent(HostConfig.java:303)
+		at org.apache.catalina.util.LifecycleBase.fireLifecycleEvent(LifecycleBase.java:109)
+		at org.apache.catalina.util.LifecycleBase.setStateInternal(LifecycleBase.java:385)
+		at org.apache.catalina.util.LifecycleBase.setState(LifecycleBase.java:332)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:776)
+		at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:772)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1203)
+		at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1193)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+		at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75)
+		at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145)
+		at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:749)
+		at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:203)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardService.startInternal(StandardService.java:415)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:874)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		at org.apache.catalina.startup.Catalina.start(Catalina.java:757)
+		at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+		at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+		at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+		at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+		at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:345)
+		at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:473)
+	Caused by: org.apache.catalina.LifecycleException: Failed to start component [StandardEngine[Catalina].StandardHost[localhost].StandardContext[/citMobi2]]
+		at org.apache.catalina.util.LifecycleBase.handleSubClassException(LifecycleBase.java:402)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:179)
+		at org.apache.catalina.core.ContainerBase.addChildInternal(ContainerBase.java:599)
+		... 37 more
+	Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Failed to initialize dependency 'flywayInitializer' of LoadTimeWeaverAware bean 'entityManagerFactory': Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Migration V2__INSERT_MOCK.sql failed
+------------------------------------
+SQL State  : 23503
+Error Code : 0
+Message    : ERRO: inserção ou atualização em tabela "t_lin_linha" viola restrição de chave estrangeira "t_lin_linha_glb_operador_cnpj_fkey"
+  Detalhe: Chave (glb_operador_cnpj)=(60870847000159) não está presente na tabela "t_glb_operador".
+Location   : db/migration/V2__INSERT_MOCK.sql (C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\target\classes\db\migration\V2__INSERT_MOCK.sql)
+Line       : 31
+Statement  : INSERT INTO T_LIN_LINHA (LIN_LINHA_ID, LIN_LINHA_ATENDIMENTO, GLB_MUNICIPIO_COD, LIN_LINHA_DESCRICAO, GLB_OPERADOR_CNPJ, LIN_LINHA_FLAGINTERMUNICIPAL, LIN_LINHA_FLAGATENDEMETRO, LIN_LINHA_FLAGATENDETREM, LIN_LINHA_FLAGATIVA)
+VALUES('9051', '10', 3550308, 'TERM. PINHEIROS - LAPA', '60870847000159', 'N', 'N', 'N', 'S')
+
+		at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:326)
+		at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:205)
+		at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:954)
+		at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625)
+		at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+		at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+		at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+		at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
+		at org.springframework.boot.web.servlet.support.SpringBootServletInitializer.run(SpringBootServletInitializer.java:174)
+		at org.springframework.boot.web.servlet.support.SpringBootServletInitializer.createRootApplicationContext(SpringBootServletInitializer.java:154)
+		at org.springframework.boot.web.servlet.support.SpringBootServletInitializer.onStartup(SpringBootServletInitializer.java:96)
+		at org.springframework.web.SpringServletContainerInitializer.onStartup(SpringServletContainerInitializer.java:171)
+		at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4414)
+		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+		... 38 more
+	Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Migration V2__INSERT_MOCK.sql failed
+------------------------------------
+SQL State  : 23503
+Error Code : 0
+Message    : ERRO: inserção ou atualização em tabela "t_lin_linha" viola restrição de chave estrangeira "t_lin_linha_glb_operador_cnpj_fkey"
+  Detalhe: Chave (glb_operador_cnpj)=(60870847000159) não está presente na tabela "t_glb_operador".
+Location   : db/migration/V2__INSERT_MOCK.sql (C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\target\classes\db\migration\V2__INSERT_MOCK.sql)
+Line       : 31
+Statement  : INSERT INTO T_LIN_LINHA (LIN_LINHA_ID, LIN_LINHA_ATENDIMENTO, GLB_MUNICIPIO_COD, LIN_LINHA_DESCRICAO, GLB_OPERADOR_CNPJ, LIN_LINHA_FLAGINTERMUNICIPAL, LIN_LINHA_FLAGATENDEMETRO, LIN_LINHA_FLAGATENDETREM, LIN_LINHA_FLAGATIVA)
+VALUES('9051', '10', 3550308, 'TERM. PINHEIROS - LAPA', '60870847000159', 'N', 'N', 'N', 'S')
+
+		at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1806)
+		at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+		at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+		at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+		at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+		at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+		at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+		at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:313)
+		... 51 more
+	Caused by: org.flywaydb.core.internal.command.DbMigrate$FlywayMigrateException: Migration V2__INSERT_MOCK.sql failed
+------------------------------------
+SQL State  : 23503
+Error Code : 0
+Message    : ERRO: inserção ou atualização em tabela "t_lin_linha" viola restrição de chave estrangeira "t_lin_linha_glb_operador_cnpj_fkey"
+  Detalhe: Chave (glb_operador_cnpj)=(60870847000159) não está presente na tabela "t_glb_operador".
+Location   : db/migration/V2__INSERT_MOCK.sql (C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\target\classes\db\migration\V2__INSERT_MOCK.sql)
+Line       : 31
+Statement  : INSERT INTO T_LIN_LINHA (LIN_LINHA_ID, LIN_LINHA_ATENDIMENTO, GLB_MUNICIPIO_COD, LIN_LINHA_DESCRICAO, GLB_OPERADOR_CNPJ, LIN_LINHA_FLAGINTERMUNICIPAL, LIN_LINHA_FLAGATENDEMETRO, LIN_LINHA_FLAGATENDETREM, LIN_LINHA_FLAGATIVA)
+VALUES('9051', '10', 3550308, 'TERM. PINHEIROS - LAPA', '60870847000159', 'N', 'N', 'N', 'S')
+
+		at org.flywaydb.core.internal.command.DbMigrate.doMigrateGroup(DbMigrate.java:382)
+		at org.flywaydb.core.internal.command.DbMigrate.lambda$applyMigrations$1(DbMigrate.java:272)
+		at org.flywaydb.core.internal.jdbc.TransactionalExecutionTemplate.execute(TransactionalExecutionTemplate.java:55)
+		at org.flywaydb.core.internal.command.DbMigrate.applyMigrations(DbMigrate.java:271)
+		at org.flywaydb.core.internal.command.DbMigrate.migrateGroup(DbMigrate.java:244)
+		at org.flywaydb.core.internal.command.DbMigrate.lambda$migrateAll$0(DbMigrate.java:139)
+		at org.flywaydb.database.postgresql.PostgreSQLAdvisoryLockTemplate.execute(PostgreSQLAdvisoryLockTemplate.java:73)
+		at org.flywaydb.database.postgresql.PostgreSQLAdvisoryLockTemplate.lambda$execute$0(PostgreSQLAdvisoryLockTemplate.java:56)
+		at org.flywaydb.core.internal.jdbc.TransactionalExecutionTemplate.execute(TransactionalExecutionTemplate.java:55)
+		at org.flywaydb.database.postgresql.PostgreSQLAdvisoryLockTemplate.execute(PostgreSQLAdvisoryLockTemplate.java:56)
+		at org.flywaydb.database.postgresql.PostgreSQLConnection.lock(PostgreSQLConnection.java:96)
+		at org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory.lock(JdbcTableSchemaHistory.java:145)
+		at org.flywaydb.core.internal.command.DbMigrate.migrateAll(DbMigrate.java:139)
+		at org.flywaydb.core.internal.command.DbMigrate.migrate(DbMigrate.java:97)
+		at org.flywaydb.core.Flyway.lambda$migrate$0(Flyway.java:202)
+		at org.flywaydb.core.FlywayExecutor.execute(FlywayExecutor.java:205)
+		at org.flywaydb.core.Flyway.migrate(Flyway.java:147)
+		at org.springframework.boot.autoconfigure.flyway.FlywayMigrationInitializer.afterPropertiesSet(FlywayMigrationInitializer.java:66)
+		at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1853)
+		at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1802)
+		... 58 more
+	Caused by: org.flywaydb.core.internal.sqlscript.FlywaySqlScriptException: Migration V2__INSERT_MOCK.sql failed
+------------------------------------
+SQL State  : 23503
+Error Code : 0
+Message    : ERRO: inserção ou atualização em tabela "t_lin_linha" viola restrição de chave estrangeira "t_lin_linha_glb_operador_cnpj_fkey"
+  Detalhe: Chave (glb_operador_cnpj)=(60870847000159) não está presente na tabela "t_glb_operador".
+Location   : db/migration/V2__INSERT_MOCK.sql (C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\target\classes\db\migration\V2__INSERT_MOCK.sql)
+Line       : 31
+Statement  : INSERT INTO T_LIN_LINHA (LIN_LINHA_ID, LIN_LINHA_ATENDIMENTO, GLB_MUNICIPIO_COD, LIN_LINHA_DESCRICAO, GLB_OPERADOR_CNPJ, LIN_LINHA_FLAGINTERMUNICIPAL, LIN_LINHA_FLAGATENDEMETRO, LIN_LINHA_FLAGATENDETREM, LIN_LINHA_FLAGATIVA)
+VALUES('9051', '10', 3550308, 'TERM. PINHEIROS - LAPA', '60870847000159', 'N', 'N', 'N', 'S')
+
+		at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.handleException(DefaultSqlScriptExecutor.java:252)
+		at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.executeStatement(DefaultSqlScriptExecutor.java:214)
+		at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.execute(DefaultSqlScriptExecutor.java:133)
+		at org.flywaydb.core.internal.resolver.sql.SqlMigrationExecutor.executeOnce(SqlMigrationExecutor.java:65)
+		at org.flywaydb.core.internal.resolver.sql.SqlMigrationExecutor.lambda$execute$0(SqlMigrationExecutor.java:57)
+		at org.flywaydb.core.internal.database.DefaultExecutionStrategy.execute(DefaultExecutionStrategy.java:27)
+		at org.flywaydb.core.internal.resolver.sql.SqlMigrationExecutor.execute(SqlMigrationExecutor.java:56)
+		at org.flywaydb.core.internal.command.DbMigrate.doMigrateGroup(DbMigrate.java:374)
+		... 77 more
+	Caused by: org.postgresql.util.PSQLException: ERRO: inserção ou atualização em tabela "t_lin_linha" viola restrição de chave estrangeira "t_lin_linha_glb_operador_cnpj_fkey"
+  Detalhe: Chave (glb_operador_cnpj)=(60870847000159) não está presente na tabela "t_glb_operador".
+		at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2733)
+		at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2420)
+		at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:372)
+		at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:517)
+		at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:434)
+		at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:356)
+		at org.postgresql.jdbc.PgStatement.executeCachedSql(PgStatement.java:341)
+		at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:317)
+		at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:312)
+		at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94)
+		at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
+		at org.flywaydb.core.internal.jdbc.JdbcTemplate.executeStatement(JdbcTemplate.java:210)
+		at org.flywaydb.core.internal.sqlscript.ParsedSqlStatement.execute(ParsedSqlStatement.java:89)
+		at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.executeStatement(DefaultSqlScriptExecutor.java:206)
+		... 83 more
+22-Jan-2025 10:48:53.111 INFO [main] org.apache.catalina.startup.HostConfig.deployDescriptor Deployment of deployment descriptor [C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src\conf\Catalina\localhost\citMobi2.xml] has finished in [15.919] ms
+22-Jan-2025 10:48:53.115 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8085"]
+22-Jan-2025 10:48:53.156 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [16046] milliseconds
+22-Jan-2025 10:49:32.005 INFO [Thread-3] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["http-nio-8085"]
+22-Jan-2025 10:49:32.237 INFO [Thread-3] org.apache.catalina.core.StandardService.stopInternal Stopping service [Catalina]
+22-Jan-2025 10:49:32.238 INFO [Thread-3] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["http-nio-8085"]
+22-Jan-2025 10:49:32.241 INFO [Thread-3] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["http-nio-8085"]
+22-Jan-2025 10:49:32.246 WARNING [Thread-3] org.apache.catalina.loader.WebappClassLoaderBase.clearReferencesJdbc The web application [citMobi2] registered the JDBC driver [org.postgresql.Driver] but failed to unregister it when the web application was stopped. To prevent a memory leak, the JDBC Driver has been forcibly unregistered.
+22-Jan-2025 10:49:34.230 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version name:   Apache Tomcat/10.1.26
+22-Jan-2025 10:49:34.235 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Jul 7 2024 21:02:13 UTC
+22-Jan-2025 10:49:34.236 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version number: 10.1.26.0
+22-Jan-2025 10:49:34.236 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Windows 11
+22-Jan-2025 10:49:34.236 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            10.0
+22-Jan-2025 10:49:34.236 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          amd64
+22-Jan-2025 10:49:34.236 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             C:\Program Files\Java\jdk-17
+22-Jan-2025 10:49:34.236 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           17.0.11+7-LTS-207
+22-Jan-2025 10:49:34.236 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Oracle Corporation
+22-Jan-2025 10:49:34.236 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src
+22-Jan-2025 10:49:34.237 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         C:\Program Files\Apache Software Foundation\Tomcat 10.1
+22-Jan-2025 10:49:34.256 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.lang=ALL-UNNAMED
+22-Jan-2025 10:49:34.257 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.io=ALL-UNNAMED
+22-Jan-2025 10:49:34.257 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util=ALL-UNNAMED
+22-Jan-2025 10:49:34.257 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+22-Jan-2025 10:49:34.257 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+22-Jan-2025 10:49:34.257 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=C:\Program Files\Apache Software Foundation\Tomcat 10.1
+22-Jan-2025 10:49:34.257 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src
+22-Jan-2025 10:49:34.257 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src\temp
+22-Jan-2025 10:49:34.257 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src\conf\logging.properties
+22-Jan-2025 10:49:34.258 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+22-Jan-2025 10:49:34.258 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -javaagent:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2024.1.4\lib\idea_rt.jar=55438:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2024.1.4\bin
+22-Jan-2025 10:49:34.258 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dfile.encoding=UTF-8
+22-Jan-2025 10:49:34.268 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent The Apache Tomcat Native library which allows using OpenSSL was not found on the java.library.path: [C:\Program Files\Java\jdk-17\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Python312\Scripts\;C:\Python312\;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\app\TDV.Admin\product\11.2.0\client_1\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Java_Essentials\apache-maven-3.6.3\bin;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\Program Files\dotnet\;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\Erick.ferreira\.console-ninja\.bin;C:\Users\Erick.ferreira\AppData\Local\Microsoft\WindowsApps;C:\Users\Erick.ferreira\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\Java\jdk1.8.0_291\bin;C:\Users\Erick.ferreira\AppData\Roaming\npm;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2024.1.4\bin;;C:\Users\Erick.ferreira\.dotnet\tools;.]
+22-Jan-2025 10:49:34.581 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8085"]
+22-Jan-2025 10:49:34.612 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [614] milliseconds
+22-Jan-2025 10:49:34.687 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+22-Jan-2025 10:49:34.687 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/10.1.26]
+22-Jan-2025 10:49:34.710 INFO [main] org.apache.catalina.startup.HostConfig.deployDescriptor Deploying deployment descriptor [C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src\conf\Catalina\localhost\citMobi2.xml]
+22-Jan-2025 10:49:41.193 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+22-Jan-2025 10:50:03.729 INFO [main] org.apache.catalina.startup.HostConfig.deployDescriptor Deployment of deployment descriptor [C:\Users\Erick.ferreira\Documents\workspace-jdk17\CitMobi2\src\conf\Catalina\localhost\citMobi2.xml] has finished in [29.018] ms
+22-Jan-2025 10:50:03.734 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8085"]
+22-Jan-2025 10:50:03.777 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [29165] milliseconds
+22-Jan-2025 11:07:22.352 INFO [Thread-3] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["http-nio-8085"]
+22-Jan-2025 11:07:22.567 INFO [Thread-3] org.apache.catalina.core.StandardService.stopInternal Stopping service [Catalina]
+22-Jan-2025 11:07:22.717 INFO [Thread-3] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["http-nio-8085"]
+22-Jan-2025 11:07:22.721 INFO [Thread-3] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["http-nio-8085"]
