@@ -14,21 +14,21 @@ public record LinhaRecord(
         String linhaAtendimento,
         @NotNull(message = "municipio is required")
         Long municipio,
+        OperadorRecord operador,
         @NotBlank(message = "Adicionar os prefixos da linha.")
         String linhaDescricao,
-        OperadorRecord operador,
         @NotBlank(message = "flagIntermunicipal is required")
         String flagIntermunicipal,
         @NotBlank(message = "flagMetro is required")
         String flagMetro,
         @NotBlank(message = "flagTrem is required")
-        String flagTrem
+        String flagTrem,
+        String flagAtiva
 ) {
         // Envia logo o objeto do Operador
     public Linha toLinha() {
-        return new Linha(linhaId.trim().toUpperCase(), linhaAtendimento.trim().toUpperCase(), municipio, linhaDescricao.trim().toUpperCase(),
-                operador != null ? new Operador(operador.cnpj(), operador.razao()) : null,
-                flagIntermunicipal.trim().toUpperCase(), flagMetro.trim().toUpperCase(), flagTrem.trim().toUpperCase());
+        return new Linha(linhaId.trim().toUpperCase(), linhaAtendimento.trim().toUpperCase(), municipio, operador != null ? new Operador(operador.cnpj(), operador.razao()) : null, linhaDescricao.trim().toUpperCase(),
+                flagIntermunicipal.trim().toUpperCase(), flagMetro.trim().toUpperCase(), flagTrem.trim().toUpperCase(), flagAtiva.trim().toUpperCase());
     }
 
     public LinhaRecord normalize() {
@@ -36,11 +36,12 @@ public record LinhaRecord(
                 linhaId.trim().toUpperCase(),
                 linhaAtendimento.trim().toUpperCase(),
                 municipio,
-                linhaDescricao.trim().toUpperCase(),
                 operador,
+                linhaDescricao.trim().toUpperCase(),
                 flagIntermunicipal.trim().toUpperCase(),
                 flagMetro.trim().toUpperCase(),
-                flagTrem.trim().toUpperCase()
+                flagTrem.trim().toUpperCase(),
+                flagAtiva.trim().toUpperCase()
         );
     }
 

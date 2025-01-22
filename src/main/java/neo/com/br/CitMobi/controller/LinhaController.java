@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import jakarta.validation.Valid;
 import neo.com.br.CitMobi.models.records.linha.LinhaRecord;
+import neo.com.br.CitMobi.models.records.response.LinhaEditResponse;
 import neo.com.br.CitMobi.models.records.response.LinhaResponse;
 import neo.com.br.CitMobi.services.LinhaService;
 import org.slf4j.Logger;
@@ -66,7 +67,7 @@ public class LinhaController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/linha/editLinha", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<LinhaResponse> editLinha(@RequestBody LinhaRecord linha, BindingResult bindingResult) {
+    public ResponseEntity<LinhaEditResponse> editLinha(@RequestBody LinhaRecord linha, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             String errorMessages = bindingResult.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
@@ -74,7 +75,7 @@ public class LinhaController {
 
             logger.error("Validation errors: {}", errorMessages);
 
-            LinhaResponse errorResponse = new LinhaResponse("400", "Validation errors: " + errorMessages, null);
+            LinhaEditResponse errorResponse = new LinhaEditResponse("400", "Validation errors: " + errorMessages, null, null);
             return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
         }
 

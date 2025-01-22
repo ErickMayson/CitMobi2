@@ -3,6 +3,7 @@ package neo.com.br.CitMobi.services;
 import jakarta.validation.Valid;
 import neo.com.br.CitMobi.models.linha.Linha;
 import neo.com.br.CitMobi.models.records.linha.LinhaRecord;
+import neo.com.br.CitMobi.models.records.response.LinhaEditResponse;
 import neo.com.br.CitMobi.models.records.response.LinhaResponse;
 import neo.com.br.CitMobi.repository.LinhaRepository;
 import org.slf4j.Logger;
@@ -21,6 +22,8 @@ public class LinhaService {
     // Be able to create Linha with paradas
     // Be able to create Linha two linhas at once with inverse routes.
     // Be able to create Linha and create new paradas at the same time.
+    // User notifications when line receives a modification
+
 
     private static final Logger logger = LoggerFactory.getLogger(LinhaService.class);
 
@@ -64,7 +67,7 @@ public class LinhaService {
         }
     }
 
-    public ResponseEntity<LinhaResponse> editLinha(@RequestBody LinhaRecord linhaRecord) {
+    public ResponseEntity<LinhaEditResponse> editLinha(@RequestBody LinhaRecord linhaRecord) {
         try {
             Linha novaLinha = linhaRecord.toLinha();
 
@@ -74,19 +77,34 @@ public class LinhaService {
                 logger.error("A linha procurada não existe");
                 String message = "";
                 message = "A linha " + novaLinha.getLinhaId().getLinhaId() + "-" + novaLinha.getLinhaId().getLinhaAtendimento() + " " + novaLinha.getLinhaDescricao() + " não existe.";
-                LinhaResponse errorResponse = new LinhaResponse("404", message, new Linha());
+                LinhaEditResponse errorResponse = new LinhaEditResponse("404", message, null, null);
                 return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
             }
 
+            Linha editLinha = new Linha();
 
+            String linhaDescricao = novaLinha.getLinhaDescricao() != null ? novaLinha.getLinhaDescricao() : existsLinha.get().getLinhaDescricao();
+            String flagIM = novaLinha.getFlagIntermunicipal() != null ? novaLinha.getFlagIntermunicipal() : existsLinha.get().getFlagIntermunicipal();
+            String flagMetro = novaLinha.getFlagMetro() != null ? novaLinha.getFlagMetro() : existsLinha.get().getFlagMetro();
+            String flagTrem = novaLinha.getFlagTrem() != null ? novaLinha.getFlagTrem() : existsLinha.get().getFlagTrem();
+            String flagAtiva = novaLinha.getFlagAtiva() != null ? novaLinha.getFlagAtiva() : existsLinha.get().getFlagAtiva();
 
-            logger.warn("Created Linha: {}", novaLinha);
+            editLinha.setLinhaId(novaLinha.getLinhaId());
+            editLinha.setLinhaDescricao(linhaDescricao);
+            editLinha.setFlagIntermunicipal(flagIM);
+            editLinha.setFlagMetro(flagMetro);
+            editLinha.setFlagTrem(flagTrem);
+            editLinha.setFlagAtiva(flagAtiva);
 
-            LinhaResponse response = new LinhaResponse("202", "Linha editada com sucesso!", novaLinha);
+            logger.warn("Edited Linha: {}", editLinha);
+
+            linhaRepository.save(editLinha);
+
+            LinhaEditResponse response = new LinhaEditResponse("202", "Linha editada com sucesso!", editLinha, existsLinha.get());
             return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
         } catch (Exception e) {
             logger.error("Error editing Linha: ", e);
-            LinhaResponse errorResponse = new LinhaResponse("500", "Erro ao editar a linha.", null);
+            LinhaEditResponse errorResponse = new LinhaEditResponse("500", "Erro ao editar a linha.", null, null);
             return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

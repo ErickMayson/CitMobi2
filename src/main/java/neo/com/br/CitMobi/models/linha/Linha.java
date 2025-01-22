@@ -43,12 +43,14 @@ public class Linha {
     public Linha(String linhaId,
                  String linhaAtendimento,
                  Long municipio,
-                 String linhaDescricao, Operador operador, String flagIntermunicipal, String flagMetro, String flagTrem) {
+                 Operador operador,
+                 String linhaDescricao, String flagIntermunicipal, String flagMetro, String flagTrem, String flagAtiva) {
         this.linhaId = new LinhaId(linhaId, linhaAtendimento, municipio, operador);
         this.flagTrem = flagTrem;
         this.flagMetro = flagMetro;
         this.flagIntermunicipal = flagIntermunicipal;
         this.linhaDescricao = linhaDescricao;
+        this.flagAtiva = flagAtiva;
     }
 
 
@@ -57,11 +59,12 @@ public class Linha {
                 linhaId.getLinhaId(),
                 linhaId.getLinhaAtendimento(),
                 linhaId.getMunicipio(),
-                linhaDescricao,
                 new OperadorRecord(linhaId.getOperador().getCnpj(), linhaId.getOperador().getRazaoSocial()),
+                linhaDescricao,
                 flagIntermunicipal,
                 flagMetro,
-                flagTrem
+                flagTrem,
+                flagAtiva
         );
     }
 

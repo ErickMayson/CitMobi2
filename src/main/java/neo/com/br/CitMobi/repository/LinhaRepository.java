@@ -11,11 +11,11 @@ import java.util.Optional;
 public interface LinhaRepository extends JpaRepository<Linha, LinhaId> {
 
     @Query(value = """
-            SELECT * T_LIN_LINHA LIN
+            SELECT * FROM T_LIN_LINHA LIN
             WHERE LIN.LIN_LINHA_ID = :linhaId
             AND LIN.LIN_LINHA_ATENDIMENTO = :linhaAtendimento
             AND LIN.GLB_MUNICIPIO_COD = :municipio
-            AND LIN.GLB_OPERADOR_CNPJ :cnpj
+            AND LIN.GLB_OPERADOR_CNPJ = :cnpj
             """,
             nativeQuery = true)
     Optional<Linha> findByIdAndOperador(@Param("linhaId") String linhaId,
