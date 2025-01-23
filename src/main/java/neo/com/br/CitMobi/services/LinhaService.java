@@ -2,17 +2,21 @@ package neo.com.br.CitMobi.services;
 
 import jakarta.validation.Valid;
 import neo.com.br.CitMobi.models.linha.Linha;
+import neo.com.br.CitMobi.models.linha.LinhaId;
+import neo.com.br.CitMobi.models.linha.Operador;
 import neo.com.br.CitMobi.models.records.linha.LinhaRecord;
 import neo.com.br.CitMobi.models.records.response.LinhaEditResponse;
 import neo.com.br.CitMobi.models.records.response.LinhaResponse;
 import neo.com.br.CitMobi.repository.LinhaRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,6 +35,29 @@ public class LinhaService {
 
     public LinhaService(LinhaRepository linhaRepository) {
         this.linhaRepository = linhaRepository;
+    }
+
+    public ResponseEntity<LinhaResponse> getLinha(String cnpj, String municipio, String linhaId, String atendimento) {
+        try {
+            //List<String> reguladores = List.of("46392155000111", "41814509000155", "60498417000158");
+
+            Optional<Linha> existsLinha = linhaRepository.findByIdAndOperador(linhaId, atendimento, Long.parseLong(municipio), cnpj);
+            if (existsLinha.isEmpty()) {
+                logger.error("A linha procurada não existe");
+                String message = "";
+                message = "A linha " + linhaId + "/" + atendimento + " não existe.";
+                LinhaResponse errorResponse = new LinhaResponse("404", message, null);
+                return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+            } else {
+                LinhaResponse response = new LinhaResponse("201", "Linha encontrada", existsLinha.get());
+                return new ResponseEntity<>(response, HttpStatus.CREATED);
+            }
+
+        } catch (Exception e) {
+            logger.error("Erro ao acessar a linha: ", e);
+            LinhaResponse errorResponse = new LinhaResponse("500", "Erro ao acessar a linha, certifique-se que a linha existe.", null);
+            return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 
@@ -53,6 +80,9 @@ public class LinhaService {
 
 
             logger.warn("Created Linha: {}", novaLinha);
+            if(novaLinha.getFlagAtiva() == null){
+                novaLinha.setFlagAtiva("S");
+            }
 
             linhaRepository.save(novaLinha);
 

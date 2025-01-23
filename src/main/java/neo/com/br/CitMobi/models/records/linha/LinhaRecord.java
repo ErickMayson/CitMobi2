@@ -26,23 +26,40 @@ public record LinhaRecord(
         String flagAtiva
 ) {
         // Envia logo o objeto do Operador
-    public Linha toLinha() {
-        return new Linha(linhaId.trim().toUpperCase(), linhaAtendimento.trim().toUpperCase(), municipio, operador != null ? new Operador(operador.cnpj(), operador.razao()) : null, linhaDescricao.trim().toUpperCase(),
-                flagIntermunicipal.trim().toUpperCase(), flagMetro.trim().toUpperCase(), flagTrem.trim().toUpperCase(), flagAtiva.trim().toUpperCase());
-    }
+        public Linha toLinha() {
+            return new Linha(
+                    safeTrimAndUppercase(linhaId),
+                    safeTrimAndUppercase(linhaAtendimento),
+                    municipio,
+                    operador != null ? new Operador(
+                            safeTrimAndUppercase(operador.cnpj()),
+                            safeTrimAndUppercase(operador.razao()))
+                            : null,
+                    safeTrimAndUppercase(linhaDescricao),
+                    safeTrimAndUppercase(flagIntermunicipal),
+                    safeTrimAndUppercase(flagMetro),
+                    safeTrimAndUppercase(flagTrem),
+                    safeTrimAndUppercase(flagAtiva)
+            );
+        }
 
     public LinhaRecord normalize() {
         return new LinhaRecord(
-                linhaId.trim().toUpperCase(),
-                linhaAtendimento.trim().toUpperCase(),
+                safeTrimAndUppercase(linhaId),
+                safeTrimAndUppercase(linhaAtendimento),
                 municipio,
                 operador,
-                linhaDescricao.trim().toUpperCase(),
-                flagIntermunicipal.trim().toUpperCase(),
-                flagMetro.trim().toUpperCase(),
-                flagTrem.trim().toUpperCase(),
-                flagAtiva.trim().toUpperCase()
+                safeTrimAndUppercase(linhaDescricao),
+                safeTrimAndUppercase(flagIntermunicipal),
+                safeTrimAndUppercase(flagMetro),
+                safeTrimAndUppercase(flagTrem),
+                safeTrimAndUppercase(flagAtiva)
         );
+    }
+
+    // Utility method for null-safe trimming and uppercasing
+    private String safeTrimAndUppercase(String value) {
+        return value == null ? null : value.trim().toUpperCase();
     }
 
     @Override

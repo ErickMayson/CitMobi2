@@ -23,5 +23,7 @@ public class Operador {
     @Column(name = "GLB_OPERADOR_RAZAOSOCIAL")
     private String razaoSocial;
 
-
+    public Operador(String cnpj) {
+        this.cnpj = cnpj;
+    }
 }

@@ -13,16 +13,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -47,6 +43,23 @@ public class LinhaController {
 //            @ApiResponse(code = 404, message = "Não localizada"),
 //            @ApiResponse(code = 500, message = "Erro inesperado no Servidor")
 //    })
+
+    @RequestMapping(method = RequestMethod.GET, value = "/linha/getLinha", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<LinhaResponse> getLinha(
+            @RequestParam String cnpj,
+            @RequestParam String municipio,
+            @RequestParam String linha,
+            @RequestParam String atendimento) {
+
+        // Log the parameters for debugging
+        System.out.println("cnpj: " + cnpj);
+        System.out.println("municipio: " + municipio);
+        System.out.println("linha: " + linha);
+        System.out.println("atendimento: " + atendimento);
+
+        return linhaService.getLinha(cnpj, municipio, linha, atendimento);
+    }
 
     @RequestMapping(method = RequestMethod.POST, value = "/linha/createLinha", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
