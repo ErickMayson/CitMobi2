@@ -49,3 +49,5 @@
 23-Jan-2025 16:06:27.593 INFO [http-nio-8085-exec-1] org.apache.catalina.core.ApplicationContext.log Initializing Spring DispatcherServlet 'dispatcherServlet'
 23-Jan-2025 16:28:54.680 INFO [Thread-3] org.apache.catalina.core.ApplicationContext.log Destroying Spring FrameworkServlet 'dispatcherServlet'
 23-Jan-2025 16:28:54.680 INFO [Thread-3] org.apache.catalina.core.ApplicationContext.log Closing Spring root WebApplicationContext
+23-Jan-2025 16:29:13.285 INFO [main] org.apache.catalina.core.ApplicationContext.log 2 Spring WebApplicationInitializers detected on classpath
+23-Jan-2025 16:29:20.974 INFO [main] org.apache.catalina.core.ApplicationContext.log Initializing Spring embedded WebApplicationContext

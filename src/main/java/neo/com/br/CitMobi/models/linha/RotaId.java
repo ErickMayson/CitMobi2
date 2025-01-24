@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import neo.com.br.CitMobi.models.ibge.Municipio;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -15,26 +14,22 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ItinerarioId implements Serializable {
+public class RotaId implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
     @NotBlank
     @Column(name = "LIN_LINHA_ID", nullable = false)
-    private String linhaId;
+    private Long LIN_ITINERARIO_ID;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @NotBlank
+    @JoinColumn(name = "LIN_PARADA_ID")
+    private Parada LIN_PARADA_ID;
 
     @NotBlank
-    @Column(name = "LIN_LINHA_ATENDIMENTO", nullable = false)
-    private String linhaAtendimento;
-
-    @NotNull
-    @Column(name = "GLB_MUNICIPIO_COD", nullable = false, updatable = false)
-    private Long municipio;
-
-    @NotBlank
-    @Column(name = "LIN_ITINERARIO_SENTIDO", nullable = false)
-    private String linhaSentido;
+    @Column(name = "LIN_ROTA_SEQUENCIA", nullable = false)
+    private Long LIN_ROTA_SEQUENCIA;
 
 }
-
