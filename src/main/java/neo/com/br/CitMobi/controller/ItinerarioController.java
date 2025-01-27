@@ -2,6 +2,7 @@ package neo.com.br.CitMobi.controller;
 
 import jakarta.validation.Valid;
 import neo.com.br.CitMobi.models.records.linha.LinhaRecord;
+import neo.com.br.CitMobi.models.records.response.GenericResponse;
 import neo.com.br.CitMobi.models.records.response.ItinerarioResponse;
 import neo.com.br.CitMobi.models.records.response.LinhaEditResponse;
 import neo.com.br.CitMobi.models.records.response.LinhaResponse;
@@ -42,7 +43,7 @@ public class ItinerarioController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/itinerario/getItinerario", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<ItinerarioResponse> getItinerario(
+    public ResponseEntity<GenericResponse<ItinerarioResponse>> getItinerario(
             @RequestParam String linha,
             @RequestParam String atendimento,
             @RequestParam String municipio) {

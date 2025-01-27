@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import jakarta.validation.Valid;
+import neo.com.br.CitMobi.models.linha.Linha;
 import neo.com.br.CitMobi.models.records.linha.LinhaRecord;
+import neo.com.br.CitMobi.models.records.response.GenericResponse;
 import neo.com.br.CitMobi.models.records.response.LinhaEditResponse;
 import neo.com.br.CitMobi.models.records.response.LinhaResponse;
 import neo.com.br.CitMobi.services.LinhaService;
@@ -46,7 +48,7 @@ public class LinhaController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/linha/getLinha", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<LinhaResponse> getLinha(
+    public ResponseEntity<GenericResponse<LinhaResponse>> getLinha(
             @RequestParam String cnpj,
             @RequestParam String municipio,
             @RequestParam String linha,
@@ -63,7 +65,7 @@ public class LinhaController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/linha/createLinha", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<LinhaResponse> createLinha(@Valid @RequestBody LinhaRecord linha, BindingResult bindingResult) {
+    public ResponseEntity<GenericResponse<LinhaResponse>> createLinha(@Valid @RequestBody LinhaRecord linha, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             String errorMessages = bindingResult.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
@@ -71,7 +73,8 @@ public class LinhaController {
 
             logger.error("Validation errors: {}", errorMessages);
 
-            LinhaResponse errorResponse = new LinhaResponse("400", "Validation errors: " + errorMessages, null);
+            LinhaResponse linhaResponse = new LinhaResponse(null);
+            GenericResponse<LinhaResponse> errorResponse = new GenericResponse<>("400", "Validation errors: " + errorMessages, linhaResponse);
             return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
         }
 
@@ -80,7 +83,7 @@ public class LinhaController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/linha/editLinha", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<LinhaEditResponse> editLinha(@RequestBody LinhaRecord linha, BindingResult bindingResult) {
+    public ResponseEntity<GenericResponse<LinhaEditResponse>> editLinha(@RequestBody LinhaRecord linha, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             String errorMessages = bindingResult.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
@@ -88,7 +91,8 @@ public class LinhaController {
 
             logger.error("Validation errors: {}", errorMessages);
 
-            LinhaEditResponse errorResponse = new LinhaEditResponse("400", "Validation errors: " + errorMessages, null, null);
+            LinhaEditResponse linhaResponse = new LinhaEditResponse(null, null);
+            GenericResponse<LinhaEditResponse> errorResponse = new GenericResponse<>("400", "Validation errors: " + errorMessages, linhaResponse);
             return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
         }
 

@@ -3,6 +3,7 @@ package neo.com.br.CitMobi.services;
 import neo.com.br.CitMobi.models.linha.Itinerario;
 import neo.com.br.CitMobi.models.linha.ItinerarioId;
 import neo.com.br.CitMobi.models.linha.Linha;
+import neo.com.br.CitMobi.models.records.response.GenericResponse;
 import neo.com.br.CitMobi.models.records.response.ItinerarioResponse;
 import neo.com.br.CitMobi.models.records.response.LinhaResponse;
 import neo.com.br.CitMobi.repository.ItinerarioRepository;
@@ -28,7 +29,7 @@ public class ItinerarioService {
     }
 
 
-    public ResponseEntity<ItinerarioResponse> getItinerario(String linha, String atendimento, String municipio) {
+    public ResponseEntity<GenericResponse<ItinerarioResponse>> getItinerario(String linha, String atendimento, String municipio) {
         try {
             //List<String> reguladores = List.of("46392155000111", "41814509000155", "60498417000158");
 
@@ -38,16 +39,16 @@ public class ItinerarioService {
                 logger.error("A linha procurada não existe");
                 String message = "";
                 message = "A linha " + itinerario + "/" + atendimento + " não existe.";
-                ItinerarioResponse errorResponse = new ItinerarioResponse("404", message, null, null);
+                GenericResponse<ItinerarioResponse> errorResponse = new GenericResponse<>("404", message, null);
                 return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
             } else {
-                ItinerarioResponse response = new ItinerarioResponse("201", "Linha encontrada", null, null);
+                GenericResponse<ItinerarioResponse> response = new GenericResponse<>("201", "Linha encontrada", null);
                 return new ResponseEntity<>(response, HttpStatus.CREATED);
             }
 
         } catch (Exception e) {
             logger.error("Erro ao acessar a linha: ", e);
-            ItinerarioResponse errorResponse = new ItinerarioResponse("500", "Erro ao acessar a linha, certifique-se que a linha existe.", null, null);
+            GenericResponse<ItinerarioResponse> errorResponse = new GenericResponse<>("500", "Erro ao acessar a linha, certifique-se que a linha existe.", null);
             return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

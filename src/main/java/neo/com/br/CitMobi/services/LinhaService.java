@@ -5,6 +5,7 @@ import neo.com.br.CitMobi.models.linha.Linha;
 import neo.com.br.CitMobi.models.linha.LinhaId;
 import neo.com.br.CitMobi.models.linha.Operador;
 import neo.com.br.CitMobi.models.records.linha.LinhaRecord;
+import neo.com.br.CitMobi.models.records.response.GenericResponse;
 import neo.com.br.CitMobi.models.records.response.LinhaEditResponse;
 import neo.com.br.CitMobi.models.records.response.LinhaResponse;
 import neo.com.br.CitMobi.repository.LinhaRepository;
@@ -37,7 +38,7 @@ public class LinhaService {
         this.linhaRepository = linhaRepository;
     }
 
-    public ResponseEntity<LinhaResponse> getLinha(String cnpj, String municipio, String linhaId, String atendimento) {
+    public ResponseEntity<GenericResponse<LinhaResponse>> getLinha(String cnpj, String municipio, String linhaId, String atendimento) {
         try {
             //List<String> reguladores = List.of("46392155000111", "41814509000155", "60498417000158");
 
@@ -46,22 +47,25 @@ public class LinhaService {
                 logger.error("A linha procurada não existe");
                 String message = "";
                 message = "A linha " + linhaId + "/" + atendimento + " não existe.";
-                LinhaResponse errorResponse = new LinhaResponse("404", message, null);
+                LinhaResponse linhaResponse = new LinhaResponse(null);
+                GenericResponse<LinhaResponse> errorResponse = new GenericResponse<>("404", message, linhaResponse);
                 return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
             } else {
-                LinhaResponse response = new LinhaResponse("201", "Linha encontrada", existsLinha.get());
+                LinhaResponse linhaResponse = new LinhaResponse(existsLinha.get());
+                GenericResponse<LinhaResponse> response = new GenericResponse<>("404", "Linha encontrada", linhaResponse);
                 return new ResponseEntity<>(response, HttpStatus.CREATED);
             }
 
         } catch (Exception e) {
             logger.error("Erro ao acessar a linha: ", e);
-            LinhaResponse errorResponse = new LinhaResponse("500", "Erro ao acessar a linha, certifique-se que a linha existe.", null);
+            LinhaResponse linhaResponse = new LinhaResponse( null);
+            GenericResponse<LinhaResponse> errorResponse = new GenericResponse<>("500", "Erro ao acessar a linha, certifique-se que a linha existe.", linhaResponse);
             return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
 
-    public ResponseEntity<LinhaResponse> createNewLinha(@RequestBody LinhaRecord linhaRecord) {
+    public ResponseEntity<GenericResponse<LinhaResponse>> createNewLinha(@RequestBody LinhaRecord linhaRecord) {
         try {
             Linha novaLinha = linhaRecord.toLinha();
 
@@ -74,7 +78,8 @@ public class LinhaService {
                 } else {
                     message = "A linha " + novaLinha.getLinhaId().getLinhaId() + "-" + novaLinha.getLinhaId().getLinhaAtendimento() + " " + novaLinha.getLinhaDescricao() +  " está inativa.";
                 }
-                LinhaResponse errorResponse = new LinhaResponse("406", message, existsLinha.get());
+                LinhaResponse linhaResponse = new LinhaResponse( existsLinha.get());
+                GenericResponse<LinhaResponse> errorResponse = new GenericResponse<>("406", message, linhaResponse);
                 return new ResponseEntity<>(errorResponse, HttpStatus.NOT_ACCEPTABLE);
             }
 
@@ -87,17 +92,19 @@ public class LinhaService {
             linhaRepository.save(novaLinha);
 
             // Prepare the response
-            LinhaResponse response = new LinhaResponse("201", "Linha criada com sucesso!", novaLinha);
+            LinhaResponse linhaResponse = new LinhaResponse( novaLinha);
+            GenericResponse<LinhaResponse> response = new GenericResponse<>("201", "Linha criada com sucesso!", linhaResponse);
             return new ResponseEntity<>(response, HttpStatus.CREATED);
 
         } catch (Exception e) {
             logger.error("Error creating Linha: ", e);
-            LinhaResponse errorResponse = new LinhaResponse("500", "Erro ao criar a linha.", null);
+            LinhaResponse linhaResponse = new LinhaResponse(null);
+            GenericResponse<LinhaResponse> errorResponse = new GenericResponse<>("500", "Erro ao criar a linha.", linhaResponse);
             return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    public ResponseEntity<LinhaEditResponse> editLinha(@RequestBody LinhaRecord linhaRecord) {
+    public ResponseEntity<GenericResponse<LinhaEditResponse>> editLinha(@RequestBody LinhaRecord linhaRecord) {
         try {
             Linha novaLinha = linhaRecord.toLinha();
 
@@ -107,7 +114,8 @@ public class LinhaService {
                 logger.error("A linha procurada não existe");
                 String message = "";
                 message = "A linha " + novaLinha.getLinhaId().getLinhaId() + "-" + novaLinha.getLinhaId().getLinhaAtendimento() + " " + novaLinha.getLinhaDescricao() + " não existe.";
-                LinhaEditResponse errorResponse = new LinhaEditResponse("404", message, null, null);
+                LinhaEditResponse linhaEditResponse = new LinhaEditResponse(null, null);
+                GenericResponse<LinhaEditResponse> errorResponse = new GenericResponse<>("404", message, linhaEditResponse);
                 return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
             }
 
@@ -130,11 +138,13 @@ public class LinhaService {
 
             linhaRepository.save(editLinha);
 
-            LinhaEditResponse response = new LinhaEditResponse("202", "Linha editada com sucesso!", editLinha, existsLinha.get());
+            LinhaEditResponse linhaEditResponse = new LinhaEditResponse(editLinha, existsLinha.get());
+            GenericResponse<LinhaEditResponse> response = new GenericResponse<>("202", "Linha editada com sucesso!", linhaEditResponse);
             return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
         } catch (Exception e) {
             logger.error("Error editing Linha: ", e);
-            LinhaEditResponse errorResponse = new LinhaEditResponse("500", "Erro ao editar a linha.", null, null);
+            LinhaEditResponse linhaEditResponse = new LinhaEditResponse(null, null);
+            GenericResponse<LinhaEditResponse> errorResponse = new GenericResponse<>("500", "Erro ao editar a linha.", linhaEditResponse);
             return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
