@@ -22,5 +22,4 @@ public interface LinhaRepository extends JpaRepository<Linha, LinhaId> {
                                        @Param("linhaAtendimento") String linhaAtendimento,
                                        @Param("municipio") Long municipio,
                                        @Param("cnpj") String cnpj);
-
 }

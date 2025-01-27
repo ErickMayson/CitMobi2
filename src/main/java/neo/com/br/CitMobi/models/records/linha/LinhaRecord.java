@@ -25,8 +25,8 @@ public record LinhaRecord(
         String flagTrem,
         String flagAtiva
 ) {
-        // Envia logo o objeto do Operador
-        public Linha toLinha() {
+
+    public Linha toLinha() {
             return new Linha(
                     safeTrimAndUppercase(linhaId),
                     safeTrimAndUppercase(linhaAtendimento),
@@ -57,7 +57,6 @@ public record LinhaRecord(
         );
     }
 
-    // Utility method for null-safe trimming and uppercasing
     private String safeTrimAndUppercase(String value) {
         return value == null ? null : value.trim().toUpperCase();
     }

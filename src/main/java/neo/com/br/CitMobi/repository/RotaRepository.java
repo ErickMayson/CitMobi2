@@ -1,6 +1,7 @@
 package neo.com.br.CitMobi.repository;
 
-import neo.com.br.CitMobi.models.linha.Itinerario;
+import neo.com.br.CitMobi.models.linha.Rota;
+import neo.com.br.CitMobi.models.linha.RotaId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -8,19 +9,17 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
-public interface ItinerarioRepository extends JpaRepository<Itinerario, Long> {
+public interface RotaRepository extends JpaRepository<Rota, RotaId> {
 
     @Query(value = """
-            SELECT ITI.LIN_ITINERARIO_ID FROM T_LIN_ITINERARIO ITI
+            SELECT * FROM T_LIN_ITINERARIO ITI
             WHERE ITI.LIN_LINHA_ID = :linhaId
             AND ITI.LIN_LINHA_ATENDIMENTO = :linhaAtendimento
             AND ITI.GLB_MUNICIPIO_COD = :municipio
             """,
             nativeQuery = true)
-    Optional<List<String>> getItinerarioIdByLinhaAtendimento(
-            @Param("linhaId") String linha,
-            @Param("linhaAtendimento") String atendimento,
-            @Param("municipio") String municipio
+    Optional<List<Rota>> getRotaByItinerarioId(
+            @Param("itinerarioId") String itinerarioId
     );
 
 }

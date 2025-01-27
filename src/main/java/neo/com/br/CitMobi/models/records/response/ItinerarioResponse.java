@@ -6,6 +6,6 @@ import java.util.List;
 
 public record ItinerarioResponse(
                 Itinerario itinerario,
-                Rota rota
+                List<Rota> rotas
 ) {
 }
