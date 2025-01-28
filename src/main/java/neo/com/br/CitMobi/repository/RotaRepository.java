@@ -13,9 +13,7 @@ public interface RotaRepository extends JpaRepository<Rota, RotaId> {
 
     @Query(value = """
             SELECT * FROM T_LIN_ITINERARIO ITI
-            WHERE ITI.LIN_LINHA_ID = :linhaId
-            AND ITI.LIN_LINHA_ATENDIMENTO = :linhaAtendimento
-            AND ITI.GLB_MUNICIPIO_COD = :municipio
+            WHERE ITI.LIN_ITINERARIO_ID = :itinerarioId
             """,
             nativeQuery = true)
     Optional<List<Rota>> getRotaByItinerarioId(

@@ -45,8 +45,7 @@ public class Itinerario {
     @Column(name = "LIN_ITINERARIO_SENTIDO", nullable = false)
     private String linhaSentido;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "LIN_ITINERARIO_ID", insertable = false)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "rotaId.itinerario")
     private List<Rota> rota;
 
     public Itinerario(String linhaId, String linhaAtendimento, String prefixo, Long municipio, String linhaSentido, List<Rota> rota) {

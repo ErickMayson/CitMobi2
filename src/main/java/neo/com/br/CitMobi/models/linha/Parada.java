@@ -11,8 +11,11 @@ import java.math.BigDecimal;
 @Table(name = "T_LIN_PARADA")
 public class Parada {
 
-    @EmbeddedId
-    private ParadaId paradaId;  // This will now be your primary key
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_lin_parada_id")
+    @SequenceGenerator(name = "seq_lin_parada_id", sequenceName = "SEQ_LIN_PARADA_ID", allocationSize = 1)
+    @Column(name = "LIN_PARADA_ID", nullable = false)
+    private Long linParadaId;
 
     @Column(name = "LIN_PARADA_LOGRADOURO", nullable = false, length = 255)
     private String logradouro;

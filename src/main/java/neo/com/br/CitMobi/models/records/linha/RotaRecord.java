@@ -6,17 +6,18 @@ import neo.com.br.CitMobi.models.linha.Rota;
 import neo.com.br.CitMobi.models.linha.RotaId;
 
 public record RotaRecord(
-        Long itinerarioId,
+        Itinerario itinerario,
         Parada parada,
         Long sequencia
 ) {
 
     public Rota toRota() {
-        return new Rota(
-                new RotaId(itinerarioId,
-                parada,
-                sequencia)
-        );
+        RotaId rotaId = new RotaId(itinerario, parada, sequencia);
+
+        // Now create a Rota and set the RotaId
+        Rota rota = new Rota();
+        rota.setRotaId(rotaId); // Set the embedded ID
+        return rota;
     }
 
     private String safeTrimAndUppercase(String value) {

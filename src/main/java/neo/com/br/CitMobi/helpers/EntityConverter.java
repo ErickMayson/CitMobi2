@@ -23,12 +23,12 @@ public class EntityConverter {
 
     public ParadaRecord toRecord(Parada parada) {
         return new ParadaRecord(
-                parada.getParadaId().getLinParadaId().toString(),
+                parada.getLinParadaId().toString(),
                 parada.getLogradouro(),
                 parada.getNumero(),
                 parada.getLongitude().toString(),
                 parada.getLatitude().toString(),
-                parada.getParadaId().toString(),
+                parada.getLinParadaId().toString(),
                 parada.getUf().getSigla(),
                 parada.getTipo().getTipoId().toString()
         );

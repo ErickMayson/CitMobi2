@@ -1,8 +1,6 @@
 package neo.com.br.CitMobi.models.linha;
 
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 
