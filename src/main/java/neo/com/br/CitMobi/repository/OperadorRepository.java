@@ -15,7 +15,7 @@ public interface OperadorRepository extends JpaRepository<Operador, String> {
 
     @Query(value = """
             SELECT * FROM T_GLB_OPERADOR OPE
-            WHERE OPE.LIN_LINHA_ID IN :cnpj
+            WHERE OPE.GLB_OPERADOR_CNPJ IN :cnpj
             """,
             nativeQuery = true)
     Optional<List<Operador>> findByCnpj(
