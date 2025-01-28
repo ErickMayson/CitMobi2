@@ -49,18 +49,16 @@ public class LinhaController {
     @RequestMapping(method = RequestMethod.GET, value = "/linha/getLinha", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<GenericResponse<LinhaResponse>> getLinha(
-            @RequestParam String cnpj,
             @RequestParam String municipio,
             @RequestParam String linha,
             @RequestParam String atendimento) {
 
         // Log the parameters for debugging
-        System.out.println("cnpj: " + cnpj);
         System.out.println("municipio: " + municipio);
         System.out.println("linha: " + linha);
         System.out.println("atendimento: " + atendimento);
 
-        return linhaService.getLinha(cnpj, municipio, linha, atendimento);
+        return linhaService.getLinha(municipio, linha, atendimento);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/linha/createLinha", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -73,7 +71,7 @@ public class LinhaController {
 
             logger.error("Validation errors: {}", errorMessages);
 
-            LinhaResponse linhaResponse = new LinhaResponse(null);
+            LinhaResponse linhaResponse = new LinhaResponse(null, null);
             GenericResponse<LinhaResponse> errorResponse = new GenericResponse<>("400", "Validation errors: " + errorMessages, linhaResponse);
             return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
         }
@@ -81,23 +79,40 @@ public class LinhaController {
         return linhaService.createNewLinha(linha);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/linha/editLinha", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public ResponseEntity<GenericResponse<LinhaEditResponse>> editLinha(@RequestBody LinhaRecord linha, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            String errorMessages = bindingResult.getAllErrors().stream()
-                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                    .collect(Collectors.joining(", "));
+//    @RequestMapping(method = RequestMethod.POST, value = "/linha/editLinha", produces = MediaType.APPLICATION_JSON_VALUE)
+//    @ResponseBody
+//    public ResponseEntity<GenericResponse<LinhaEditResponse>> editLinha(@RequestBody LinhaRecord linha, BindingResult bindingResult) {
+//        if (bindingResult.hasErrors()) {
+//            String errorMessages = bindingResult.getAllErrors().stream()
+//                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
+//                    .collect(Collectors.joining(", "));
+//
+//            logger.error("Validation errors: {}", errorMessages);
+//
+//            LinhaEditResponse linhaResponse = new LinhaEditResponse(null, null);
+//            GenericResponse<LinhaEditResponse> errorResponse = new GenericResponse<>("400", "Validation errors: " + errorMessages, linhaResponse);
+//            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+//        }
+//
+//        return linhaService.editLinha(linha);
+//    }
 
-            logger.error("Validation errors: {}", errorMessages);
-
-            LinhaEditResponse linhaResponse = new LinhaEditResponse(null, null);
-            GenericResponse<LinhaEditResponse> errorResponse = new GenericResponse<>("400", "Validation errors: " + errorMessages, linhaResponse);
-            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
-        }
-
-        return linhaService.editLinha(linha);
-    }
+//    @RequestMapping(method = RequestMethod.GET, value = "/linha/addOperador", produces = MediaType.APPLICATION_JSON_VALUE)
+//    @ResponseBody
+//    public ResponseEntity<GenericResponse<LinhaResponse>> addOperador(
+//            @RequestParam String cnpj,
+//            @RequestParam String municipio,
+//            @RequestParam String linha,
+//            @RequestParam String atendimento) {
+//
+//        // Log the parameters for debugging
+//        System.out.println("cnpj: " + cnpj);
+//        System.out.println("municipio: " + municipio);
+//        System.out.println("linha: " + linha);
+//        System.out.println("atendimento: " + atendimento);
+//
+//        return linhaService.getLinha(cnpj, municipio, linha, atendimento);
+//    }
 
 
 }

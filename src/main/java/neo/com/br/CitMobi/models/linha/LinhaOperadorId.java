@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import neo.com.br.CitMobi.models.ibge.Municipio;
-import neo.com.br.CitMobi.models.ibge.UF;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -16,7 +14,7 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LinhaId implements Serializable {
+public class LinhaOperadorId implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -32,5 +30,10 @@ public class LinhaId implements Serializable {
     @NotNull
     @Column(name = "GLB_MUNICIPIO_COD")
     private Long municipio;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "GLB_OPERADOR_CNPJ")
+    private Operador operador;
+
 
 }

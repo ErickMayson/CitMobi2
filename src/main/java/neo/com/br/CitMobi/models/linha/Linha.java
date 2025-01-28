@@ -43,9 +43,8 @@ public class Linha {
     public Linha(String linhaId,
                  String linhaAtendimento,
                  Long municipio,
-                 Operador operador,
                  String linhaDescricao, String flagIntermunicipal, String flagMetro, String flagTrem, String flagAtiva) {
-        this.linhaId = new LinhaId(linhaId, linhaAtendimento, municipio, operador);
+        this.linhaId = new LinhaId(linhaId, linhaAtendimento, municipio);
         this.flagTrem = flagTrem;
         this.flagMetro = flagMetro;
         this.flagIntermunicipal = flagIntermunicipal;
@@ -59,7 +58,7 @@ public class Linha {
                 linhaId.getLinhaId(),
                 linhaId.getLinhaAtendimento(),
                 linhaId.getMunicipio(),
-                new OperadorRecord(linhaId.getOperador().getCnpj(), linhaId.getOperador().getRazaoSocial()),
+                null,
                 linhaDescricao,
                 flagIntermunicipal,
                 flagMetro,

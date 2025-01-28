@@ -31,10 +31,6 @@ public record LinhaRecord(
                     safeTrimAndUppercase(linhaId),
                     safeTrimAndUppercase(linhaAtendimento),
                     municipio,
-                    operador != null ? new Operador(
-                            safeTrimAndUppercase(operador.cnpj()),
-                            safeTrimAndUppercase(operador.razao()))
-                            : null,
                     safeTrimAndUppercase(linhaDescricao),
                     safeTrimAndUppercase(flagIntermunicipal),
                     safeTrimAndUppercase(flagMetro),
@@ -42,20 +38,6 @@ public record LinhaRecord(
                     safeTrimAndUppercase(flagAtiva)
             );
         }
-
-    public LinhaRecord normalize() {
-        return new LinhaRecord(
-                safeTrimAndUppercase(linhaId),
-                safeTrimAndUppercase(linhaAtendimento),
-                municipio,
-                operador,
-                safeTrimAndUppercase(linhaDescricao),
-                safeTrimAndUppercase(flagIntermunicipal),
-                safeTrimAndUppercase(flagMetro),
-                safeTrimAndUppercase(flagTrem),
-                safeTrimAndUppercase(flagAtiva)
-        );
-    }
 
     private String safeTrimAndUppercase(String value) {
         return value == null ? null : value.trim().toUpperCase();
@@ -67,8 +49,8 @@ public record LinhaRecord(
                 "linhaId='" + linhaId + '\'' +
                 ", linhaAtendimento='" + linhaAtendimento + '\'' +
                 ", municipio=" + municipio +
-                ", linhaDescricao='" + linhaDescricao + '\'' +
                 ", operador=" + operador +
+                ", linhaDescricao='" + linhaDescricao + '\'' +
                 ", flagIntermunicipal='" + flagIntermunicipal + '\'' +
                 ", flagMetro='" + flagMetro + '\'' +
                 ", flagTrem='" + flagTrem + '\'' +
