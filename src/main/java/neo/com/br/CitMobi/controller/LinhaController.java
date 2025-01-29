@@ -79,23 +79,23 @@ public class LinhaController {
         return linhaService.createNewLinha(linha);
     }
 
-//    @RequestMapping(method = RequestMethod.POST, value = "/linha/editLinha", produces = MediaType.APPLICATION_JSON_VALUE)
-//    @ResponseBody
-//    public ResponseEntity<GenericResponse<LinhaEditResponse>> editLinha(@RequestBody LinhaRecord linha, BindingResult bindingResult) {
-//        if (bindingResult.hasErrors()) {
-//            String errorMessages = bindingResult.getAllErrors().stream()
-//                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
-//                    .collect(Collectors.joining(", "));
-//
-//            logger.error("Validation errors: {}", errorMessages);
-//
-//            LinhaEditResponse linhaResponse = new LinhaEditResponse(null, null);
-//            GenericResponse<LinhaEditResponse> errorResponse = new GenericResponse<>("400", "Validation errors: " + errorMessages, linhaResponse);
-//            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
-//        }
-//
-//        return linhaService.editLinha(linha);
-//    }
+    @RequestMapping(method = RequestMethod.POST, value = "/linha/editLinha", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<GenericResponse<LinhaEditResponse>> editLinha(@RequestBody LinhaRecord linha, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            String errorMessages = bindingResult.getAllErrors().stream()
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                    .collect(Collectors.joining(", "));
+
+            logger.error("Validation errors: {}", errorMessages);
+
+            LinhaEditResponse linhaResponse = new LinhaEditResponse(null, null);
+            GenericResponse<LinhaEditResponse> errorResponse = new GenericResponse<>("400", "Validation errors: " + errorMessages, linhaResponse);
+            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        }
+
+        return linhaService.editLinha(linha);
+    }
 
 //    @RequestMapping(method = RequestMethod.GET, value = "/linha/addOperador", produces = MediaType.APPLICATION_JSON_VALUE)
 //    @ResponseBody

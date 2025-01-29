@@ -24,3 +24,4 @@
 0:0:0:0:0:0:0:1 - - [28/Jan/2025:16:03:49 -0300] "POST /citMobi2/api/linha/createLinha HTTP/1.1" 500 102
 0:0:0:0:0:0:0:1 - - [28/Jan/2025:16:07:39 -0300] "POST /citMobi2/api/linha/createLinha HTTP/1.1" 201 371
 0:0:0:0:0:0:0:1 - - [28/Jan/2025:16:07:52 -0300] "GET /citMobi2/api/linha/getLinha?municipio=3550308&atendimento=10&linha=9051 HTTP/1.1" 202 420
+0:0:0:0:0:0:0:1 - - [28/Jan/2025:16:07:57 -0300] "GET /citMobi2/api/linha/getLinha?municipio=3550308&atendimento=10&linha=2076 HTTP/1.1" 202 362

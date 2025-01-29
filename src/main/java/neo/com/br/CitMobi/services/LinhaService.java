@@ -120,14 +120,17 @@ public class LinhaService {
             Optional<List<Operador>> operadores = operadorRepository.findByCnpj(Collections.singletonList(linhaRecord.operador().cnpj()));
             Linha novaLinha = linhaRecord.toLinha();
             logger.warn("Linha: {}", novaLinha);
-            if(linhaRecord.flagAtiva() == null){
+            if(operadores.isPresent()){
                 novaLinha.setFlagAtiva("S");
+            } else {
+                logger.info("Linha criada sem operadores nâo pode ser ativa.");
+                novaLinha.setFlagAtiva("N");
             }
             linhaRepository.save(novaLinha);
 
             if(operadores.isEmpty()) {
                 LinhaResponse linhaResponse = new LinhaResponse(novaLinha, null);
-                GenericResponse<LinhaResponse> errorResponse = new GenericResponse<>("201", "Linha criada sem operador.", linhaResponse);
+                GenericResponse<LinhaResponse> errorResponse = new GenericResponse<>("201", "Linha criada, adicione um operador para ativar essa linha.", linhaResponse);
                 return new ResponseEntity<>(errorResponse, HttpStatus.CREATED);
 
             } else {
@@ -145,50 +148,54 @@ public class LinhaService {
         }
     }
 
-//    public ResponseEntity<GenericResponse<LinhaEditResponse>> editLinha(@RequestBody LinhaRecord linhaRecord) {
-//        try {
-//            Linha novaLinha = linhaRecord.toLinha();
-//
-//            Optional<Linha> existsLinha = linhaRepository.findByIdAndOperador(novaLinha.getLinhaId().getLinhaId(),novaLinha.getLinhaId().getLinhaAtendimento(),novaLinha.getLinhaId().getMunicipio(), novaLinha.getLinhaId().getOperador().getCnpj());
-//
-//            if (existsLinha.isEmpty()) {
-//                logger.error("A linha procurada não existe");
-//                String message = "";
-//                message = "A linha " + novaLinha.getLinhaId().getLinhaId() + "-" + novaLinha.getLinhaId().getLinhaAtendimento() + " " + novaLinha.getLinhaDescricao() + " não existe.";
-//                LinhaEditResponse linhaEditResponse = new LinhaEditResponse(null, null);
-//                GenericResponse<LinhaEditResponse> errorResponse = new GenericResponse<>("404", message, linhaEditResponse);
-//                return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
-//            }
-//
-//            Linha editLinha = new Linha();
-//
-//            String linhaDescricao = novaLinha.getLinhaDescricao() != null ? novaLinha.getLinhaDescricao() : existsLinha.get().getLinhaDescricao();
-//            String flagIM = novaLinha.getFlagIntermunicipal() != null ? novaLinha.getFlagIntermunicipal() : existsLinha.get().getFlagIntermunicipal();
-//            String flagMetro = novaLinha.getFlagMetro() != null ? novaLinha.getFlagMetro() : existsLinha.get().getFlagMetro();
-//            String flagTrem = novaLinha.getFlagTrem() != null ? novaLinha.getFlagTrem() : existsLinha.get().getFlagTrem();
-//            String flagAtiva = novaLinha.getFlagAtiva() != null ? novaLinha.getFlagAtiva() : existsLinha.get().getFlagAtiva();
-//
-//            editLinha.setLinhaId(novaLinha.getLinhaId());
-//            editLinha.setLinhaDescricao(linhaDescricao);
-//            editLinha.setFlagIntermunicipal(flagIM);
-//            editLinha.setFlagMetro(flagMetro);
-//            editLinha.setFlagTrem(flagTrem);
-//            editLinha.setFlagAtiva(flagAtiva);
-//
-//            logger.warn("Edited Linha: {}", editLinha);
-//
-//            linhaRepository.save(editLinha);
-//
-//            LinhaEditResponse linhaEditResponse = new LinhaEditResponse(editLinha, existsLinha.get());
-//            GenericResponse<LinhaEditResponse> response = new GenericResponse<>("202", "Linha editada com sucesso!", linhaEditResponse);
-//            return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-//        } catch (Exception e) {
-//            logger.error("Error editing Linha: ", e);
-//            LinhaEditResponse linhaEditResponse = new LinhaEditResponse(null, null);
-//            GenericResponse<LinhaEditResponse> errorResponse = new GenericResponse<>("500", "Erro ao editar a linha.", linhaEditResponse);
-//            return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
+    public ResponseEntity<GenericResponse<LinhaEditResponse>> editLinha(@RequestBody LinhaRecord linhaRecord) {
+        try {
+            // TO DO
+            // Esta retornando a mesma linha já editada duas vezes.
+            Optional<Linha> existsLinha = linhaRepository.findByLinhaIdAndOperador(linhaRecord.linhaId(), linhaRecord.linhaAtendimento(), linhaRecord.municipio(), linhaRecord.operador().cnpj());
+            if (existsLinha.isEmpty()) {
+                logger.error("A linha procurada não existe");
+                String message = "A linha " + linhaRecord.linhaId() + "-" + linhaRecord.linhaAtendimento() + " " + linhaRecord.linhaDescricao() + " não existe.";
+                LinhaEditResponse linhaEditResponse = new LinhaEditResponse(null, null);
+                GenericResponse<LinhaEditResponse> errorResponse = new GenericResponse<>("404", message, linhaEditResponse);
+                return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+            }
+
+            Linha editLinha = new Linha();
+
+            String linhaDescricao = linhaRecord.linhaDescricao() != null ? linhaRecord.linhaDescricao() : existsLinha.get().getLinhaDescricao();
+            String flagIM = linhaRecord.flagIntermunicipal() != null ? linhaRecord.flagIntermunicipal() : existsLinha.get().getFlagIntermunicipal();
+            String flagMetro = linhaRecord.flagMetro() != null ? linhaRecord.flagMetro() : existsLinha.get().getFlagMetro();
+            String flagTrem = linhaRecord.flagTrem() != null ? linhaRecord.flagTrem() : existsLinha.get().getFlagTrem();
+            String flagAtiva = linhaRecord.flagAtiva() != null ? linhaRecord.flagAtiva() : existsLinha.get().getFlagAtiva();
+
+            editLinha.setLinhaId(new LinhaId(linhaRecord.linhaId(), linhaRecord.linhaAtendimento(), linhaRecord.municipio()));
+            editLinha.setLinhaDescricao(linhaDescricao);
+            editLinha.setFlagIntermunicipal(flagIM);
+            editLinha.setFlagMetro(flagMetro);
+            editLinha.setFlagTrem(flagTrem);
+            editLinha.setFlagAtiva(flagAtiva);
+
+            logger.warn("Edited Linha: {}", editLinha);
+
+            linhaRepository.save(editLinha);
+
+            Optional<List<LinhaOperador>> linhaOperadores = linhaOperadorRepository.findByLinhaId(existsLinha.get().getLinhaId().getLinhaId(), existsLinha.get().getLinhaId().getLinhaAtendimento(), existsLinha.get().getLinhaId().getMunicipio());
+            GenericResponse<LinhaResponse> linhaAnterior = getLinhaResponseWithOperadores("200", "Linha encontrada", linhaOperadores.get(), existsLinha.get());
+            linhaOperadores = linhaOperadorRepository.findByLinhaId(editLinha.getLinhaId().getLinhaId(), editLinha.getLinhaId().getLinhaAtendimento(), editLinha.getLinhaId().getMunicipio());
+            GenericResponse<LinhaResponse> linhaEditada = getLinhaResponseWithOperadores("200", "Linha encontrada", linhaOperadores.get(), editLinha);
+
+
+            LinhaEditResponse linhaEditResponse = new LinhaEditResponse(linhaEditada.data(), linhaAnterior.data());
+            GenericResponse<LinhaEditResponse> response = new GenericResponse<>("202", "Linha editada com sucesso!", linhaEditResponse);
+            return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            logger.error("Error editing Linha: ", e);
+            LinhaEditResponse linhaEditResponse = new LinhaEditResponse(null, null);
+            GenericResponse<LinhaEditResponse> errorResponse = new GenericResponse<>("500", "Erro ao editar a linha.", linhaEditResponse);
+            return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
 }
