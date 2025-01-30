@@ -17,7 +17,7 @@ public interface RotaRepository extends JpaRepository<Rota, RotaId> {
             """,
             nativeQuery = true)
     Optional<Rota> getRotaByItinerarioId(
-            @Param("itinerarioId") String itinerarioId
+            @Param("itinerarioId") Long itinerarioId
     );
 
     @Query(value = """
@@ -26,7 +26,7 @@ public interface RotaRepository extends JpaRepository<Rota, RotaId> {
             """,
             nativeQuery = true)
     Optional<List<Rota>> getRotasFromItinerario(
-            @Param("itinerarioId") List<String> itinerarioId
+            @Param("itinerarioId") List<Long> itinerarioId
     );
 
 }

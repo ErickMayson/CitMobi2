@@ -22,6 +22,7 @@ public class Itinerario {
 
     @Id
     @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Use IDENTITY for SERIAL in PostgreSQL
     @Column(name = "LIN_ITINERARIO_ID")
     private Long itinerarioId;
 

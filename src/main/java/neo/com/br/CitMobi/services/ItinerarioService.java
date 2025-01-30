@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,9 +43,9 @@ public class ItinerarioService {
                 GenericResponse<ItinerarioResponse> errorResponse = new GenericResponse<>("404", message, null);
                 return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
             }
-            ItinerarioResponse itinerarioResponse = new ItinerarioResponse(null);
+            ItinerarioResponse itinerarioResponse = new ItinerarioResponse(new ArrayList<>());
             itinerarios.get().forEach(itinerario -> {
-                Optional<Rota> optRota = rotaRepository.getRotaByItinerarioId(String.valueOf(itinerario.getItinerarioId()));
+                Optional<Rota> optRota = rotaRepository.getRotaByItinerarioId(itinerario.getItinerarioId());
                 if(optRota.isEmpty()) {
                     logger.error("Itinerario da linha " + linha + "/" + atendimento + " não possui rota cadastrada." );
                     ItinerarioRecord itinerarioRecord = new ItinerarioRecord(linha, atendimento, itinerario.getPrefixo(), Long.parseLong(municipio), itinerario.getLinhaSentido(), null);

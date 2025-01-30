@@ -8,3 +8,9 @@
 0:0:0:0:0:0:0:1 - - [30/Jan/2025:10:03:26 -0300] "GET /citMobi2/api/itinerario/getItinerario?linha=2076&atendimento=10&municipio=3550308 HTTP/1.1" 404 80
 0:0:0:0:0:0:0:1 - - [30/Jan/2025:10:03:34 -0300] "POST /citMobi2/api/linha/createLinha HTTP/1.1" 406 408
 0:0:0:0:0:0:0:1 - - [30/Jan/2025:10:03:38 -0300] "GET /citMobi2/api/itinerario/getItinerario?linha=2076&atendimento=10&municipio=3550308 HTTP/1.1" 404 80
+0:0:0:0:0:0:0:1 - - [30/Jan/2025:10:41:14 -0300] "GET /citMobi2/api/itinerario/getItinerario?linha=9051&atendimento=10&municipio=3550308 HTTP/1.1" 500 110
+0:0:0:0:0:0:0:1 - - [30/Jan/2025:10:44:35 -0300] "GET /citMobi2/api/itinerario/getItinerario?linha=9051&atendimento=10&municipio=3550308 HTTP/1.1" 500 110
+0:0:0:0:0:0:0:1 - - [30/Jan/2025:10:57:24 -0300] "GET /citMobi2/api/itinerario/getItinerario?linha=9051&atendimento=10&municipio=3550308 HTTP/1.1" 500 110
+0:0:0:0:0:0:0:1 - - [30/Jan/2025:11:00:43 -0300] "GET /citMobi2/api/itinerario/getItinerario?linha=9051&atendimento=10&municipio=3550308 HTTP/1.1" 500 110
+0:0:0:0:0:0:0:1 - - [30/Jan/2025:11:00:56 -0300] "GET /citMobi2/api/itinerario/getItinerario?linha=9051&atendimento=10&municipio=3550308 HTTP/1.1" 500 110
+0:0:0:0:0:0:0:1 - - [30/Jan/2025:11:06:59 -0300] "GET /citMobi2/api/itinerario/getItinerario?linha=9051&atendimento=10&municipio=3550308 HTTP/1.1" 201 345

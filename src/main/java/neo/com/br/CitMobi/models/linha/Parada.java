@@ -30,7 +30,7 @@ public class Parada {
     private BigDecimal latitude;
 
     @ManyToOne
-    @JoinColumn(name = "GLB_UF_SIGLA", nullable = false)
+    @JoinColumn(name = "GLB_UF_SIGLA", referencedColumnName = "GLB_UF_SIGLA", nullable = false)
     private UF uf;
 
     @ManyToOne
