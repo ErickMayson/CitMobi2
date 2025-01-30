@@ -12,12 +12,21 @@ import java.util.Optional;
 public interface RotaRepository extends JpaRepository<Rota, RotaId> {
 
     @Query(value = """
-            SELECT * FROM T_LIN_ITINERARIO ITI
-            WHERE ITI.LIN_ITINERARIO_ID = :itinerarioId
+            SELECT * FROM T_LIN_ROTA ROTA
+            WHERE ROTA.LIN_ITINERARIO_ID = :itinerarioId
             """,
             nativeQuery = true)
-    Optional<List<Rota>> getRotaByItinerarioId(
+    Optional<Rota> getRotaByItinerarioId(
             @Param("itinerarioId") String itinerarioId
+    );
+
+    @Query(value = """
+            SELECT * FROM T_LIN_ROTA ROTA
+            WHERE ROTA.LIN_ITINERARIO_ID IN :itinerarioId
+            """,
+            nativeQuery = true)
+    Optional<List<Rota>> getRotasFromItinerario(
+            @Param("itinerarioId") List<String> itinerarioId
     );
 
 }

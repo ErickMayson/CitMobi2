@@ -13,7 +13,7 @@ public record ItinerarioRecord(
         String prefixo,
         Long municipio,
         String linhaSentido,
-        List<Rota> rota
+        Rota rota
 ) {
     public Itinerario toItinerario() {
         return new Itinerario(

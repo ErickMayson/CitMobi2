@@ -1,6 +1,8 @@
 package neo.com.br.CitMobi.services;
 
+import neo.com.br.CitMobi.models.linha.Itinerario;
 import neo.com.br.CitMobi.models.linha.Rota;
+import neo.com.br.CitMobi.models.records.linha.ItinerarioRecord;
 import neo.com.br.CitMobi.models.records.response.GenericResponse;
 import neo.com.br.CitMobi.models.records.response.ItinerarioResponse;
 import neo.com.br.CitMobi.repository.ItinerarioRepository;
@@ -22,32 +24,38 @@ public class ItinerarioService {
     private final ItinerarioRepository itinerarioRepository;
     private final RotaRepository rotaRepository;
 
-
     public ItinerarioService(ItinerarioRepository itinerarioRepository, RotaRepository rotaRepository) {
         this.itinerarioRepository = itinerarioRepository;
         this.rotaRepository = rotaRepository;
     }
 
-
     public ResponseEntity<GenericResponse<ItinerarioResponse>> getItinerario(String linha, String atendimento, String municipio) {
         try {
             //List<String> reguladores = List.of("46392155000111", "41814509000155", "60498417000158");
-
             //Optional<List<Itinerario>> itinerario = itinerarioRepository.findById();
-            Optional<List<String>> itinerariosId = itinerarioRepository.getItinerarioIdByLinhaAtendimento(linha, atendimento, municipio);
-            if(itinerariosId.isEmpty()){
+
+            Optional<List<Itinerario>> itinerarios = itinerarioRepository.getItinerarioIdByLinhaId(linha, atendimento, Long.parseLong(municipio));
+            if (itinerarios.isPresent() && itinerarios.get().isEmpty()) {
                 logger.error("A linha procurada não existe");
-                String message = "";
-                message = "A linha " + linha + "/" + atendimento + " não existe.";
+                String message = "A linha " + linha + "/" + atendimento + " não possui nenhum itinerario cadastrado.";
                 GenericResponse<ItinerarioResponse> errorResponse = new GenericResponse<>("404", message, null);
                 return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
             }
-            else {
-                List<Rota> rota = null;
-
-                GenericResponse<ItinerarioResponse> response = new GenericResponse<>("201", "Linha encontrada", null);
-                return new ResponseEntity<>(response, HttpStatus.CREATED);
-            }
+            ItinerarioResponse itinerarioResponse = new ItinerarioResponse(null);
+            itinerarios.get().forEach(itinerario -> {
+                Optional<Rota> optRota = rotaRepository.getRotaByItinerarioId(String.valueOf(itinerario.getItinerarioId()));
+                if(optRota.isEmpty()) {
+                    logger.error("Itinerario da linha " + linha + "/" + atendimento + " não possui rota cadastrada." );
+                    ItinerarioRecord itinerarioRecord = new ItinerarioRecord(linha, atendimento, itinerario.getPrefixo(), Long.parseLong(municipio), itinerario.getLinhaSentido(), null);
+                    itinerarioResponse.itinerarioRecords().add(itinerarioRecord);
+                } else {
+                    logger.info("Adicionando itinerario...");
+                    ItinerarioRecord itinerarioRecord = new ItinerarioRecord(linha, atendimento, itinerario.getPrefixo(), Long.parseLong(municipio), itinerario.getLinhaSentido(), optRota.get());
+                    itinerarioResponse.itinerarioRecords().add(itinerarioRecord);
+                }
+            });
+            GenericResponse<ItinerarioResponse> response = new GenericResponse<>("201", "Itinerario encontrado", itinerarioResponse);
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
 
         } catch (Exception e) {
             logger.error("Erro ao acessar a linha: ", e);

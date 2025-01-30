@@ -45,10 +45,10 @@ public class Itinerario {
     @Column(name = "LIN_ITINERARIO_SENTIDO", nullable = false)
     private String linhaSentido;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "rotaId.itinerario")
-    private List<Rota> rota;
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "rotaId.itinerario")
+    private Rota rota;
 
-    public Itinerario(String linhaId, String linhaAtendimento, String prefixo, Long municipio, String linhaSentido, List<Rota> rota) {
+    public Itinerario(String linhaId, String linhaAtendimento, String prefixo, Long municipio, String linhaSentido, Rota rota) {
         this.linhaId = linhaId;
         this.linhaAtendimento = linhaAtendimento;
         this.prefixo = prefixo;
