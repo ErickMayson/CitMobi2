@@ -57,4 +57,13 @@ public class Itinerario {
         this.linhaSentido = linhaSentido;
         this.rota = rota;
     }
+
+    public Itinerario(String linhaId, String linhaAtendimento, String prefixo, Long municipio, String linhaSentido) {
+        this.linhaId = linhaId;
+        this.linhaAtendimento = linhaAtendimento;
+        this.prefixo = prefixo;
+        this.municipio = municipio;
+        this.linhaSentido = linhaSentido;
+    }
+
 }

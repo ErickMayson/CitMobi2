@@ -1,7 +1,9 @@
 package neo.com.br.CitMobi.controller;
 
 import jakarta.validation.Valid;
+import neo.com.br.CitMobi.models.records.linha.ItinerarioRecord;
 import neo.com.br.CitMobi.models.records.linha.LinhaRecord;
+import neo.com.br.CitMobi.models.records.request.ItinerarioRequest;
 import neo.com.br.CitMobi.models.records.response.GenericResponse;
 import neo.com.br.CitMobi.models.records.response.ItinerarioResponse;
 import neo.com.br.CitMobi.models.records.response.LinhaEditResponse;
@@ -54,5 +56,21 @@ public class ItinerarioController {
         System.out.println("atendimento: " + atendimento);
 
         return itinerarioService.getItinerario(linha, atendimento, municipio);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/itinerario/createItinerario", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<GenericResponse<ItinerarioResponse>> createItinerario(
+            @RequestParam String linha,
+            @RequestParam String atendimento,
+            @RequestParam String municipio,
+            @RequestBody ItinerarioRecord itinerario) {
+
+        // Log the parameters for debugging
+        System.out.println("municipio: " + municipio);
+        System.out.println("linha: " + linha);
+        System.out.println("atendimento: " + atendimento);
+
+        return itinerarioService.createItinerario(linha, atendimento, municipio, itinerario);
     }
 }

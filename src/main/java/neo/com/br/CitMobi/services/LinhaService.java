@@ -114,7 +114,6 @@ public class LinhaService {
                     GenericResponse<LinhaResponse> response = new GenericResponse<>("406", "Linha criada com sucesso!", linhaResponse);
                     return new ResponseEntity<>(response, HttpStatus.NOT_ACCEPTABLE);
                 }
-
             }
 
             Optional<List<Operador>> operadores = operadorRepository.findByCnpj(Collections.singletonList(linhaRecord.operador().cnpj()));

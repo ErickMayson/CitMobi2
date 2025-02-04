@@ -25,6 +25,16 @@ public record ItinerarioRecord(
                 rota
         );
     }
+    // Posso criar itinerarios sem rota definida, entao esse constructor se faz necessario.
+    public Itinerario toItinerarioNoRoute() {
+        return new Itinerario(
+                safeTrimAndUppercase(linhaId),
+                safeTrimAndUppercase(linhaAtendimento),
+                safeTrimAndUppercase(prefixo),
+                municipio,
+                safeTrimAndUppercase(linhaSentido)
+        );
+    }
 
     private String safeTrimAndUppercase(String value) {
         return value == null ? null : value.trim().toUpperCase();
