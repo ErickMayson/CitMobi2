@@ -21,17 +21,4 @@ public class EntityConverter {
         );
     }
 
-    public ParadaRecord toRecord(Parada parada) {
-        return new ParadaRecord(
-                parada.getLinParadaId().toString(),
-                parada.getLogradouro(),
-                parada.getNumero(),
-                parada.getLongitude().toString(),
-                parada.getLatitude().toString(),
-                parada.getLinParadaId().toString(),
-                parada.getUf().getSigla(),
-                parada.getTipo().getTipoId().toString()
-        );
-    }
-
 }

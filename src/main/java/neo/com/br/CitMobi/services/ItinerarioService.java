@@ -95,6 +95,8 @@ public class ItinerarioService {
                 return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
             }
             // Para criar o Itinerario com a rota, preciso criar o service de Rota.
+            GenericResponse<ItinerarioResponse> response = new GenericResponse<>("201", "Placeholder.", new ItinerarioResponse(Collections.singletonList(novoItinerario)));
+            return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 
         } catch (Exception e) {
             logger.error("Erro ao acessar a linha: ", e);

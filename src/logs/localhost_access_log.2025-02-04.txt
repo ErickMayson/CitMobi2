@@ -1,0 +1,5 @@
+0:0:0:0:0:0:0:1 - - [04/Feb/2025:14:36:36 -0300] "GET /citMobi2/api/parada/getParadasByLogradouro?logradouro=R.%20Bresser HTTP/1.1" 400 144
+0:0:0:0:0:0:0:1 - - [04/Feb/2025:14:37:03 -0300] "GET /citMobi2/api/parada/getParadasByLogradouro?logradouro=R.%20Bresser&municipio=3550308 HTTP/1.1" 500 86
+0:0:0:0:0:0:0:1 - - [04/Feb/2025:14:39:07 -0300] "GET /citMobi2/api/parada/getParadasByLogradouro?logradouro=R.%20Bresser&municipio=3550308 HTTP/1.1" 200 96
+0:0:0:0:0:0:0:1 - - [04/Feb/2025:14:44:32 -0300] "GET /citMobi2/api/parada/getParadasByLogradouro?logradouro=R.%20Bresser&municipio=3550308 HTTP/1.1" 200 96
+0:0:0:0:0:0:0:1 - - [04/Feb/2025:14:49:03 -0300] "GET /citMobi2/api/parada/getParadasByLogradouro?logradouro=R.%20Bresser&municipio=3550308 HTTP/1.1" 200 392

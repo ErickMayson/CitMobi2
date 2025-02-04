@@ -1,13 +1,14 @@
 package neo.com.br.CitMobi.models.records.linha;
 
-public record ParadaRecord(
+import java.math.BigDecimal;
 
-        String paradaId,
+public record ParadaRecord(
+        Long paradaId,
         String logradouro,
         String numero,
-        String longitude,
-        String latitude,
-        String municipioCod,
+        BigDecimal longitude,
+        BigDecimal latitude,
+        Long municipio,
         String ufSigla,
-        String tipoId
+        Long tipoId
 ) {}
