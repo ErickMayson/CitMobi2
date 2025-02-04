@@ -29,4 +29,19 @@ public interface RotaRepository extends JpaRepository<Rota, RotaId> {
             @Param("itinerarioId") List<Long> itinerarioId
     );
 
+    @Query(value = """
+            SELECT ROTA.* FROM T_LIN_ROTA ROTA
+            LEFT JOIN T_LIN_ITINERARIO ITI ON ITI.LIN_ITINERARIO_ID = ROTA.LIN_ITINERARIO_ID
+            WHERE ITI.LIN_LINHA_ID = :linhaId
+            AND ITI.LIN_LINHA_ATENDIMENTO = :linhaAtendimento
+            AND ITI.GLB_MUNICIPIO_COD = :municipio
+            ORDER BY ITI.LIN_ITINERARIO_SENTIDO ASC, ROTA.LIN_ROTA_SEQUENCIA ASC
+            """,
+            nativeQuery = true)
+    Optional<List<Rota>> getRotasPerLine(
+            @Param("linhaId") String linha,
+            @Param("linhaAtendimento") String atendimento,
+            @Param("municipio") Long municipio
+            );
+
 }

@@ -16,4 +16,7 @@ public interface ParadaRepository extends JpaRepository<Parada, Long> {
     @Query(value = "SELECT * FROM T_LIN_PARADA PAR WHERE UPPER(PAR.LIN_PARADA_LOGRADOURO) LIKE UPPER(CONCAT('%', :logradouro, '%')) AND PAR.GLB_MUNICIPIO_COD = :municipio", nativeQuery = true)
     Optional<List<Parada>> findByLogradouro(@Param("logradouro") String logradouro, @Param("municipio") Long municipio);
 
+    @Query(value = "SELECT * FROM T_LIN_PARADA PAR WHERE PAR.GLB_MUNICIPIO_COD = :municipio", nativeQuery = true)
+    Optional<List<Parada>> findByMunicipio(@Param("municipio") Long municipio);
+
 }

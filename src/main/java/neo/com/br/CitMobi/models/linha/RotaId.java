@@ -27,10 +27,10 @@ public class RotaId implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @NotBlank
     @JoinColumn(name = "LIN_PARADA_ID")
-    private Parada LIN_PARADA_ID;
+    private Parada parada;
 
     @NotBlank
     @Column(name = "LIN_ROTA_SEQUENCIA", nullable = false)
-    private Long LIN_ROTA_SEQUENCIA;
+    private Long sequencia;
 
 }

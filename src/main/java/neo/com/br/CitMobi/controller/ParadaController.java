@@ -26,6 +26,14 @@ public class ParadaController {
         this.paradaService = paradaService;
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/parada/getParadasByMunicipio", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<GenericResponse<List<ParadaRecord>>> getParadasByMunicipio(
+            @RequestParam Long municipio) {
+
+        return paradaService.getParadasByMunicipio(municipio);
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "/parada/getParadasByLogradouro", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<GenericResponse<List<ParadaRecord>>> getParadasByLogradouro(

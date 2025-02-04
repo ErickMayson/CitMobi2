@@ -1,0 +1,36 @@
+{
+  "data": [
+    {
+      "itinerario": {
+        "itinerarioId": 4,
+        "linhaId": "372F",
+        "linhaAtendimento": "10",
+        "prefixo": "METRO BRESSER",
+        "municipio": 3550308,
+        "linhaSentido": "VOLTA",
+        "rota": [
+          {
+            "paradaId": 4,
+            "logradouro": "R. Bresser",
+            "numero": "1954",
+            "longitude": -46.604062,
+            "latitude": -23.546752,
+            "municipio": 3550308,
+            "ufSigla": "SP",
+            "tipoId": 2
+          },
+          {
+            "paradaId": 4,
+            "logradouro": "R. Bresser",
+            "numero": "1954",
+            "longitude": -46.604062,
+            "latitude": -23.546752,
+            "municipio": 3550308,
+            "ufSigla": "SP",
+            "tipoId": 2
+          }
+        ]
+      }
+    }
+  ]
+}
