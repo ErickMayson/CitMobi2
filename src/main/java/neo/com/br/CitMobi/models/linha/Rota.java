@@ -18,12 +18,13 @@ public class Rota {
     @EmbeddedId
     public RotaId rotaId;
 
-    public RotaRecord toRecord() {
-        return new RotaRecord(
-                rotaId.getItinerario(),
-                rotaId.getParada(),
-                rotaId.getSequencia()
-        );
-    }
+//    public RotaRecord toRecord() {
+//        return new RotaRecord(
+//                rotaId.getItinerario(),
+//                rotaId.getParada(),
+//                rotaId.getSequencia()
+//
+//        );
+//    }
 
 }

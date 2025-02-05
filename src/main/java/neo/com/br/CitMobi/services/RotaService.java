@@ -14,8 +14,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class RotaService {
@@ -40,10 +43,25 @@ public class RotaService {
                 GenericResponse<List<RotaRecord>> errorResponse = new GenericResponse<>("404", "Nenhuma rota encontrada para essa linha", null);
                 return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
             }
-            List<RotaRecord> rotas = optionalRotas.get()
-                    .stream()
-                    .map(Rota::toRecord)
-                    .toList(); // Converts the stream into a List
+
+            List<Long> sentidos = optionalRotas.get().stream()
+                    .sorted(Comparator.comparing(rota -> rota.getRotaId().getSequencia())) // Sort by sequencia
+                    .map(rota -> rota.getRotaId().getItinerario())
+                    .distinct()
+                    .toList();
+
+            List<RotaRecord> rotas = new ArrayList<>();
+
+            for (Long itinerarioId : sentidos) {
+                List<Parada> paradas = optionalRotas.get()
+                        .stream()
+                        .filter(rota -> rota.getRotaId().getItinerario().equals(itinerarioId))  // Ensure correct itinerary
+                        .map(rota -> rota.getRotaId().getParada())
+                        .toList();
+                RotaRecord rotaRecord = new RotaRecord(itinerarioId, paradas);
+                rotas.add(rotaRecord);
+            }
+
             logger.error("Rotas encontradas: {}", rotas);
             GenericResponse<List<RotaRecord>> response = new GenericResponse<>("200", "Rotas encontradas", rotas);
             return new ResponseEntity<>(response, HttpStatus.OK);

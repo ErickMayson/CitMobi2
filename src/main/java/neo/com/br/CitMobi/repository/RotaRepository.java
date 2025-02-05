@@ -16,7 +16,7 @@ public interface RotaRepository extends JpaRepository<Rota, RotaId> {
             WHERE ROTA.LIN_ITINERARIO_ID = :itinerarioId
             """,
             nativeQuery = true)
-    Optional<Rota> getRotaByItinerarioId(
+    Optional<List<Rota>> getRotaByItinerarioId(
             @Param("itinerarioId") Long itinerarioId
     );
 

@@ -1,10 +1,8 @@
 package neo.com.br.CitMobi.services;
 
-import neo.com.br.CitMobi.models.linha.Itinerario;
-import neo.com.br.CitMobi.models.linha.Linha;
-import neo.com.br.CitMobi.models.linha.LinhaId;
-import neo.com.br.CitMobi.models.linha.Rota;
+import neo.com.br.CitMobi.models.linha.*;
 import neo.com.br.CitMobi.models.records.linha.ItinerarioRecord;
+import neo.com.br.CitMobi.models.records.linha.RotaRecord;
 import neo.com.br.CitMobi.models.records.request.ItinerarioRequest;
 import neo.com.br.CitMobi.models.records.response.CriarItinerarioResponse;
 import neo.com.br.CitMobi.models.records.response.GenericResponse;
@@ -53,14 +51,19 @@ public class ItinerarioService {
             }
             ItinerarioResponse itinerarioResponse = new ItinerarioResponse(new ArrayList<>());
             itinerarios.get().forEach(itinerario -> {
-                Optional<Rota> optRota = rotaRepository.getRotaByItinerarioId(itinerario.getItinerarioId());
+                Optional<List<Rota>> optRota = rotaRepository.getRotaByItinerarioId(itinerario.getItinerarioId());
                 if(optRota.isEmpty()) {
                     logger.error("Itinerario da linha " + linha + "/" + atendimento + " não possui rota cadastrada." );
                     ItinerarioRecord itinerarioRecord = new ItinerarioRecord(linha, atendimento, itinerario.getPrefixo(), Long.parseLong(municipio), itinerario.getLinhaSentido(), null);
                     itinerarioResponse.itinerarioRecords().add(itinerarioRecord);
                 } else {
+                    List<Parada> paradasRota = new ArrayList<>();
+                    optRota.get().forEach( rota -> {
+                        paradasRota.add(rota.getRotaId().getParada());
+                    });
+                    RotaRecord rotaResponse = new RotaRecord(itinerario.getItinerarioId(), paradasRota);
                     logger.info("Adicionando itinerario...");
-                    ItinerarioRecord itinerarioRecord = new ItinerarioRecord(linha, atendimento, itinerario.getPrefixo(), Long.parseLong(municipio), itinerario.getLinhaSentido(), optRota.get());
+                    ItinerarioRecord itinerarioRecord = new ItinerarioRecord(linha, atendimento, itinerario.getPrefixo(), Long.parseLong(municipio), itinerario.getLinhaSentido(), rotaResponse);
                     itinerarioResponse.itinerarioRecords().add(itinerarioRecord);
                 }
             });

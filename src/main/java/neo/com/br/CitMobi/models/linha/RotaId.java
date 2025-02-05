@@ -20,9 +20,10 @@ public class RotaId implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @NotBlank
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "LIN_ITINERARIO_ID", insertable = false, updatable = false)
-    private Itinerario itinerario;
+//  @ManyToOne(fetch = FetchType.LAZY)
+//  @JoinColumn(name = "LIN_ITINERARIO_ID", insertable = false, updatable = false)
+    @Column(name = "LIN_ITINERARIO_ID")
+    private Long itinerario;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @NotBlank
