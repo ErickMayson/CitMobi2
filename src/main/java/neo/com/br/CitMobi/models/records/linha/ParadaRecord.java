@@ -6,8 +6,8 @@ public record ParadaRecord(
         Long paradaId,
         String logradouro,
         String numero,
-        BigDecimal longitude,
         BigDecimal latitude,
+        BigDecimal longitude,
         Long municipio,
         String ufSigla,
         Long tipoId
