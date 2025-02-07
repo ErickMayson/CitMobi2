@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import neo.com.br.CitMobi.models.linha.Linha;
 import neo.com.br.CitMobi.models.records.linha.LinhaRecord;
@@ -26,7 +27,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/api")
 @CrossOrigin(value = "*")
-//@Api(value = "Controller que faz a inserção de notas")
+@Tag(name = "Linha", description = "Controller to manage Linhas")
 public class LinhaController {
 
     private static final Logger logger = LoggerFactory.getLogger(LinhaController.class);
@@ -46,7 +47,7 @@ public class LinhaController {
 //            @ApiResponse(code = 500, message = "Erro inesperado no Servidor")
 //    })
 
-    @RequestMapping(method = RequestMethod.GET, value = "/linha/getLinha", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.GET, value = "/linha", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<GenericResponse<LinhaResponse>> getLinha(
             @RequestParam String municipio,
@@ -61,7 +62,7 @@ public class LinhaController {
         return linhaService.getLinha(municipio, linha, atendimento);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/linha/createLinha", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST, value = "/linha", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<GenericResponse<LinhaResponse>> createLinha(@Valid @RequestBody LinhaRecord linha, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -79,7 +80,7 @@ public class LinhaController {
         return linhaService.createNewLinha(linha);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/linha/editLinha", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.PATCH, value = "/linha", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<GenericResponse<LinhaEditResponse>> editLinha(@RequestBody LinhaRecord linha, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {

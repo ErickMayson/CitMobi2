@@ -73,4 +73,15 @@ public class RotaService {
         }
     }
 
+    public ResponseEntity<GenericResponse<List<RotaRecord>>> createRota() {
+        try {
+            GenericResponse<List<RotaRecord>> response = new GenericResponse<>("200", "Rotas encontradas", null);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Erro ao procurar a rota", e);
+            GenericResponse<List<RotaRecord>> errorResponse = new GenericResponse<>("500", "Certifique-se que essa rua existe.", null);
+            return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

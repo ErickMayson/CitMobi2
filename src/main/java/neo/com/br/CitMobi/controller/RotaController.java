@@ -1,5 +1,6 @@
 package neo.com.br.CitMobi.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import neo.com.br.CitMobi.models.records.linha.ParadaRecord;
 import neo.com.br.CitMobi.models.records.linha.RotaRecord;
 import neo.com.br.CitMobi.models.records.response.GenericResponse;
@@ -16,7 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api")
 @CrossOrigin(value = "*")
-//@Api(value = "Controller que faz a inserção de notas")
+@Tag(name = "Itinerario", description = "Controller to manage Itinerarios (stops).")
 public class RotaController {
 
     private static final Logger logger = LoggerFactory.getLogger(LinhaController.class);
@@ -27,7 +28,7 @@ public class RotaController {
         this.paradaService = paradaService;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/rota/getRotasPerLine", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.GET, value = "/rotas", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<GenericResponse<List<RotaRecord>>> getRotasByMunicipio(
             @RequestParam String linha,

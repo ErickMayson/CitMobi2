@@ -1,5 +1,6 @@
 package neo.com.br.CitMobi.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import neo.com.br.CitMobi.models.records.linha.ItinerarioRecord;
 import neo.com.br.CitMobi.models.records.linha.LinhaRecord;
@@ -24,7 +25,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping(value = "/api")
 @CrossOrigin(value = "*")
-//@Api(value = "Controller que faz a inserção de notas")
+@Tag(name = "Rota", description = "Controller to manage rotas.")
 public class ItinerarioController {
     private static final Logger logger = LoggerFactory.getLogger(LinhaController.class);
 
@@ -43,7 +44,7 @@ public class ItinerarioController {
 //            @ApiResponse(code = 500, message = "Erro inesperado no Servidor")
 //    })
 
-    @RequestMapping(method = RequestMethod.GET, value = "/itinerario/getItinerario", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.GET, value = "/itinerario", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<GenericResponse<ItinerarioResponse>> getItinerario(
             @RequestParam String linha,
@@ -58,7 +59,7 @@ public class ItinerarioController {
         return itinerarioService.getItinerario(linha, atendimento, municipio);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/itinerario/createItinerario", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST, value = "/itinerario", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<GenericResponse<ItinerarioResponse>> createItinerario(
             @RequestParam String linha,

@@ -97,7 +97,10 @@ public class ItinerarioService {
                 GenericResponse<ItinerarioResponse> response = new GenericResponse<>("201", "Itinerario criado com sucesso", new ItinerarioResponse(Collections.singletonList(novoItinerario)));
                 return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
             }
-            // Para criar o Itinerario com a rota, preciso criar o service de Rota.
+            Itinerario criarItinerario = novoItinerario.toItinerarioNoRoute();
+            itinerarioRepository.save(criarItinerario);
+
+
             GenericResponse<ItinerarioResponse> response = new GenericResponse<>("201", "Placeholder.", new ItinerarioResponse(Collections.singletonList(novoItinerario)));
             return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 
