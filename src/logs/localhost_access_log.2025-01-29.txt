@@ -1,7 +1,0 @@
-0:0:0:0:0:0:0:1 - - [29/Jan/2025:14:21:26 -0300] "POST /citMobi2/api/linha/createLinha HTTP/1.1" 406 408
-0:0:0:0:0:0:0:1 - - [29/Jan/2025:14:21:58 -0300] "POST /citMobi2/api/linha/editLinha HTTP/1.1" 404 128
-0:0:0:0:0:0:0:1 - - [29/Jan/2025:14:23:48 -0300] "POST /citMobi2/api/linha/editLinha HTTP/1.1" 500 113
-0:0:0:0:0:0:0:1 - - [29/Jan/2025:14:28:35 -0300] "POST /citMobi2/api/linha/editLinha HTTP/1.1" 500 113
-0:0:0:0:0:0:0:1 - - [29/Jan/2025:14:33:43 -0300] "POST /citMobi2/api/linha/editLinha HTTP/1.1" 500 113
-0:0:0:0:0:0:0:1 - - [29/Jan/2025:14:35:29 -0300] "POST /citMobi2/api/linha/editLinha HTTP/1.1" 202 709
-0:0:0:0:0:0:0:1 - - [29/Jan/2025:14:35:44 -0300] "POST /citMobi2/api/linha/editLinha HTTP/1.1" 202 703

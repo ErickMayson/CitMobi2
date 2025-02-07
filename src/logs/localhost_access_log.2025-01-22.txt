@@ -1,3 +1,0 @@
-0:0:0:0:0:0:0:1 - - [22/Jan/2025:15:04:55 -0300] "POST /citMobi2/api/linha/editLinha HTTP/1.1" 500 102
-0:0:0:0:0:0:0:1 - - [22/Jan/2025:15:08:28 -0300] "POST /citMobi2/api/linha/editLinha HTTP/1.1" 202 676
-0:0:0:0:0:0:0:1 - - [22/Jan/2025:15:08:53 -0300] "POST /citMobi2/api/linha/editLinha HTTP/1.1" 202 698

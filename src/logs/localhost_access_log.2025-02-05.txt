@@ -1,3 +1,0 @@
-0:0:0:0:0:0:0:1 - - [05/Feb/2025:15:57:05 -0300] "GET /citMobi2/api/rota/getRotasPerLine?linha=372F&atendimento=10&municipio=3550308 HTTP/1.1" 200 1409
-0:0:0:0:0:0:0:1 - - [05/Feb/2025:15:57:56 -0300] "GET /citMobi2/api/itinerario/getItinerario?linha=372F&atendimento=10&municipio=3550308 HTTP/1.1" 201 1718
-0:0:0:0:0:0:0:1 - - [05/Feb/2025:16:07:51 -0300] "GET /citMobi2/api/itinerario/getItinerario?linha=372F&atendimento=10&municipio=3550308 HTTP/1.1" 201 1718
