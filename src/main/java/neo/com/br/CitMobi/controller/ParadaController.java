@@ -3,7 +3,6 @@ package neo.com.br.CitMobi.controller;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import neo.com.br.CitMobi.models.records.linha.ParadaRecord;
 import neo.com.br.CitMobi.models.records.response.GenericResponse;
-import neo.com.br.CitMobi.services.ItinerarioService;
 import neo.com.br.CitMobi.services.ParadaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

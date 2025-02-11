@@ -2,9 +2,7 @@ package neo.com.br.CitMobi.models.records.response;
 
 import neo.com.br.CitMobi.models.records.linha.RotaRecord;
 
-import java.util.List;
-
-public record RotaResponse(
-                List<RotaRecord> rotaRecords
+public record CriarRotaResponse(
+                RotaRecord rotaRecord
 ) {
 }

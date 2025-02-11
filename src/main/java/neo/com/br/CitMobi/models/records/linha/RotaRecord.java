@@ -1,34 +1,37 @@
 package neo.com.br.CitMobi.models.records.linha;
 
-import neo.com.br.CitMobi.models.linha.Itinerario;
-import neo.com.br.CitMobi.models.linha.Parada;
 import neo.com.br.CitMobi.models.linha.Rota;
-import neo.com.br.CitMobi.models.linha.RotaId;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 public record RotaRecord(
-            Long itinerarioId,
-            List<Parada> paradas
+        String linhaId,
+        String linhaAtendimento,
+        String prefixo,
+        Long municipio,
+        String linhaSentido,
+        ItinerarioRecord rota
 ) {
-
-    public List<Rota> toRotaList() {
-        long sequencia = 0L;
-        List<Rota> rotaList = new ArrayList<>();
-        for (Parada parada : paradas) {
-            RotaId rotaId = new RotaId(itinerarioId, parada, ++sequencia);
-            Rota rota = new Rota();
-            rota.setRotaId(rotaId);
-            rotaList.add(rota);
-        }
-        return rotaList;
+    public Rota toRota() {
+        return new Rota(
+                safeTrimAndUppercase(linhaId),
+                safeTrimAndUppercase(linhaAtendimento),
+                safeTrimAndUppercase(prefixo),
+                municipio,
+                safeTrimAndUppercase(linhaSentido),
+                rota.toRotaList()
+        );
     }
-
+    // Posso criar itinerarios sem rota definida, entao esse constructor se faz necessario.
+    public Rota toRotaNoItinerario() {
+        return new Rota(
+                safeTrimAndUppercase(linhaId),
+                safeTrimAndUppercase(linhaAtendimento),
+                safeTrimAndUppercase(prefixo),
+                municipio,
+                safeTrimAndUppercase(linhaSentido)
+        );
+    }
 
     private String safeTrimAndUppercase(String value) {
         return value == null ? null : value.trim().toUpperCase();
     }
-
 }

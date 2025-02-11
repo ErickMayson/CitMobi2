@@ -3,10 +3,10 @@ package neo.com.br.CitMobi.services;
 import neo.com.br.CitMobi.models.linha.Parada;
 import neo.com.br.CitMobi.models.records.linha.ParadaRecord;
 import neo.com.br.CitMobi.models.records.response.GenericResponse;
-import neo.com.br.CitMobi.repository.ItinerarioRepository;
+import neo.com.br.CitMobi.repository.RotaRepository;
 import neo.com.br.CitMobi.repository.LinhaRepository;
 import neo.com.br.CitMobi.repository.ParadaRepository;
-import neo.com.br.CitMobi.repository.RotaRepository;
+import neo.com.br.CitMobi.repository.ItinerarioRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -19,16 +19,16 @@ import java.util.Optional;
 @Service
 public class ParadaService {
 
-    private static final Logger logger = LoggerFactory.getLogger(ItinerarioService.class);
+    private static final Logger logger = LoggerFactory.getLogger(RotaService.class);
 
     private final LinhaRepository linhaRepository;
-    private final ItinerarioRepository itinerarioRepository;
     private final RotaRepository rotaRepository;
+    private final ItinerarioRepository itinerarioRepository;
     private final ParadaRepository paradaRepository;
 
-    public ParadaService(ItinerarioRepository itinerarioRepository, RotaRepository rotaRepository, LinhaRepository linhaRepository, ParadaRepository paradaRepository) {
-        this.itinerarioRepository = itinerarioRepository;
+    public ParadaService(RotaRepository rotaRepository, ItinerarioRepository itinerarioRepository, LinhaRepository linhaRepository, ParadaRepository paradaRepository) {
         this.rotaRepository = rotaRepository;
+        this.itinerarioRepository = itinerarioRepository;
         this.linhaRepository = linhaRepository;
         this.paradaRepository = paradaRepository;
     }

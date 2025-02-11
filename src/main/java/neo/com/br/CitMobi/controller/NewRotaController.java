@@ -1,38 +1,27 @@
 package neo.com.br.CitMobi.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
-import neo.com.br.CitMobi.models.records.linha.ItinerarioRecord;
-import neo.com.br.CitMobi.models.records.linha.LinhaRecord;
-import neo.com.br.CitMobi.models.records.request.ItinerarioRequest;
+import neo.com.br.CitMobi.models.records.linha.RotaRecord;
 import neo.com.br.CitMobi.models.records.response.GenericResponse;
-import neo.com.br.CitMobi.models.records.response.ItinerarioResponse;
-import neo.com.br.CitMobi.models.records.response.LinhaEditResponse;
-import neo.com.br.CitMobi.models.records.response.LinhaResponse;
-import neo.com.br.CitMobi.services.ItinerarioService;
-import neo.com.br.CitMobi.services.LinhaService;
+import neo.com.br.CitMobi.models.records.response.RotaResponse;
+import neo.com.br.CitMobi.services.RotaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api")
 @CrossOrigin(value = "*")
-@Tag(name = "Rota", description = "Controller to manage rotas.")
-public class ItinerarioController {
+@Tag(name = "Itinerario", description = "Controller to manage rotas.")
+public class NewRotaController {
     private static final Logger logger = LoggerFactory.getLogger(LinhaController.class);
 
-    private final ItinerarioService itinerarioService;
+    private final RotaService rotaService;
 
-    public ItinerarioController(ItinerarioService itinerarioService) {
-        this.itinerarioService = itinerarioService;
+    public NewRotaController(RotaService rotaService) {
+        this.rotaService = rotaService;
     }
 
 //    @ApiResponses(value = {
@@ -44,9 +33,9 @@ public class ItinerarioController {
 //            @ApiResponse(code = 500, message = "Erro inesperado no Servidor")
 //    })
 
-    @RequestMapping(method = RequestMethod.GET, value = "/itinerario", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.GET, value = "/rotas", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<GenericResponse<ItinerarioResponse>> getItinerario(
+    public ResponseEntity<GenericResponse<RotaResponse>> getRota(
             @RequestParam String linha,
             @RequestParam String atendimento,
             @RequestParam String municipio) {
@@ -56,22 +45,22 @@ public class ItinerarioController {
         System.out.println("linha: " + linha);
         System.out.println("atendimento: " + atendimento);
 
-        return itinerarioService.getItinerario(linha, atendimento, municipio);
+        return rotaService.getRota(linha, atendimento, municipio);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/itinerario", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST, value = "/rotas", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<GenericResponse<ItinerarioResponse>> createItinerario(
+    public ResponseEntity<GenericResponse<RotaResponse>> createRota(
             @RequestParam String linha,
             @RequestParam String atendimento,
             @RequestParam String municipio,
-            @RequestBody ItinerarioRecord itinerario) {
+            @RequestBody RotaRecord itinerario) {
 
         // Log the parameters for debugging
         System.out.println("municipio: " + municipio);
         System.out.println("linha: " + linha);
         System.out.println("atendimento: " + atendimento);
 
-        return itinerarioService.createItinerario(linha, atendimento, municipio, itinerario);
+        return rotaService.createRota(linha, atendimento, municipio, itinerario);
     }
 }

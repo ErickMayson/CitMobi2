@@ -1,13 +1,10 @@
 package neo.com.br.CitMobi.repository;
 
 import neo.com.br.CitMobi.models.linha.Parada;
-import neo.com.br.CitMobi.models.linha.Rota;
-import neo.com.br.CitMobi.models.linha.RotaId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
