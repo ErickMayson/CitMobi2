@@ -25,6 +25,9 @@ public class Parada {
     @Column(name = "LIN_PARADA_NUMERO", nullable = false, length = 255)
     private String numero;
 
+    @Column(name = "LIN_PARADA_OBS", nullable = false, length = 255)
+    private String obs;
+
     @Column(name = "LIN_PARADA_LONGITUDE", nullable = false)
     private BigDecimal longitude;
 
@@ -47,6 +50,7 @@ public class Parada {
                 linParadaId,
                 logradouro,
                 numero,
+                obs,
                 longitude,
                 latitude,
                 municipio,

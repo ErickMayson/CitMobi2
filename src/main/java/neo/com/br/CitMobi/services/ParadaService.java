@@ -79,4 +79,14 @@ public class ParadaService {
         }
     }
 
+//    public ResponseEntity<GenericResponse<List<ParadaRecord>>> createParadas(List<ParadaRecord> paradasList, Long municipio) {
+//        try {
+//
+//        } catch(Exception e) {
+//            logger.error("Erro ao criar as paradas", e);
+//            GenericResponse<List<ParadaRecord>> errorResponse = new GenericResponse<>("500", "Certifique-se que essa rua existe.", null);
+//            return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
+
 }

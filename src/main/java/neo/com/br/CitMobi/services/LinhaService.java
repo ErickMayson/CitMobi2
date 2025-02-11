@@ -149,8 +149,8 @@ public class LinhaService {
 
     public ResponseEntity<GenericResponse<LinhaEditResponse>> editLinha(@RequestBody LinhaRecord linhaRecord) {
         try {
-            // TO DO
-            // Esta retornando a mesma linha já editada duas vezes.
+            // TODO
+            // Criar tabela de historico de edição.
             Optional<Linha> existsLinha = linhaRepository.findByLinhaIdAndOperador(linhaRecord.linhaId(), linhaRecord.linhaAtendimento(), linhaRecord.municipio(), linhaRecord.operador().cnpj());
             if (existsLinha.isEmpty()) {
                 logger.error("A linha procurada não existe");
@@ -175,17 +175,15 @@ public class LinhaService {
             editLinha.setFlagTrem(flagTrem);
             editLinha.setFlagAtiva(flagAtiva);
 
-            logger.warn("Edited Linha: {}", editLinha);
-
-            linhaRepository.save(editLinha);
+            logger.warn("Alteracoes: {}", editLinha);
 
             Optional<List<LinhaOperador>> linhaOperadores = linhaOperadorRepository.findByLinhaId(existsLinha.get().getLinhaId().getLinhaId(), existsLinha.get().getLinhaId().getLinhaAtendimento(), existsLinha.get().getLinhaId().getMunicipio());
-            GenericResponse<LinhaResponse> linhaAnterior = getLinhaResponseWithOperadores("200", "Linha encontrada", linhaOperadores.get(), existsLinha.get());
+            GenericResponse<LinhaResponse> linhaEditada = getLinhaResponseWithOperadores("200", "Linha encontrada", linhaOperadores.get(), existsLinha.get());
             linhaOperadores = linhaOperadorRepository.findByLinhaId(editLinha.getLinhaId().getLinhaId(), editLinha.getLinhaId().getLinhaAtendimento(), editLinha.getLinhaId().getMunicipio());
-            GenericResponse<LinhaResponse> linhaEditada = getLinhaResponseWithOperadores("200", "Linha encontrada", linhaOperadores.get(), editLinha);
+            GenericResponse<LinhaResponse> linhaAtualizada = getLinhaResponseWithOperadores("200", "Linha encontrada", linhaOperadores.get(), editLinha);
+            linhaRepository.save(editLinha);
 
-
-            LinhaEditResponse linhaEditResponse = new LinhaEditResponse(linhaEditada.data(), linhaAnterior.data());
+            LinhaEditResponse linhaEditResponse = new LinhaEditResponse(linhaAtualizada.data(), linhaEditada.data());
             GenericResponse<LinhaEditResponse> response = new GenericResponse<>("202", "Linha editada com sucesso!", linhaEditResponse);
             return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
         } catch (Exception e) {
