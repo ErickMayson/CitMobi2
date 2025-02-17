@@ -1,7 +1,9 @@
 package neo.com.br.CitMobi.models.linha;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import neo.com.br.CitMobi.models.ibge.UF;
 import neo.com.br.CitMobi.models.records.linha.LinhaRecord;
 import neo.com.br.CitMobi.models.records.linha.ParadaRecord;
@@ -11,11 +13,12 @@ import java.math.BigDecimal;
 @Data
 @Entity
 @Table(name = "T_LIN_PARADA")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Parada {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_lin_parada_id")
-    @SequenceGenerator(name = "seq_lin_parada_id", sequenceName = "SEQ_LIN_PARADA_ID", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "LIN_PARADA_ID", nullable = false)
     private Long linParadaId;
 
@@ -28,22 +31,24 @@ public class Parada {
     @Column(name = "LIN_PARADA_OBS", nullable = false, length = 255)
     private String obs;
 
-    @Column(name = "LIN_PARADA_LONGITUDE", nullable = false)
-    private BigDecimal longitude;
-
     @Column(name = "LIN_PARADA_LATITUDE", nullable = false)
     private BigDecimal latitude;
+
+    @Column(name = "LIN_PARADA_LONGITUDE", nullable = false)
+    private BigDecimal longitude;
 
     @Column(name = "GLB_MUNICIPIO_COD")
     private Long municipio;
 
-    @ManyToOne
-    @JoinColumn(name = "GLB_UF_SIGLA", referencedColumnName = "GLB_UF_SIGLA", nullable = false)
-    private UF uf;
+    @Column(name = "GLB_UF_SIGLA", nullable = false)
+    private String uf;
 
-    @ManyToOne
-    @JoinColumn(name = "LIN_TIPO_ID", referencedColumnName = "LIN_TIPO_ID")
-    private Tipo tipo;
+    @Column(name = "LIN_TIPO_ID", nullable = false)
+    private Long tipo;
+
+    @Column(name = "LIN_PARADA_FLAGATIVA", nullable = false)
+    private String ativa;
+
 
     public ParadaRecord toRecord() {
         return new ParadaRecord(
@@ -51,13 +56,24 @@ public class Parada {
                 logradouro,
                 numero,
                 obs,
-                longitude,
                 latitude,
+                longitude,
                 municipio,
-                uf.getSigla(),
-                tipo.getTipoId()
+                uf,
+                tipo,
+                ativa
         );
     }
 
+    public Parada(String logradouro, String numero, String obs, BigDecimal longitude, BigDecimal latitude, Long municipio, String uf, Long tipo) {
+        this.logradouro = logradouro;
+        this.numero = numero;
+        this.obs = obs;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.municipio = municipio;
+        this.uf = uf;
+        this.tipo = tipo;
+    }
 }
 

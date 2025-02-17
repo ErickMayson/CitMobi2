@@ -13,13 +13,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ParadaService {
 
-    private static final Logger logger = LoggerFactory.getLogger(RotaService.class);
+    private static final Logger logger = LoggerFactory.getLogger(ParadaService.class);
 
     private final LinhaRepository linhaRepository;
     private final RotaRepository rotaRepository;
@@ -79,14 +80,28 @@ public class ParadaService {
         }
     }
 
-//    public ResponseEntity<GenericResponse<List<ParadaRecord>>> createParadas(List<ParadaRecord> paradasList, Long municipio) {
-//        try {
-//
-//        } catch(Exception e) {
-//            logger.error("Erro ao criar as paradas", e);
-//            GenericResponse<List<ParadaRecord>> errorResponse = new GenericResponse<>("500", "Certifique-se que essa rua existe.", null);
-//            return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
+    public ResponseEntity<GenericResponse<List<GenericResponse<ParadaRecord>>>> createParadas(List<ParadaRecord> paradasList) {
+        try {
+            List<GenericResponse<ParadaRecord>> createdParadas = new ArrayList<>();
+            for(ParadaRecord paradaRecord : paradasList) {
+                Parada criarParada = paradaRecord.toParada();
+                try {
+                    paradaRepository.save(criarParada);
+                    ParadaRecord paradaCriada = criarParada.toRecord();
+                    GenericResponse<ParadaRecord> criaParadaResponse = new GenericResponse<>("200", "Parada criada com sucesso.", paradaCriada);
+                    createdParadas.add(criaParadaResponse);
+                } catch (Exception e) {
+                    GenericResponse<ParadaRecord> criaParadaResponse = new GenericResponse<>("500", "Erro ao criar parada, verifique.", paradaRecord);
+                    createdParadas.add(criaParadaResponse);
+                }
+            }
+            GenericResponse<List<GenericResponse<ParadaRecord>>> response = new GenericResponse<>("200", "Processo realizado com sucesso.", createdParadas);
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+        } catch(Exception e) {
+            logger.error("Erro ao criar as paradas", e);
+            GenericResponse<List<GenericResponse<ParadaRecord>>> errorResponse = new GenericResponse<>("500", "Erro ao criar as paradas.", null);
+            return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }
