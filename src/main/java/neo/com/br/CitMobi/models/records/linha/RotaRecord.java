@@ -8,7 +8,7 @@ public record RotaRecord(
         String prefixo,
         Long municipio,
         String linhaSentido,
-        ItinerarioRecord rota
+        ItinerarioRecord itinerario
 ) {
     public Rota toRota() {
         return new Rota(
@@ -17,7 +17,7 @@ public record RotaRecord(
                 safeTrimAndUppercase(prefixo),
                 municipio,
                 safeTrimAndUppercase(linhaSentido),
-                rota.toRotaList()
+                itinerario.toRotaList()
         );
     }
     // Posso criar itinerarios sem rota definida, entao esse constructor se faz necessario.

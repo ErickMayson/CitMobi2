@@ -1,6 +1,7 @@
 package neo.com.br.CitMobi.services;
 
 import neo.com.br.CitMobi.models.linha.*;
+import neo.com.br.CitMobi.models.records.linha.ParadaRecord;
 import neo.com.br.CitMobi.models.records.linha.RotaRecord;
 import neo.com.br.CitMobi.models.records.linha.ItinerarioRecord;
 import neo.com.br.CitMobi.models.records.response.GenericResponse;
@@ -54,9 +55,9 @@ public class RotaService {
                     RotaRecord rotaRecord = new RotaRecord(linha, atendimento, rota.getPrefixo(), Long.parseLong(municipio), rota.getLinhaSentido(), null);
                     itinerarioResponse.rotaRecords().add(rotaRecord);
                 } else {
-                    List<Parada> paradasRota = new ArrayList<>();
+                    List<ParadaRecord> paradasRota = new ArrayList<>();
                     optRota.get().forEach( toBeItinerario -> {
-                        paradasRota.add(toBeItinerario.getItinerarioId().getParada());
+                        paradasRota.add(toBeItinerario.getItinerarioId().getParada().toRecord());
                     });
                     ItinerarioRecord rotaResponse = new ItinerarioRecord(rota.getRotaId(), paradasRota);
                     logger.info("Adicionando itinerario...");
@@ -88,7 +89,7 @@ public class RotaService {
                 GenericResponse<RotaResponse> errorResponse = new GenericResponse<>("409", message, null);
                 return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
             }
-            if (novaRota.rota() == null) {
+            if (novaRota.itinerario() == null) {
                 Rota criarRota = novaRota.toRotaNoItinerario();
                 rotaRepository.save(criarRota);
                 GenericResponse<RotaResponse> response = new GenericResponse<>("201", "Nova rota criada com sucesso", new RotaResponse(Collections.singletonList(novaRota)));
