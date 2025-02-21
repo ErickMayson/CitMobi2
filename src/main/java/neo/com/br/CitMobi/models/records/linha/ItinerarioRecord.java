@@ -25,6 +25,7 @@ public record ItinerarioRecord(
     }
 
 
+
     private String safeTrimAndUppercase(String value) {
         return value == null ? null : value.trim().toUpperCase();
     }

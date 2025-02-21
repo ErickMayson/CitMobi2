@@ -19,7 +19,6 @@ import java.util.List;
 public class Rota {
 
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Use IDENTITY for SERIAL in PostgreSQL
     @Column(name = "LIN_ROTA_ID")
     private Long rotaId;

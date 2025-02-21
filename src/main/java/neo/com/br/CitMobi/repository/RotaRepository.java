@@ -26,7 +26,7 @@ public interface RotaRepository extends JpaRepository<Rota, Long> {
     @Query(value = """
             SELECT CASE
                 WHEN EXISTS (
-                    SELECT 1 FROM FROM T_LIN_ROTA ROTA
+                    SELECT 1 FROM T_LIN_ROTA ROTA
                     WHERE ROTA.LIN_LINHA_ID = :linhaId
                     AND ROTA.LIN_LINHA_ATENDIMENTO = :linhaAtendimento
                     AND ROTA.GLB_MUNICIPIO_COD = :municipio

@@ -15,24 +15,23 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class RotaService {
 
     private static final Logger logger = LoggerFactory.getLogger(RotaService.class);
 
+    private final ItinerarioRepository itinerarioRepository;
+    private final ItinerarioService itinerarioService;
     private final LinhaRepository linhaRepository;
     private final RotaRepository rotaRepository;
-    private final ItinerarioRepository itinerarioRepository;
 
-    public RotaService(RotaRepository rotaRepository, ItinerarioRepository itinerarioRepository, LinhaRepository linhaRepository) {
-        this.rotaRepository = rotaRepository;
+    public RotaService(ItinerarioService itinerarioService, ItinerarioRepository itinerarioRepository,RotaRepository rotaRepository, LinhaRepository linhaRepository) {
         this.itinerarioRepository = itinerarioRepository;
+        this.itinerarioService = itinerarioService;
         this.linhaRepository = linhaRepository;
+        this.rotaRepository = rotaRepository;
     }
 
     public ResponseEntity<GenericResponse<RotaResponse>> getRota(String linha, String atendimento, String municipio) {
@@ -77,7 +76,7 @@ public class RotaService {
 
     public ResponseEntity<GenericResponse<RotaResponse>> createRota(String linha, String atendimento, String municipio, RotaRecord novaRota) {
         try {
-            if (doesLinhaExists(linha, atendimento, municipio)) {
+            if (!doesLinhaExists(linha, atendimento, municipio)) {
                 String message = "A linha " + linha + "/" + atendimento + " não foi encontrada.";
                 logger.error(message);
                 GenericResponse<RotaResponse> errorResponse = new GenericResponse<>("404", message, null);
@@ -92,14 +91,11 @@ public class RotaService {
             if (novaRota.itinerario() == null) {
                 Rota criarRota = novaRota.toRotaNoItinerario();
                 rotaRepository.save(criarRota);
-                GenericResponse<RotaResponse> response = new GenericResponse<>("201", "Nova rota criada com sucesso", new RotaResponse(Collections.singletonList(novaRota)));
+                GenericResponse<RotaResponse> response = new GenericResponse<>("201", "Nova rota criada com sucesso, tente adicionar um itinerario.", new RotaResponse(Collections.singletonList(novaRota)));
                 return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
             }
-            Rota criarRota = novaRota.toRotaNoItinerario();
-            rotaRepository.save(criarRota);
 
-
-            GenericResponse<RotaResponse> response = new GenericResponse<>("201", "Placeholder.", new RotaResponse(Collections.singletonList(novaRota)));
+            GenericResponse<RotaResponse> response = createRotaItinerario(novaRota);
             return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 
         } catch (Exception e) {
@@ -107,6 +103,23 @@ public class RotaService {
             GenericResponse<RotaResponse> errorResponse = new GenericResponse<>("500", "Erro ao acessar o itinerario", null);
             return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    private GenericResponse<RotaResponse> createRotaItinerario(RotaRecord novaRota) {
+        Rota criarRota = novaRota.toRotaNoItinerario();
+        Rota createdRota = rotaRepository.save(criarRota);
+        List<ParadaRecord> itinerario = novaRota.itinerario().paradas();
+        ItinerarioRecord itinerarioRecord = new ItinerarioRecord(createdRota.getRotaId(), itinerario);
+        ResponseEntity<GenericResponse<ItinerarioRecord>> criaItinerario = itinerarioService.createItinerario(itinerarioRecord, novaRota.linhaId(), novaRota.linhaAtendimento(), novaRota.prefixo());
+        if(criaItinerario.getStatusCode().is2xxSuccessful()) {
+            RotaRecord rotaCriada = createNewRotaRecord(Objects.requireNonNull(criaItinerario.getBody()).data(), novaRota);
+            return new GenericResponse<>("201", "Rota criada com sucesso.", new RotaResponse(Collections.singletonList(rotaCriada)));
+        }
+        return new GenericResponse<>("500", "Erro ao criar o itinerario", null);
+    }
+
+    private RotaRecord createNewRotaRecord(ItinerarioRecord itinerario, RotaRecord novaRota) {
+        return new RotaRecord(novaRota.linhaId(), novaRota.linhaAtendimento(), novaRota.prefixo(), novaRota.municipio(), novaRota.linhaSentido(), itinerario);
     }
 
     private boolean doesLinhaExists(String linha, String atendimento, String municipio) {
