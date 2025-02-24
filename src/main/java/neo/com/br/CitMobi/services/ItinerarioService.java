@@ -143,6 +143,11 @@ public class ItinerarioService {
         }
     }
 
+    // TODO
+    // Reorganizar toda a sequencia ao adicionar ou remover paradas.
+    // Se possivel, realizar isso no minimo de operacoes possiveis sem utilizar full deletes(apagar toda rota e criar do zero)
+    //public ResponseEntity<GenericResponse<ItinerarioRecord>> editItinerario() {}
+
     private List<ParadaRecord> createParadasForItinerario(List<ParadaRecord> paradasACriar, Map<Integer, ParadaRecord> indexedParadas) {
         ResponseEntity<GenericResponse<List<GenericResponse<ParadaRecord>>>> responseCreateParadas =
                 paradaService.createParadas(paradasACriar);
