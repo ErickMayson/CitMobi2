@@ -15,18 +15,24 @@ public class SecurityConfig {
             "/swagger-resources/**",
             "swagger-resources"
     };
+    private static final String[] WHITELIST = {
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(AbstractHttpConfigurer::disable) // Disable CSRF
-                .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll() // Allow all requests
-                )
-                .httpBasic(AbstractHttpConfigurer::disable) // Disable HTTP Basic Auth
-                .formLogin(AbstractHttpConfigurer::disable); // Disable Form-based login
+    };
 
-        return http.build();
-    }
+
+
+    // Antigo "WHITELIST"
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        http
+//                .csrf(AbstractHttpConfigurer::disable) // Disable CSRF
+//                .authorizeHttpRequests(auth -> auth
+//                        .anyRequest().permitAll() // Allow all requests
+//                )
+//                .httpBasic(AbstractHttpConfigurer::disable) // Disable HTTP Basic Auth
+//                .formLogin(AbstractHttpConfigurer::disable); // Disable Form-based login
+//
+//        return http.build();
+//    }
 }
 

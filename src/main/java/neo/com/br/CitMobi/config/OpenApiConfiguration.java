@@ -20,7 +20,7 @@ public class OpenApiConfiguration {
 
         Contact myContact = new Contact();
         myContact.setName("Erick Ferreira");
-        myContact.setEmail("erick.ferreira@CitMobi2.com");
+        myContact.setEmail("erick.ferreira@CitMobi.com");
 
         Info information = new Info()
                 .title("Public Transport Management System API")
