@@ -1,12 +1,9 @@
-package neo.com.br.CitMobi.controller;
+package neo.com.br.CitMobi.controller.linha;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import neo.com.br.CitMobi.models.linha.Linha;
 import neo.com.br.CitMobi.models.records.linha.LinhaRecord;
 import neo.com.br.CitMobi.models.records.response.GenericResponse;
 import neo.com.br.CitMobi.models.records.response.LinhaEditResponse;
@@ -14,9 +11,7 @@ import neo.com.br.CitMobi.models.records.response.LinhaResponse;
 import neo.com.br.CitMobi.services.LinhaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/v1/api")
 @CrossOrigin(value = "*")
 @Tag(name = "Linha", description = "Controller to manage Linhas")
 public class LinhaController {

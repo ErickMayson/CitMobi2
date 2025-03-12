@@ -1,4 +1,4 @@
-package neo.com.br.CitMobi.controller;
+package neo.com.br.CitMobi.controller.linha;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import neo.com.br.CitMobi.models.records.linha.RotaRecord;
@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/v1/api")
 @CrossOrigin(value = "*")
 @Tag(name = "Itinerario", description = "Controller to manage rotas.")
 public class RotaController {

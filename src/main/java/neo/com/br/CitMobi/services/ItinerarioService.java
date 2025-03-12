@@ -42,8 +42,6 @@ public class ItinerarioService {
         this.paradaService = paradaService;
         this.paradaRepository = paradaRepository;
         this.rotaRepository = rotaRepository;
-
-
     }
 
     public ResponseEntity<GenericResponse<List<ItinerarioRecord>>> getItinerariosPerLine(String linha, String atendimento, Long municipio) {

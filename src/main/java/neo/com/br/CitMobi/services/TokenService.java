@@ -1,0 +1,46 @@
+package neo.com.br.CitMobi.services;
+
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTCreationException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import neo.com.br.CitMobi.models.usuario.Usuario;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+
+@Service
+public class TokenService {
+    @Value("$.{api.secret}")
+    String secret;
+
+    public String generateToken(Usuario usuario) {
+        try{
+            Algorithm algorithm = Algorithm.HMAC256(secret);
+            return JWT.create().withIssuer("cit").withSubject(usuario.getLogin()).withExpiresAt(getExpirationDate()).sign(algorithm);
+        } catch (JWTCreationException e) {
+            throw new RuntimeException("ITS OVER");
+        }
+    }
+
+    public String validateToken(String token) {
+        try{
+            Algorithm algorithm = Algorithm.HMAC256(secret);
+            return JWT.require(algorithm).withIssuer("cit")
+                    .build()
+                    .verify(token)
+                    .getSubject();
+        } catch(JWTVerificationException e) {
+            return "";
+        }
+    }
+
+    private Instant getExpirationDate() {
+        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
+    }
+
+}
