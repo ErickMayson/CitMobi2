@@ -57,7 +57,7 @@ INSERT INTO T_USU_USUARIO (
 'Mobiadm',
 '01234567890123',
 'citMobi@citmobi.com.br',
-'$2a$10$JHflw8dGp7Tkn6B5h/tEue7zFJw9TLe8lN5ebvAYh9jBg/dRzSeN2',  -- mobibrasil password,
+'$2a$10$9BH8374tLxctMcb/ZpBgzuwaOCh.4IEFvExT9H1BcLb0SpuRYSV6q',  -- mobibrasil,
 'ADMINISTRADOR DO SISTEMA',
 '11999999999',
 'ADMIN',
