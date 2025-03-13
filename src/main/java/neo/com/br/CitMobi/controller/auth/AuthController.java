@@ -4,10 +4,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import neo.com.br.CitMobi.controller.linha.LinhaController;
 import neo.com.br.CitMobi.models.records.usuario.AuthRecord;
+import neo.com.br.CitMobi.models.records.usuario.UsuarioRecord;
+import neo.com.br.CitMobi.models.usuario.LoginResponse;
 import neo.com.br.CitMobi.models.usuario.Usuario;
 import neo.com.br.CitMobi.models.usuario.UsuarioRole;
 import neo.com.br.CitMobi.repository.UsuarioRepository;
 import neo.com.br.CitMobi.services.TokenService;
+import neo.com.br.CitMobi.services.UsuarioService;
 import org.apache.coyote.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,32 +31,34 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private  final TokenService tokenService;
     private final UsuarioRepository usuarioRepository;
+    private final UsuarioService usuarioService;
 
-    public AuthController(AuthenticationManager authenticationManager, TokenService tokenService, UsuarioRepository usuarioRepository) {
+    public AuthController(AuthenticationManager authenticationManager, TokenService tokenService, UsuarioService usuarioService, UsuarioRepository usuarioRepository) {
         this.authenticationManager = authenticationManager;
         this.tokenService = tokenService;
+        this.usuarioService = usuarioService;
         this.usuarioRepository = usuarioRepository;
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @Valid AuthRecord user) {
+    public ResponseEntity<LoginResponse> login(@RequestBody @Valid AuthRecord user) {
+        logger.info("New AUTH request {} {}", user.login(), user.senha());
         var userPassword = new UsernamePasswordAuthenticationToken(user.login(), user.senha());
         var auth = this.authenticationManager.authenticate(userPassword);
 
         var token = tokenService.generateToken((Usuario) auth.getPrincipal());
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(new LoginResponse(token));
     }
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody @Valid String login) {
-        if(this.usuarioRepository.findByLogin(login) != null) return ResponseEntity.badRequest().body("SORRY! CANT DO!");
-
-        String encryptedPassword = new BCryptPasswordEncoder().encode(login);
-        Usuario novoUsuario = new Usuario(login, encryptedPassword, UsuarioRole.USER);
-
-
-        return ResponseEntity.badRequest().body("Sorry, you can't create users this way.");
+    public ResponseEntity register(@RequestBody UsuarioRecord novoUsuario) {
+//        if(this.usuarioRepository.findByLogin(login) != null) return ResponseEntity.badRequest().body("SORRY! CANT DO!");
+//
+//        String encryptedPassword = new BCryptPasswordEncoder().encode(login);
+//        Usuario novoUsuario = new Usuario(login, encryptedPassword, UsuarioRole.USER);
+        return usuarioService.createUsuario(novoUsuario);
+//        return ResponseEntity.badRequest().body("Sorry, you can't create users this way.");
     }
 
 }

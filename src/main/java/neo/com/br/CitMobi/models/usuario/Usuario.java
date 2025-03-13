@@ -6,13 +6,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import neo.com.br.CitMobi.models.linha.Operador;
+import neo.com.br.CitMobi.models.records.usuario.UsuarioRecord;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.Instant;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -25,13 +28,10 @@ public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "USU_USUARIO_ID")
-    private String id;
+    private UUID id;
 
     @Column(name = "USU_USUARIO_LOGIN", length = 50, nullable = false, unique = true)
     private String login;
-
-    @Column(name = "USU_USUARIO_CNPJ", length = 14, nullable = false)
-    private String cnpj;
 
     @Column(name = "USU_USUARIO_EMAIL", nullable = false, unique = true)
     private String email;
@@ -62,7 +62,7 @@ public class Usuario implements UserDetails {
     private Instant dataUltimoLogin;
 
     @ManyToOne
-    @JoinColumn(name = "USU_USUARIO_CNPJ", referencedColumnName = "GLB_OPERADOR_CNPJ", insertable = false, updatable = false)
+    @JoinColumn(name = "GLB_OPERADOR_CNPJ", referencedColumnName = "GLB_OPERADOR_CNPJ")
     private Operador operador;
 
     public Usuario(String login, String senha, UsuarioRole role) {
@@ -70,6 +70,21 @@ public class Usuario implements UserDetails {
         this.senha = senha;
         this.role = role;
     }
+
+    public Usuario(UsuarioRecord usuario) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        this.login = usuario.login();
+        this.senha = encoder.encode(usuario.senha());
+        this.email = usuario.email();
+        this.telefone = usuario.telefone();
+        this.nome = usuario.nome();
+        this.role = usuario.role();
+        if (usuario.operador() != null) {
+            this.operador = new Operador(usuario.operador().getCnpj(), usuario.operador().getRazaoSocial());
+        }
+    }
+
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -79,7 +94,7 @@ public class Usuario implements UserDetails {
 
     @Override
     public String getPassword() {
-        return "";
+        return this.senha;
     }
 
     @Override
