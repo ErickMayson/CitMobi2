@@ -31,7 +31,7 @@ public record UsuarioRecord(
                 usuario.getSenha(),
                 usuario.getEmail(),
                 usuario.getNome(),
-                usuario.getTelefone(),
+                   usuario.getTelefone(),
                 usuario.getRole(),
                 usuario.getOperador());
     }
