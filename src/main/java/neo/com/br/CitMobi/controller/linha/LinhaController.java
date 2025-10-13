@@ -15,6 +15,7 @@ import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/v1/api")
 @CrossOrigin(value = "*")
 @Tag(name = "Linha", description = "Controller to manage Linhas")
+@PreAuthorize("!hasRole('MOTORISTA')")
 public class LinhaController {
 
     private static final Logger logger = LoggerFactory.getLogger(LinhaController.class);

@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -19,6 +20,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.List;
 
 @Configuration
+@EnableMethodSecurity
 public class SecurityConfig {
 
     private static final String[] SWAGGER_WHITELIST = {
@@ -27,9 +29,7 @@ public class SecurityConfig {
             "/swagger-resources/**",
             "swagger-resources"
     };
-//    private static final String[] WHITELIST = {
-//
-//    };
+
     private final SecurityFilter securityFilter;
 
     public SecurityConfig(SecurityFilter securityFilter) {
@@ -73,20 +73,5 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
-
-
-    // Antigo "WHITELIST"
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        http
-//                .csrf(AbstractHttpConfigurer::disable) // Disable CSRF
-//                .authorizeHttpRequests(auth -> auth
-//                        .anyRequest().permitAll() // Allow all requests
-//                )
-//                .httpBasic(AbstractHttpConfigurer::disable) // Disable HTTP Basic Auth
-//                .formLogin(AbstractHttpConfigurer::disable); // Disable Form-based login
-//
-//        return http.build();
-//    }
 }
 

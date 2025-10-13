@@ -3,7 +3,8 @@ package neo.com.br.CitMobi.models.usuario;
 public enum UsuarioRole {
 
     ADMIN("ADMIN"),
-    USER("USER");
+    USER("USER"),
+    MOTORISTA("MOTORISTA");
 
     private final String role;
 

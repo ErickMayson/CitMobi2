@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 @RequestMapping(value = "/v1/api")
 @CrossOrigin(value = "*")
 @Tag(name = "Parada", description = "Controller to manage Paradas (Stops)")
+@PreAuthorize("!hasRole('MOTORISTA')")
 public class ParadaController {
 
     private static final Logger logger = LoggerFactory.getLogger(LinhaController.class);

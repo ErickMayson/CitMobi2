@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import neo.com.br.CitMobi.models.usuario.Usuario;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -19,13 +20,19 @@ public class TokenService {
     String secret;
 
     public String generateToken(Usuario usuario) {
-        try{
+        try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
-            return JWT.create().withIssuer("cit").withSubject(usuario.getLogin()).withExpiresAt(getExpirationDate()).sign(algorithm);
+            return JWT.create()
+                    .withIssuer("cit")
+                    .withSubject(usuario.getLogin())
+                    .withClaim("role", usuario.getRole().getRole()) // <-- add role claim
+                    .withExpiresAt(getExpirationDate())
+                    .sign(algorithm);
         } catch (JWTCreationException e) {
             throw new RuntimeException("ITS OVER");
         }
     }
+
 
     public String validateToken(String token) {
         try{
@@ -36,6 +43,18 @@ public class TokenService {
                     .getSubject();
         } catch(JWTVerificationException e) {
             return "";
+        }
+    }
+
+    public DecodedJWT decodeToken(String token) {
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(secret);
+            return JWT.require(algorithm)
+                    .withIssuer("cit")
+                    .build()
+                    .verify(token);
+        } catch (JWTVerificationException e) {
+            return null;
         }
     }
 

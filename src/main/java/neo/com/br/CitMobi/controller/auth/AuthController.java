@@ -30,14 +30,12 @@ public class AuthController {
 
     private final AuthenticationManager authenticationManager;
     private  final TokenService tokenService;
-    private final UsuarioRepository usuarioRepository;
     private final UsuarioService usuarioService;
 
-    public AuthController(AuthenticationManager authenticationManager, TokenService tokenService, UsuarioService usuarioService, UsuarioRepository usuarioRepository) {
+    public AuthController(AuthenticationManager authenticationManager, TokenService tokenService, UsuarioService usuarioService) {
         this.authenticationManager = authenticationManager;
         this.tokenService = tokenService;
         this.usuarioService = usuarioService;
-        this.usuarioRepository = usuarioRepository;
     }
 
     @PostMapping("/login")
@@ -50,15 +48,10 @@ public class AuthController {
 
         return ResponseEntity.ok(new LoginResponse(token));
     }
-
+    //Bloquear esse controller.
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody UsuarioRecord novoUsuario) {
-//        if(this.usuarioRepository.findByLogin(login) != null) return ResponseEntity.badRequest().body("SORRY! CANT DO!");
-//
-//        String encryptedPassword = new BCryptPasswordEncoder().encode(login);
-//        Usuario novoUsuario = new Usuario(login, encryptedPassword, UsuarioRole.USER);
         return usuarioService.createUsuario(novoUsuario);
-//        return ResponseEntity.badRequest().body("Sorry, you can't create users this way.");
     }
 
 }
