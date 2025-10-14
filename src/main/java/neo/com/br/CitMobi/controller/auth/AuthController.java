@@ -15,6 +15,7 @@ import org.apache.coyote.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -50,6 +51,7 @@ public class AuthController {
     }
     //Bloquear esse controller.
     @PostMapping("/register")
+    @PreAuthorize("!hasRole('MOTORISTA')")
     public ResponseEntity register(@RequestBody UsuarioRecord novoUsuario) {
         return usuarioService.createUsuario(novoUsuario);
     }

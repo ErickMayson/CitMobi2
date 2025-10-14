@@ -42,6 +42,9 @@ public class Usuario implements UserDetails {
     @Column(name = "USU_USUARIO_NOME", length = 100)
     private String nome;
 
+    @Column(name = "USU_USUARIO_CPF", length = 11)
+    private String cpf;
+
     @Column(name = "USU_USUARIO_TELEFONE", length = 20, unique = true)
     private String telefone;
 
@@ -76,6 +79,7 @@ public class Usuario implements UserDetails {
         this.login = usuario.login();
         this.senha = encoder.encode(usuario.senha());
         this.email = usuario.email();
+        this.cpf = usuario.cpf();
         this.telefone = usuario.telefone();
         this.nome = usuario.nome();
         this.role = usuario.role();

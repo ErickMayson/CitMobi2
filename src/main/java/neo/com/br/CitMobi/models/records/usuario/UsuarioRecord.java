@@ -17,6 +17,7 @@ public record UsuarioRecord(
         String email,
         String nome,
         String telefone,
+        String cpf,
         UsuarioRole role,
         Operador operador
 ){
@@ -31,7 +32,8 @@ public record UsuarioRecord(
                 usuario.getSenha(),
                 usuario.getEmail(),
                 usuario.getNome(),
-                   usuario.getTelefone(),
+                usuario.getTelefone(),
+                usuario.getCpf(),
                 usuario.getRole(),
                 usuario.getOperador());
     }
