@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
@@ -25,7 +24,8 @@ public class TokenService {
             return JWT.create()
                     .withIssuer("cit")
                     .withSubject(usuario.getLogin())
-                    .withClaim("role", usuario.getRole().getRole()) // <-- add role claim
+                    .withClaim("role", usuario.getRole().getRole())
+                    .withClaim("operador", usuario.getOperador().getCnpj())
                     .withExpiresAt(getExpirationDate())
                     .sign(algorithm);
         } catch (JWTCreationException e) {
@@ -57,6 +57,17 @@ public class TokenService {
             return null;
         }
     }
+
+    public String getOperadorIdFromToken(String authHeader) {
+        if (authHeader == null || !authHeader.startsWith("bearer ")) {
+            return null;
+        }
+
+        String token = authHeader.substring(7);
+        DecodedJWT decoded = decodeToken(token);
+        return decoded != null ? decoded.getClaim("operador").asString() : null;
+    }
+
 
     private Instant getExpirationDate() {
         return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));

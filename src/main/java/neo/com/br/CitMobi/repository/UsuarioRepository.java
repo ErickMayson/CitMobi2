@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
@@ -28,6 +29,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
 
     UserDetails findByLogin(String login);
+
+    List<Usuario> findByOperadorCnpj(String cnpj);
 
     @Query(value =  verifyBy, nativeQuery = true)
     Optional<String> getUsuario(@Param("login") String login, @Param("email") String email, @Param("telefone") String telefone, @Param("cpf") String cpf);

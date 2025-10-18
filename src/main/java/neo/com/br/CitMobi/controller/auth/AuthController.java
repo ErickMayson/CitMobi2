@@ -49,11 +49,5 @@ public class AuthController {
 
         return ResponseEntity.ok(new LoginResponse(token));
     }
-    //Bloquear esse controller.
-    @PostMapping("/register")
-    @PreAuthorize("!hasRole('MOTORISTA')")
-    public ResponseEntity register(@RequestBody UsuarioRecord novoUsuario) {
-        return usuarioService.createUsuario(novoUsuario);
-    }
 
 }
