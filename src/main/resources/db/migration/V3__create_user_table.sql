@@ -30,8 +30,6 @@ RETURNS TRIGGER AS $$
 BEGIN
     -- Update last login timestamp
     NEW.USU_USUARIO_DTULTIMOLOGIN = now();  -- Corrected to match the column name
-    -- Increment the login count
-    NEW.USU_USUARIO_LOGIN_COUNT = NEW.USU_USUARIO_LOGIN_COUNT + 1;
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;

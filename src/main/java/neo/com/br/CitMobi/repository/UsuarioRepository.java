@@ -30,7 +30,10 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     UserDetails findByLogin(String login);
 
-    List<Usuario> findByOperadorCnpj(String cnpj);
+    @Query(value = "SELECT b FROM Usuario b where b.login = :login AND b.operador.cnpj = :cnpj")
+    Optional<Usuario> findUserByLogin(String login, String cnpj);
+
+    List<Usuario> findByOperadorCnpjAndFlagAtivo(String cnpj, String flagAtivo);
 
     @Query(value =  verifyBy, nativeQuery = true)
     Optional<String> getUsuario(@Param("login") String login, @Param("email") String email, @Param("telefone") String telefone, @Param("cpf") String cpf);

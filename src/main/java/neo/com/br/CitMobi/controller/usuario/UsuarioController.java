@@ -24,8 +24,16 @@ public class UsuarioController {
     }
 
     @PostMapping("/usuarios")
-    public ResponseEntity register(@RequestBody UsuarioRecord novoUsuario) {
-        return usuarioService.createUsuario(novoUsuario);
+    public ResponseEntity register(@RequestHeader("Authorization") String authHeader, @RequestBody UsuarioRecord novoUsuario) {
+        return usuarioService.createUsuario(novoUsuario, authHeader);
+    }
+
+    @PatchMapping("/usuarios/{login}")
+    public ResponseEntity updateUsuario(
+            @RequestHeader("Authorization") String authHeader,
+            @PathVariable String login,
+            @RequestBody UsuarioRecord updateData) {
+        return usuarioService.updateUsuario(login, updateData, authHeader);
     }
 
 

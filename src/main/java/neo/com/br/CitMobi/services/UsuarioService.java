@@ -9,8 +9,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Field;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,8 +31,7 @@ public class UsuarioService {
     }
 
     public ResponseEntity<GenericResponse> getUsuariosPerOperador(String authHeader) {
-        String cnpjOperador = tokenService.getOperadorIdFromToken(authHeader);
-        List<Usuario>  usuarios = usuarioRepository.findByOperadorCnpj(cnpjOperador);
+        List<Usuario> usuarios = usuarioRepository.findByOperadorCnpjAndFlagAtivo(tokenService.getOperadorIdFromToken(authHeader), "S");
 
         List<UsuarioLiteRecord> liteUsuarios = usuarios.stream()
                 .map(UsuarioLiteRecord::fromUsuario)
@@ -38,10 +40,13 @@ public class UsuarioService {
         GenericResponse<List<UsuarioLiteRecord>> response = new GenericResponse<>("200", "Usuarios encontrados", liteUsuarios);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
-
     }
 
-    public ResponseEntity<GenericResponse> createUsuario(UsuarioRecord novoUsuario) {
+    public ResponseEntity<GenericResponse> createUsuario(UsuarioRecord novoUsuario, String authHeader) {
+        if(tokenService.getOperadorIdFromToken(authHeader) != novoUsuario.operador().getCnpj()) {
+            GenericResponse errorResponse = new GenericResponse<>("403", "Permissão insuficiente", null);
+            return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
         try {
             Optional<String> usuarioExists = usuarioRepository.getUsuario(novoUsuario.login(), novoUsuario.email(), novoUsuario.telefone(), novoUsuario.cpf());
             if(usuarioExists.isPresent()) {
@@ -62,4 +67,43 @@ public class UsuarioService {
             return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    public ResponseEntity<GenericResponse> updateUsuario(String login, UsuarioRecord updateData, String authHeader) {
+        Usuario usuario = usuarioRepository.findUserByLogin(login, tokenService.getOperadorIdFromToken(authHeader))
+                .orElseThrow(() -> new RuntimeException("Usuario not found"));
+
+        updateUsuarioFields(usuario, updateData);
+
+        usuario.setDataUpdate(Instant.now());
+        usuarioRepository.save(usuario);
+
+        GenericResponse response = new GenericResponse<>("200", "Usuario atualizado com sucesso!", null);
+        return ResponseEntity.ok(response);
+    }
+
+    private void updateUsuarioFields(Usuario usuario, UsuarioRecord updateData) {
+        Field[] fields = UsuarioRecord.class.getDeclaredFields();
+        for (Field field : fields) {
+            try {
+                field.setAccessible(true);
+                Object newValue = field.get(updateData);
+                if (newValue != null) {
+                    Field usuarioField = Usuario.class.getDeclaredField(field.getName());
+                    usuarioField.setAccessible(true);
+                    Object currentValue = usuarioField.get(usuario);
+
+                    if (field.getName().equals("senha")) {
+                        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+                        if (!encoder.matches((String) newValue, (String) currentValue)) {
+                            usuarioField.set(usuario, encoder.encode((String) newValue));
+                        }
+                    } else if (!newValue.equals(currentValue)) {
+                        usuarioField.set(usuario, newValue);
+                    }
+                }
+            } catch (NoSuchFieldException | IllegalAccessException ignored) {}
+        }
+    }
+
+
 }
