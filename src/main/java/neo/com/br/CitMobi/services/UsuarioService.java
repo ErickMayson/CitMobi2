@@ -30,7 +30,7 @@ public class UsuarioService {
 
     public ResponseEntity<GenericResponse> createUsuario(UsuarioRecord novoUsuario) {
         try {
-            Optional<String> usuarioExists = usuarioRepository.getUsuario(novoUsuario.login(), novoUsuario.email(), novoUsuario.telefone());
+            Optional<String> usuarioExists = usuarioRepository.getUsuario(novoUsuario.login(), novoUsuario.email(), novoUsuario.telefone(), novoUsuario.cpf());
             if(usuarioExists.isPresent()) {
                 String message = usuarioExists.get().toUpperCase();
                 logger.error(message);

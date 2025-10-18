@@ -17,16 +17,18 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
                     WHEN USU.USU_USUARIO_LOGIN = :login THEN 'ESSE USUARIO JA ESTA EM USO'
                     WHEN USU.USU_USUARIO_EMAIL = :email THEN 'EMAIL JA ESTA EM USO'
                     WHEN USU.USU_USUARIO_TELEFONE = :telefone THEN 'ESSE TELEFONE JA ESTA EM USO'
+                    WHEN USU.USU_USUARIO_CPF = :cpf THEN 'ESSE CPF JA ESTA EM USO'
                 END AS FOUND_CONDITION
             FROM T_USU_USUARIO USU
             WHERE USU.USU_USUARIO_LOGIN = :login
                OR USU.USU_USUARIO_EMAIL = :email
-               OR USU.USU_USUARIO_TELEFONE = :telefone;
+               OR USU.USU_USUARIO_TELEFONE = :telefone
+               OR USU.USU_USUARIO_CPF = :cpf
             """;
 
 
     UserDetails findByLogin(String login);
 
     @Query(value =  verifyBy, nativeQuery = true)
-    Optional<String> getUsuario(@Param("login") String login, @Param("email") String email, @Param("telefone") String telefone);
+    Optional<String> getUsuario(@Param("login") String login, @Param("email") String email, @Param("telefone") String telefone, @Param("cpf") String cpf);
 }
