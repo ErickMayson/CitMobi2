@@ -33,6 +33,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     @Query(value = "SELECT b FROM Usuario b where b.login = :login AND b.operador.cnpj = :cnpj")
     Optional<Usuario> findUserByLogin(String login, String cnpj);
 
+    Optional<Usuario> findByOperadorCnpjAndLoginAndFlagAtivo(String cnpj, String login,  String flagAtivo);
     List<Usuario> findByOperadorCnpjAndFlagAtivo(String cnpj, String flagAtivo);
 
     @Query(value =  verifyBy, nativeQuery = true)

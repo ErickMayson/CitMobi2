@@ -30,6 +30,18 @@ public class UsuarioService {
         this.tokenService = tokenService;
     }
 
+    public ResponseEntity<GenericResponse> getUsuarioByLogin(String authHeader, String login) {
+        Optional<Usuario> usuario = usuarioRepository.findByOperadorCnpjAndLoginAndFlagAtivo(tokenService.getOperadorIdFromToken(authHeader), login, "S");
+
+        List<UsuarioLiteRecord> liteUsuarios = usuario.stream()
+                .map(UsuarioLiteRecord::fromUsuario)
+                .toList();
+
+        GenericResponse<List<UsuarioLiteRecord>> response = new GenericResponse<>("200", "Usuario encontrados", liteUsuarios);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     public ResponseEntity<GenericResponse> getUsuariosPerOperador(String authHeader) {
         List<Usuario> usuarios = usuarioRepository.findByOperadorCnpjAndFlagAtivo(tokenService.getOperadorIdFromToken(authHeader), "S");
 
