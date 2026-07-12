@@ -1,4 +1,4 @@
 package neo.com.br.CitMobi.models.usuario;
 
-public record LoginResponse(String token) {
+public record LoginResponse(String token, String refreshToken) {
 }

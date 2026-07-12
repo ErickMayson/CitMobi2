@@ -28,13 +28,21 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         var token = this.recoverToken(request);
-        if(token !=null) {
+        if(token != null) {
             var subject = tokenService.validateToken(token);
+            if(subject == null || subject.isEmpty()) {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.getWriter().write("Invalid or expired token");
+                return;
+            }
             UserDetails userDetails = usuarioRepository.findByLogin(subject);
-
+            if(userDetails == null) {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.getWriter().write("User not found");
+                return;
+            }
             var authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
-
         }
         filterChain.doFilter(request, response);
     }

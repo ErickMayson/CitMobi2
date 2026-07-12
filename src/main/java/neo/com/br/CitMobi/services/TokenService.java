@@ -33,6 +33,20 @@ public class TokenService {
         }
     }
 
+    public String generateRefreshToken(Usuario usuario) {
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(secret);
+            return JWT.create()
+                    .withIssuer("cit")
+                    .withSubject(usuario.getLogin())
+                    .withClaim("type", "refresh")
+                    .withExpiresAt(getRefreshExpirationDate())
+                    .sign(algorithm);
+        } catch (JWTCreationException e) {
+            throw new RuntimeException("Error generating refresh token");
+        }
+    }
+
 
     public String validateToken(String token) {
         try{
@@ -42,6 +56,20 @@ public class TokenService {
                     .verify(token)
                     .getSubject();
         } catch(JWTVerificationException e) {
+            return "";
+        }
+    }
+
+    public String validateRefreshToken(String token) {
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(secret);
+            DecodedJWT decoded = JWT.require(algorithm)
+                    .withIssuer("cit")
+                    .withClaim("type", "refresh")
+                    .build()
+                    .verify(token);
+            return decoded.getSubject();
+        } catch (JWTVerificationException e) {
             return "";
         }
     }
@@ -71,6 +99,10 @@ public class TokenService {
 
     private Instant getExpirationDate() {
         return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
+    }
+
+    private Instant getRefreshExpirationDate() {
+        return LocalDateTime.now().plusDays(7).toInstant(ZoneOffset.of("-03:00"));
     }
 
 }
