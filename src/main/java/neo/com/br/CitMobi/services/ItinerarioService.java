@@ -2,16 +2,13 @@ package neo.com.br.CitMobi.services;
 
 import neo.com.br.CitMobi.models.linha.Itinerario;
 import neo.com.br.CitMobi.models.linha.ItinerarioId;
-import neo.com.br.CitMobi.models.linha.Parada;
 import neo.com.br.CitMobi.models.records.linha.ItinerarioRecord;
 import neo.com.br.CitMobi.models.records.linha.ParadaRecord;
-import neo.com.br.CitMobi.models.records.linha.RotaRecord;
 import neo.com.br.CitMobi.models.records.response.GenericResponse;
+import neo.com.br.CitMobi.repository.ItinerarioRepository;
+import neo.com.br.CitMobi.repository.LinhaRepository;
 import neo.com.br.CitMobi.repository.ParadaRepository;
 import neo.com.br.CitMobi.repository.RotaRepository;
-import neo.com.br.CitMobi.repository.LinhaRepository;
-import neo.com.br.CitMobi.repository.ItinerarioRepository;
-import org.apache.coyote.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -49,7 +46,9 @@ public class ItinerarioService {
             Optional<List<Itinerario>> optionalRotas = itinerarioRepository.getItinerariosPerLine(linha, atendimento, municipio);
             if(optionalRotas.isEmpty()) {
                 logger.error("Nenhuma rota encontrada para essa linha.");
-                GenericResponse<List<ItinerarioRecord>> errorResponse = new GenericResponse<>("404", "Nenhuma rota encontrada para essa linha", null);
+                GenericResponse<List<ItinerarioRecord>> errorResponse = new GenericResponse<>("404",
+                        "Nenhuma rota encontrada para essa linha",
+                        null);
                 return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
             }
 
