@@ -6,10 +6,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import neo.com.br.CitMobi.models.records.ibge.DistritoRecord;
+import neo.com.br.CitMobi.models.records.ibge.MunicipioRecord;
 
 @Entity
-@Table(name = "T_GLB_MUNICIPIO")
+@Table(name = "T_GLB_MUNICIPIO", schema = "ibge")
 @Data
 @NoArgsConstructor
 public class Municipio {
@@ -18,26 +18,29 @@ public class Municipio {
     @Column(name = "GLB_MUNICIPIO_COD")
     private Long codIbge;
 
-    @Column(name = "GLB_MUNICIPIO_NOME", precision = 150)
+    @Column(name = "GLB_MUNICIPIO_NOME", length = 150)
     private String nome;
 
-    @Column(name = "GLB_UF_SIGLA", precision = 4)
+    @Column(name = "GLB_UF_SIGLA", length = 2)
     private String uf;
 
-    // Construtor que recebe um UFRecord
-        public Municipio(DistritoRecord record) {
-        this.codIbge = record.municipio().id();
-        this.nome = record.municipio().nome();
-        this.uf = record.municipio().microrregiao().mesorregiao().UF().sigla();
+    @Column(name = "GLB_REGIAOIMEDIATA_COD")
+    private Long codRegiaoImediata;
+
+    public Municipio(MunicipioRecord record) {
+        this.codIbge = record.id();
+        this.nome = record.nome();
+        this.uf = record.regiaoImediata().regiaoIntermediaria().UF().sigla();
+        this.codRegiaoImediata = record.regiaoImediata().id();
     }
 
-    // Método de conversão
-    public static UF fromRecord(DistritoRecord record) {
-        UF uf = new UF();
-        uf.setCodIbge(record.municipio().id());
-        uf.setNome(record.municipio().nome());
-        uf.setSigla(record.municipio().microrregiao().mesorregiao().UF().sigla());
-        return uf;
+    public static Municipio fromRecord(MunicipioRecord record) {
+        Municipio municipio = new Municipio();
+        municipio.setCodIbge(record.id());
+        municipio.setNome(record.nome());
+        municipio.setUf(record.regiaoImediata().regiaoIntermediaria().UF().sigla());
+        municipio.setCodRegiaoImediata(record.regiaoImediata().id());
+        return municipio;
     }
 
 }

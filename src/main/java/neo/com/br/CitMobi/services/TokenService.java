@@ -15,7 +15,7 @@ import java.time.ZoneOffset;
 
 @Service
 public class TokenService {
-    @Value("$.{api.secret}")
+    @Value("${api.secret}")
     String secret;
 
     public String generateToken(Usuario usuario) {
@@ -87,7 +87,7 @@ public class TokenService {
     }
 
     public String getOperadorIdFromToken(String authHeader) {
-        if (authHeader == null || !authHeader.startsWith("bearer ")) {
+        if (authHeader == null || !authHeader.toLowerCase().startsWith("bearer ")) {
             return null;
         }
 

@@ -4,6 +4,7 @@ import neo.com.br.CitMobi.models.records.response.GenericResponse;
 import neo.com.br.CitMobi.models.records.usuario.UsuarioLiteRecord;
 import neo.com.br.CitMobi.models.records.usuario.UsuarioRecord;
 import neo.com.br.CitMobi.models.usuario.Usuario;
+import neo.com.br.CitMobi.models.usuario.UsuarioRole;
 import neo.com.br.CitMobi.repository.UsuarioRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,10 +55,28 @@ public class UsuarioService {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    public ResponseEntity<GenericResponse> getUsuariosByRole(String authHeader, String role) {
+        try {
+            UsuarioRole userRole = UsuarioRole.valueOf(role.toUpperCase());
+            List<Usuario> usuarios = usuarioRepository.findByOperadorCnpjAndRoleAndFlagAtivo(
+                    tokenService.getOperadorIdFromToken(authHeader), userRole, "S"
+            );
+            List<UsuarioLiteRecord> liteUsuarios = usuarios.stream()
+                    .map(UsuarioLiteRecord::fromUsuario)
+                    .toList();
+            GenericResponse<List<UsuarioLiteRecord>> response = new GenericResponse<>("200", "Usuarios encontrados", liteUsuarios);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            GenericResponse errorResponse = new GenericResponse<>("400", "Invalid role parameter: " + role, null);
+            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        }
+    }
+
     public ResponseEntity<GenericResponse> createUsuario(UsuarioRecord novoUsuario, String authHeader) {
-        if(tokenService.getOperadorIdFromToken(authHeader) != novoUsuario.operador().getCnpj()) {
+        String tokenCnpj = tokenService.getOperadorIdFromToken(authHeader);
+        if (tokenCnpj == null || !tokenCnpj.equals(novoUsuario.operador().getCnpj())) {
             GenericResponse errorResponse = new GenericResponse<>("403", "Permissão insuficiente", null);
-            return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
         }
         try {
             Optional<String> usuarioExists = usuarioRepository.getUsuario(novoUsuario.login(), novoUsuario.email(), novoUsuario.telefone(), novoUsuario.cpf());

@@ -20,9 +20,12 @@ public class UsuarioController {
 
     @GetMapping("/usuarios")
     public ResponseEntity getUsuarios(@RequestHeader("Authorization") String authHeader,
-                                      @RequestParam(value = "login", required = false) String login) {
+                                      @RequestParam(value = "login", required = false) String login,
+                                      @RequestParam(value = "role", required = false) String role) {
         if (login != null && !login.isEmpty()) {
             return usuarioService.getUsuarioByLogin(authHeader, login);
+        } else if (role != null && !role.isEmpty()) {
+            return usuarioService.getUsuariosByRole(authHeader, role);
         } else {
             return usuarioService.getUsuariosPerOperador(authHeader);
         }

@@ -1,6 +1,7 @@
 package neo.com.br.CitMobi.repository;
 
 import neo.com.br.CitMobi.models.usuario.Usuario;
+import neo.com.br.CitMobi.models.usuario.UsuarioRole;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -35,6 +36,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     Optional<Usuario> findByOperadorCnpjAndLoginAndFlagAtivo(String cnpj, String login,  String flagAtivo);
     List<Usuario> findByOperadorCnpjAndFlagAtivo(String cnpj, String flagAtivo);
+    List<Usuario> findByOperadorCnpjAndRoleAndFlagAtivo(String cnpj, UsuarioRole role, String flagAtivo);
 
     @Query(value =  verifyBy, nativeQuery = true)
     Optional<String> getUsuario(@Param("login") String login, @Param("email") String email, @Param("telefone") String telefone, @Param("cpf") String cpf);
