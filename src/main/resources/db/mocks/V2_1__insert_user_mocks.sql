@@ -34,7 +34,7 @@ INSERT INTO T_USU_USUARIO (
     USU_USUARIO_FLAGATIVO,
     USU_USUARIO_DTCRIACAO
 ) VALUES(
-    'gtpadm',
+        'gtpadm',
     '60870847000159',
     'ti_gatopreto@gatopreto.com',
     '$2a$10$5CAmDGBcLR7./akaUc5Czu9RaHYmD1z2H84lr13uzvUwDeT.N54qC',
@@ -63,9 +63,33 @@ INSERT INTO T_USU_USUARIO (
     'ana.julia@viacaomp.com',
     '$2a$10$9BH8374tLxctMcb/ZpBgzuwaOCh.4IEFvExT9H1BcLb0SpuRYSV6q',
     'ANA JULIA VIANA',
-    '14987950411',
+    '14988112233',
     '84395928846',
     'USER',
+    'S',
+    NOW()
+);
+
+INSERT INTO T_USU_USUARIO (
+    USU_USUARIO_LOGIN,
+    GLB_OPERADOR_CNPJ,
+    USU_USUARIO_EMAIL,
+    USU_USUARIO_SENHA,
+    USU_USUARIO_NOME,
+    USU_USUARIO_TELEFONE,
+    USU_USUARIO_CPF,
+    USU_USUARIO_ROLE,
+    USU_USUARIO_FLAGATIVO,
+    USU_USUARIO_DTCRIACAO
+) VALUES(
+    'admin',
+    '01234567890123',
+    'admin@citmobi.com.br',
+    '$2a$10$q/dv8vJAJUMgzpV8ZlSAPe.4L7D1eR5KRPiJ1FP/AJSyfC3wb.zIa',
+    'ADMINISTRADOR DO SISTEMA',
+    '11988887777',
+    '00000000000',
+    'ADMIN',
     'S',
     NOW()
 );
