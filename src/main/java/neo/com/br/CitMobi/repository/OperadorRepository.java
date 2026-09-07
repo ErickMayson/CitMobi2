@@ -1,25 +1,19 @@
 package neo.com.br.CitMobi.repository;
 
-import neo.com.br.CitMobi.models.linha.Linha;
-import neo.com.br.CitMobi.models.linha.LinhaId;
-import neo.com.br.CitMobi.models.linha.LinhaOperador;
 import neo.com.br.CitMobi.models.linha.Operador;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface OperadorRepository extends JpaRepository<Operador, String> {
+@Repository
+public interface OperadorRepository extends JpaRepository<Operador, Long> {
 
-    @Query(value = """
-            SELECT * FROM T_GLB_OPERADOR OPE
-            WHERE OPE.GLB_OPERADOR_CNPJ IN :cnpj
-            """,
-            nativeQuery = true)
-    Optional<List<Operador>> findByCnpj(
-            @Param("cnpj") List<String> cnpj
-    );
+    Optional<Operador> findByCnpj(String cnpj);
 
+    List<Operador> findByCnpjIn(List<String> cnpjs);
+
+    boolean existsByCnpj(String cnpj);
 }
+

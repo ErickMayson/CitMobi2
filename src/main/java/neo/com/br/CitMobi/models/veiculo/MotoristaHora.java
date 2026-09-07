@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import neo.com.br.CitMobi.models.usuario.Usuario;
+
+import java.time.LocalTime;
 
 @Data
 @Entity
@@ -12,12 +15,37 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MotoristaHora {
 
-    @EmbeddedId
-    private MotoristaHoraId motoristaHoraId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "USU_MOTORISTAHORA_ID")
+    private Long id;
 
-    public MotoristaHora(String usuarioCpf, String diaSemana, String horaInicio, 
-                         String horaFim, String pausaInicio, String pausaFim) {
-        this.motoristaHoraId = new MotoristaHoraId(usuarioCpf, diaSemana, 
-                                                   horaInicio, horaFim, pausaInicio, pausaFim);
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USU_USUARIO_ID", nullable = false)
+    private Usuario motorista;
+
+    @Column(name = "USU_MOTORISTAHORA_DIASEMANA", nullable = false, length = 30)
+    private String diaSemana;
+
+    @Column(name = "USU_MOTORISTAHORA_HORAINICIO", nullable = false)
+    private LocalTime horaInicio;
+
+    @Column(name = "USU_MOTORISTAHORA_HORAFIM", nullable = false)
+    private LocalTime horaFim;
+
+    @Column(name = "USU_MOTORISTAHORA_PAUSAINICIO", nullable = false)
+    private LocalTime pausaInicio;
+
+    @Column(name = "USU_MOTORISTAHORA_PAUSAFIM", nullable = false)
+    private LocalTime pausaFim;
+
+    public MotoristaHora(Usuario motorista, String diaSemana, LocalTime horaInicio, 
+                         LocalTime horaFim, LocalTime pausaInicio, LocalTime pausaFim) {
+        this.motorista = motorista;
+        this.diaSemana = diaSemana;
+        this.horaInicio = horaInicio;
+        this.horaFim = horaFim;
+        this.pausaInicio = pausaInicio;
+        this.pausaFim = pausaFim;
     }
-}
+}

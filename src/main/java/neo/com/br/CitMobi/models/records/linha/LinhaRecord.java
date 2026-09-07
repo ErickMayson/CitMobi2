@@ -8,6 +8,7 @@ import neo.com.br.CitMobi.models.records.glb.OperadorRecord;
 
 
 public record LinhaRecord(
+        Long id,
         @NotBlank(message = "linhaId is required")
         String linhaId,
         @NotBlank(message = "linhaAtendimento is required")
@@ -26,18 +27,19 @@ public record LinhaRecord(
         String flagAtiva
 ) {
 
-    public Linha toLinha() {
-            return new Linha(
-                    safeTrimAndUppercase(linhaId),
-                    safeTrimAndUppercase(linhaAtendimento),
-                    municipio,
-                    safeTrimAndUppercase(linhaDescricao),
-                    safeTrimAndUppercase(flagIntermunicipal),
-                    safeTrimAndUppercase(flagMetro),
-                    safeTrimAndUppercase(flagTrem),
-                    safeTrimAndUppercase(flagAtiva)
-            );
-        }
+    public LinhaRecord(
+            String linhaId,
+            String linhaAtendimento,
+            Long municipio,
+            OperadorRecord operador,
+            String linhaDescricao,
+            String flagIntermunicipal,
+            String flagMetro,
+            String flagTrem,
+            String flagAtiva
+    ) {
+        this(null, linhaId, linhaAtendimento, municipio, operador, linhaDescricao, flagIntermunicipal, flagMetro, flagTrem, flagAtiva);
+    }
 
     private String safeTrimAndUppercase(String value) {
         return value == null ? null : value.trim().toUpperCase();

@@ -4,6 +4,10 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import neo.com.br.CitMobi.models.linha.Linha;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Data
 @Entity
@@ -12,12 +16,37 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LinhaPlaca {
 
-    @EmbeddedId
-    private LinhaPlacaId linhaPlacaId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "VEI_LINHAPLACA_ID")
+    private Long id;
 
-    public LinhaPlaca(String linhaId, String linhaAtendimento, Long municipio, 
-                      String veiculoPlaca, String diaSemana, String horaInicio, String horaFim) {
-        this.linhaPlacaId = new LinhaPlacaId(linhaId, linhaAtendimento, municipio, 
-                                             veiculoPlaca, diaSemana, horaInicio, horaFim);
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "LIN_LINHA_ID", nullable = false)
+    private Linha linha;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "VEI_VEICULO_ID", nullable = false)
+    private Veiculo veiculo;
+
+    @Column(name = "VEI_LINHAPLACA_DIASEMANA", nullable = false, length = 30)
+    private String diaSemana;
+
+    @Column(name = "VEI_LINHAPLACA_HORAINICIO")
+    private LocalTime horaInicio;
+
+    @Column(name = "VEI_LINHAPLACA_HORAFIM")
+    private LocalTime horaFim;
+
+    @Column(name = "VEI_LINHAPLACA_DTGRAV")
+    private LocalDate dataGravacao = LocalDate.now();
+
+    public LinhaPlaca(Linha linha, Veiculo veiculo, String diaSemana, LocalTime horaInicio, LocalTime horaFim) {
+        this.linha = linha;
+        this.veiculo = veiculo;
+        this.diaSemana = diaSemana;
+        this.horaInicio = horaInicio;
+        this.horaFim = horaFim;
+        this.dataGravacao = LocalDate.now();
     }
-}
+}

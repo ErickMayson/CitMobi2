@@ -64,9 +64,10 @@ public class Usuario implements UserDetails {
     @Column(name = "USU_USUARIO_DTULTIMOLOGIN")
     private Instant dataUltimoLogin;
 
-    @ManyToOne
-    @JoinColumn(name = "GLB_OPERADOR_CNPJ", referencedColumnName = "GLB_OPERADOR_CNPJ")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "GLB_OPERADOR_ID", nullable = false)
     private Operador operador;
+
 
     public Usuario(String login, String senha, UsuarioRole role) {
         this.login = login;

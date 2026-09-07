@@ -39,8 +39,14 @@ public class Municipio {
         municipio.setCodIbge(record.id());
         municipio.setNome(record.nome());
         municipio.setUf(record.regiaoImediata().regiaoIntermediaria().UF().sigla());
-        municipio.setCodRegiaoImediata(record.regiaoImediata().id());
         return municipio;
     }
 
+    public Long getCodigoIbge() {
+        return codIbge;
+    }
+
+    public void setCodigoIbge(Long codIbge) {
+        this.codIbge = codIbge;
+    }
 }

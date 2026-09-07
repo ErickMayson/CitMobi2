@@ -16,14 +16,18 @@ import java.time.LocalDate;
 public class Veiculo {
 
     @Id
-    @Column(name = "VEI_VEICULO_PLACA", length = 16)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "VEI_VEICULO_ID")
+    private Long id;
+
+    @Column(name = "VEI_VEICULO_PLACA", unique = true, nullable = false, length = 16)
     private String placa;
 
-    @Column(name = "VEI_VEICULO_ID", nullable = false, length = 100)
-    private String veiculoId;
+    @Column(name = "VEI_VEICULO_CODIGO", nullable = false, length = 100)
+    private String codigoVeiculo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "GLB_OPERADOR_CNPJ", nullable = false)
+    @JoinColumn(name = "GLB_OPERADOR_ID", nullable = false)
     private Operador operador;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -40,20 +44,23 @@ public class Veiculo {
     @JoinColumn(name = "VEI_GARAGEM_ID", nullable = false)
     private Garagem garagem;
 
-    @Column(name = "VEI_VEICULO_FLAGATIVO", nullable = false, length = 1)
-    private String flagAtivo = "S";
+    @Enumerated(EnumType.STRING)
+    @Column(name = "VEI_VEICULO_STATUS", nullable = false, length = 20)
+    private VeiculoStatus status = VeiculoStatus.ATIVO;
 
     @Column(name = "VEI_VEICULO_DTCADASTRO", updatable = false)
     private LocalDate dataCadastro = LocalDate.now();
 
-    public Veiculo(String placa, String veiculoId, Operador operador, VeiculoModelo veiculoModelo, 
+    public Veiculo(String placa, String codigoVeiculo, Operador operador, VeiculoModelo veiculoModelo, 
                    Integer capacidade, String anoFabricacao, Garagem garagem) {
         this.placa = placa;
-        this.veiculoId = veiculoId;
+        this.codigoVeiculo = codigoVeiculo;
         this.operador = operador;
         this.veiculoModelo = veiculoModelo;
         this.capacidade = capacidade;
         this.anoFabricacao = anoFabricacao;
         this.garagem = garagem;
+        this.status = VeiculoStatus.ATIVO;
+        this.dataCadastro = LocalDate.now();
     }
-}
+}
