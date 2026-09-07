@@ -1,7 +1,11 @@
-INSERT INTO T_VEI_GARAGEM (VEI_GARAGEM_DESCRICAO, GLB_MUNICIPIO_COD, GLB_OPERADOR_CNPJ, VEI_GARAGEM_LOGRADOURO, VEI_GARAGEM_NUMERO, VEI_GARAGEM_CEP)
+INSERT INTO T_VEI_GARAGEM (VEI_GARAGEM_ID, VEI_GARAGEM_DESCRICAO, GLB_MUNICIPIO_COD, GLB_OPERADOR_ID, VEI_GARAGEM_LOGRADOURO, VEI_GARAGEM_NUMERO, VEI_GARAGEM_CEP)
 VALUES 
-('Garagem Central', 3550308, '60870847000159', 'Av. Celso Garcia', '1000', '03064000'),
-('Garagem Norte', 3550308, '60870847000159', 'Av. Cruzeiro do Sul', '500', '02030000'),
-('Garagem Sul', 3550308, '60870847000159', 'Av. Santo Amaro', '4000', '04556200'),
-('Garagem Leste', 3550308, '60870847000159', 'Av. Imperador', '2970', '03694000'),
-('Garagem Oeste', 3550308, '60870847000159', 'Av. Corifeu de Azevedo Marques', '3000', '05339000');
+(1, 'Garagem Central', 3550308, 3, 'Av. Celso Garcia', '1000', '03064000'),
+(2, 'Garagem Norte', 3550308, 3, 'Av. Cruzeiro do Sul', '500', '02030000'),
+(3, 'Garagem Sul', 3550308, 3, 'Av. Santo Amaro', '4000', '04556200'),
+(4, 'Garagem Leste', 3550308, 3, 'Av. Imperador', '2970', '03694000'),
+(5, 'Garagem Oeste', 3550308, 3, 'Av. Corifeu de Azevedo Marques', '3000', '05339000');
+
+-- Synchronize sequence
+SELECT setval(pg_get_serial_sequence('T_VEI_GARAGEM', 'vei_garagem_id'), coalesce(max(vei_garagem_id), 1)) FROM T_VEI_GARAGEM;
+
