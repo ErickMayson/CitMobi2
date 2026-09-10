@@ -60,7 +60,7 @@ class RotaServiceTest {
         Operador operador = new Operador("01234567890123", "Cit Mobi", "S");
         operador.setId(1L);
 
-        sampleLinha = new Linha("3301", "10", municipio, operador, "Amaral Gurgel", "N", "N", "N", "S");
+        sampleLinha = new Linha("3301", "10", municipio, operador, "TERMINAL SÃO MIGUEL - TERMINAL PARQUE DOM PEDRO II", "N", "N", "N", "S");
         sampleLinha.setId(10L);
 
         sampleRota = new Rota(sampleLinha, "3301-10", "IDA");

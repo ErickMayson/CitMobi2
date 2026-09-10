@@ -15,6 +15,15 @@ public record UsuarioLiteRecord(
 ) {
     // Convert from entity
     public static UsuarioLiteRecord fromUsuario(Usuario usuario) {
+        Operador op = null;
+        if (usuario.getOperador() != null) {
+            op = new Operador(
+                    usuario.getOperador().getId(),
+                    usuario.getOperador().getCnpj(),
+                    usuario.getOperador().getRazaoSocial(),
+                    usuario.getOperador().getFlagRegulador()
+            );
+        }
         return new UsuarioLiteRecord(
                 usuario.getLogin(),
                 usuario.getEmail(),
@@ -22,7 +31,7 @@ public record UsuarioLiteRecord(
                 usuario.getTelefone(),
                 usuario.getCpf(),
                 usuario.getRole(),
-                usuario.getOperador()
+                op
         );
     }
 

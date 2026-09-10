@@ -56,7 +56,7 @@ class LinhaServiceTest {
         sampleMunicipio.setNome("São Paulo");
         sampleMunicipio.setUf("SP");
 
-        sampleLinha = new Linha("3301", "10", sampleMunicipio, sampleOperador, "Term. Amaral Gurgel / Term. Pq. D. Pedro II", "N", "N", "N", "S");
+        sampleLinha = new Linha("3301", "10", sampleMunicipio, sampleOperador, "TERMINAL SÃO MIGUEL - TERMINAL PARQUE DOM PEDRO II", "N", "N", "N", "S");
         sampleLinha.setId(100L);
     }
 

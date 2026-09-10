@@ -29,7 +29,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, java.util.UUID
             """;
 
 
-    UserDetails findByLogin(String login);
+    @Query("SELECT u FROM Usuario u WHERE LOWER(u.login) = LOWER(:login)")
+    UserDetails findByLogin(@Param("login") String login);
 
     @Query(value = "SELECT b FROM Usuario b where b.login = :login AND b.operador.cnpj = :cnpj")
     Optional<Usuario> findUserByLogin(String login, String cnpj);
