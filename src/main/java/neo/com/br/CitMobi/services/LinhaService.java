@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class LinhaService {
@@ -36,6 +37,35 @@ public class LinhaService {
         this.linhaRepository = linhaRepository;
         this.operadorRepository = operadorRepository;
         this.municipioRepository = municipioRepository;
+    }
+
+    @Transactional(readOnly = true)
+    public ResponseEntity<GenericResponse<List<LinhaResponse>>> getAllLinhas(Long municipioCod, Long operadorId) {
+        try {
+            List<Linha> linhas;
+            if (municipioCod != null && operadorId != null) {
+                linhas = linhaRepository.findByMunicipio_CodIbge(municipioCod).stream()
+                        .filter(l -> l.getOperador() != null && l.getOperador().getId().equals(operadorId))
+                        .collect(Collectors.toList());
+            } else if (municipioCod != null) {
+                linhas = linhaRepository.findByMunicipio_CodIbge(municipioCod);
+            } else if (operadorId != null) {
+                linhas = linhaRepository.findByOperador_Id(operadorId);
+            } else {
+                linhas = linhaRepository.findAll();
+            }
+
+            List<LinhaResponse> responseList = linhas.stream().map(linha -> {
+                List<Operador> operadores = linha.getOperador() != null ? List.of(linha.getOperador()) : Collections.emptyList();
+                return new LinhaResponse(linha, operadores);
+            }).collect(Collectors.toList());
+
+            return ResponseEntity.ok(new GenericResponse<>("200", "Linhas recuperadas com sucesso", responseList));
+        } catch (Exception e) {
+            logger.error("Erro ao buscar linhas: ", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new GenericResponse<>("500", "Erro ao buscar linhas: " + e.getMessage(), null));
+        }
     }
 
     @Transactional(readOnly = true)

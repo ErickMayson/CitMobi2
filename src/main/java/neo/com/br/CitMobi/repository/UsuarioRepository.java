@@ -38,6 +38,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, java.util.UUID
     Optional<Usuario> findByOperadorCnpjAndLoginAndFlagAtivo(String cnpj, String login,  String flagAtivo);
     List<Usuario> findByOperadorCnpjAndFlagAtivo(String cnpj, String flagAtivo);
     List<Usuario> findByOperadorCnpjAndRoleAndFlagAtivo(String cnpj, UsuarioRole role, String flagAtivo);
+    List<Usuario> findByOperador_IdAndRoleAndFlagAtivo(Long operadorId, UsuarioRole role, String flagAtivo);
 
     @Query(value =  verifyBy, nativeQuery = true)
     Optional<String> getUsuario(@Param("login") String login, @Param("email") String email, @Param("telefone") String telefone, @Param("cpf") String cpf);

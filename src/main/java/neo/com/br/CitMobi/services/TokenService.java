@@ -21,11 +21,16 @@ public class TokenService {
     public String generateToken(Usuario usuario) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
+            String flagRegulador = (usuario.getOperador() != null && usuario.getOperador().getFlagRegulador() != null)
+                    ? usuario.getOperador().getFlagRegulador()
+                    : "N";
+
             return JWT.create()
                     .withIssuer("cit")
                     .withSubject(usuario.getLogin())
                     .withClaim("role", usuario.getRole().getRole())
-                    .withClaim("operador", usuario.getOperador().getCnpj())
+                    .withClaim("operador", usuario.getOperador() != null ? usuario.getOperador().getCnpj() : null)
+                    .withClaim("flagRegulador", flagRegulador)
                     .withExpiresAt(getExpirationDate())
                     .sign(algorithm);
         } catch (JWTCreationException e) {
@@ -94,6 +99,16 @@ public class TokenService {
         String token = authHeader.substring(7);
         DecodedJWT decoded = decodeToken(token);
         return decoded != null ? decoded.getClaim("operador").asString() : null;
+    }
+
+    public String getFlagReguladorFromToken(String authHeader) {
+        if (authHeader == null || !authHeader.toLowerCase().startsWith("bearer ")) {
+            return null;
+        }
+
+        String token = authHeader.substring(7);
+        DecodedJWT decoded = decodeToken(token);
+        return decoded != null ? decoded.getClaim("flagRegulador").asString() : null;
     }
 
 

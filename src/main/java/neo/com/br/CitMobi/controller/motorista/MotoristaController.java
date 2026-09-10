@@ -23,8 +23,9 @@ public class MotoristaController {
 
     @GetMapping("/motoristas")
     public ResponseEntity<GenericResponse<List<MotoristaRecord>>> getMotoristas(
+            @RequestParam(value = "operadorId", required = false) Long operadorId,
             @RequestHeader(value = "Authorization", required = false) String authHeader) {
-        return motoristaService.getAllMotoristas(authHeader);
+        return motoristaService.getAllMotoristas(operadorId, authHeader);
     }
 
     @PostMapping("/motoristas")

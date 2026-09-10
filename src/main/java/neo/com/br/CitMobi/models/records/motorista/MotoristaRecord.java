@@ -6,7 +6,9 @@ public record MotoristaRecord(
         String id,
         String nome,
         String cpf,
+        String login,
         String telefone,
+        Long operadorId,
         String status,
         List<MotoristaHorarioRecord> horarios
 ) {}

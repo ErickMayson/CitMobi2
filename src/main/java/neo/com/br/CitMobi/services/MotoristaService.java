@@ -84,17 +84,25 @@ public class MotoristaService {
     }
 
     @Transactional(readOnly = true)
-    public ResponseEntity<GenericResponse<List<MotoristaRecord>>> getAllMotoristas(String authHeader) {
+    public ResponseEntity<GenericResponse<List<MotoristaRecord>>> getAllMotoristas(Long operadorId, String authHeader) {
         try {
             List<Usuario> motoristas;
             String cnpj = null;
+            String flagRegulador = null;
             if (authHeader != null && authHeader.startsWith("Bearer ")) {
                 try {
                     cnpj = tokenService.getOperadorIdFromToken(authHeader);
+                    flagRegulador = tokenService.getFlagReguladorFromToken(authHeader);
                 } catch (Exception ignored) {}
             }
 
-            if (cnpj != null && !cnpj.isEmpty()) {
+            if (operadorId != null) {
+                motoristas = usuarioRepository.findByOperador_IdAndRoleAndFlagAtivo(operadorId, UsuarioRole.MOTORISTA, "S");
+            } else if ("S".equalsIgnoreCase(flagRegulador)) {
+                motoristas = usuarioRepository.findAll().stream()
+                        .filter(u -> u.getRole() == UsuarioRole.MOTORISTA && "S".equalsIgnoreCase(u.getFlagAtivo()))
+                        .collect(Collectors.toList());
+            } else if (cnpj != null && !cnpj.isEmpty()) {
                 motoristas = usuarioRepository.findByOperadorCnpjAndRoleAndFlagAtivo(cnpj, UsuarioRole.MOTORISTA, "S");
             } else {
                 motoristas = usuarioRepository.findAll().stream()
@@ -155,9 +163,11 @@ public class MotoristaService {
             horarioMeta.put(key, new String[]{veiculoId, veiculoPlaca, veiculoModelo, rotaId, rotaNome, startTime, endTime});
         }
 
+        long[] scheduleSeq = {1L};
         List<MotoristaHorarioRecord> horarios = horariosGrouped.entrySet().stream().map(entry -> {
             String[] meta = horarioMeta.get(entry.getKey());
             return new MotoristaHorarioRecord(
+                    scheduleSeq[0]++,
                     meta[0],
                     meta[1],
                     meta[2],
@@ -181,7 +191,9 @@ public class MotoristaService {
                 u.getId() != null ? u.getId().toString() : u.getLogin(),
                 u.getNome(),
                 u.getCpf(),
+                u.getLogin(),
                 u.getTelefone(),
+                u.getOperador() != null ? u.getOperador().getId() : null,
                 status,
                 horarios
         );
@@ -190,24 +202,33 @@ public class MotoristaService {
     @Transactional
     public ResponseEntity<GenericResponse<MotoristaRecord>> createMotorista(MotoristaRecord record, String authHeader) {
         try {
-            String cnpj = null;
-            if (authHeader != null && authHeader.startsWith("Bearer ")) {
-                try {
-                    cnpj = tokenService.getOperadorIdFromToken(authHeader);
-                } catch (Exception ignored) {}
+            Operador op = null;
+            if (record.operadorId() != null) {
+                op = operadorRepository.findById(record.operadorId()).orElse(null);
             }
 
-            Operador op = null;
-            if (cnpj != null && !cnpj.isEmpty()) {
-                op = operadorRepository.findByCnpj(cnpj).orElse(null);
+            if (op == null) {
+                String cnpj = null;
+                if (authHeader != null && authHeader.startsWith("Bearer ")) {
+                    try {
+                        cnpj = tokenService.getOperadorIdFromToken(authHeader);
+                    } catch (Exception ignored) {}
+                }
+
+                if (cnpj != null && !cnpj.isEmpty()) {
+                    op = operadorRepository.findByCnpj(cnpj).orElse(null);
+                }
             }
+
             if (op == null) {
                 op = operadorRepository.findAll().stream().findFirst().orElse(null);
             }
 
             String rawCpf = record.cpf() != null ? record.cpf().replaceAll("\\D", "") : "";
             String rawPhone = record.telefone() != null ? record.telefone().replaceAll("\\D", "") : "";
-            String login = rawCpf.isEmpty() ? (record.nome() != null ? record.nome().toLowerCase().replaceAll("\\s+", "") : "driver") : rawCpf;
+            String login = (record.login() != null && !record.login().isBlank())
+                    ? record.login().trim()
+                    : (rawCpf.isEmpty() ? (record.nome() != null ? record.nome().toLowerCase().replaceAll("\\s+", "") : "driver") : rawCpf);
 
             Usuario u = new Usuario();
             u.setId(UUID.randomUUID());

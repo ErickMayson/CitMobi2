@@ -1,5 +1,6 @@
 package neo.com.br.CitMobi.controller.linha;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -35,14 +36,13 @@ public class LinhaController {
         this.linhaService = linhaService;
     }
 
-//    @ApiResponses(value = {
-//            @ApiResponse(code = 201, message = "Criado"),
-//            @ApiResponse(code = 200, message = "Retorna o status passada na Path"),
-//            @ApiResponse(code = 401, message = "Nâo tem permissão"),
-//            @ApiResponse(code = 403, message = "Nâo tem permissâo para acessar o Recurso"),
-//            @ApiResponse(code = 404, message = "Não localizada"),
-//            @ApiResponse(code = 500, message = "Erro inesperado no Servidor")
-//    })
+    @GetMapping(value = "/linhas", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<GenericResponse<List<LinhaResponse>>> getAllLinhas(
+            @RequestParam(required = false) Long municipio,
+            @RequestParam(required = false) Long operadorId) {
+        return linhaService.getAllLinhas(municipio, operadorId);
+    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/linha", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
