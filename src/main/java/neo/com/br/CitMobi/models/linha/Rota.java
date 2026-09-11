@@ -1,5 +1,7 @@
 package neo.com.br.CitMobi.models.linha;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -9,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "T_LIN_ROTA")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -22,6 +25,7 @@ public class Rota {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "LIN_LINHA_ID", nullable = false)
+    @JsonIgnore
     private Linha linha;
 
     @NotBlank
@@ -49,4 +53,3 @@ public class Rota {
         this.itinerarios = itinerarios != null ? itinerarios : new ArrayList<>();
     }
 }
-

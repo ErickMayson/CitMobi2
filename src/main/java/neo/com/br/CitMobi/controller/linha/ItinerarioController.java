@@ -17,10 +17,10 @@ import java.util.List;
 @RequestMapping(value = "/v1/api")
 @CrossOrigin(value = "*")
 @Tag(name = "Rota", description = "Controller to manage Itinerarios (stops).")
-@PreAuthorize("!hasRole('MOTORISTA')")
+@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
 public class ItinerarioController {
 
-    private static final Logger logger = LoggerFactory.getLogger(LinhaController.class);
+    private static final Logger logger = LoggerFactory.getLogger(ItinerarioController.class);
 
     private final ItinerarioService itinerarioService;
 
@@ -37,5 +37,4 @@ public class ItinerarioController {
 
         return itinerarioService.getItinerariosPerLine(linha, atendimento, municipio);
     }
-
 }

@@ -1,5 +1,6 @@
 package neo.com.br.CitMobi.models.linha;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +13,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "T_LIN_PARADA")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @AllArgsConstructor
 @NoArgsConstructor
 public class Parada {
@@ -95,4 +97,3 @@ public class Parada {
         return List.of(latitude, longitude);
     }
 }
-

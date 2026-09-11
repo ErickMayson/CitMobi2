@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping(value = "/v1/api")
 @CrossOrigin(value = "*")
 @Tag(name = "Parada", description = "Controller to manage Paradas (Stops)")
-@PreAuthorize("!hasRole('MOTORISTA')")
+@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
 public class ParadaController {
 
     private static final Logger logger = LoggerFactory.getLogger(LinhaController.class);
@@ -44,7 +44,6 @@ public class ParadaController {
     @PostMapping(value = "/paradas", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<GenericResponse<List<GenericResponse<ParadaRecord>>>> getParadas(@RequestBody List<ParadaRecord> paradasList) {
-            return paradaService.createParadas(paradasList);
+        return paradaService.createParadas(paradasList);
     }
-
 }

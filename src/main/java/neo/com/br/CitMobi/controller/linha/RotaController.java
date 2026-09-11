@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/v1/api")
 @CrossOrigin(value = "*")
 @Tag(name = "Itinerario", description = "Controller to manage rotas.")
-@PreAuthorize("!hasRole('MOTORISTA')")
+@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
 public class RotaController {
-    private static final Logger logger = LoggerFactory.getLogger(LinhaController.class);
+    private static final Logger logger = LoggerFactory.getLogger(RotaController.class);
 
     private final RotaService rotaService;
 
@@ -26,26 +26,12 @@ public class RotaController {
         this.rotaService = rotaService;
     }
 
-//    @ApiResponses(value = {
-//            @ApiResponse(code = 201, message = "Criado"),
-//            @ApiResponse(code = 200, message = "Retorna o status passada na Path"),
-//            @ApiResponse(code = 401, message = "Nâo tem permissão"),
-//            @ApiResponse(code = 403, message = "Nâo tem permissâo para acessar o Recurso"),
-//            @ApiResponse(code = 404, message = "Não localizada"),
-//            @ApiResponse(code = 500, message = "Erro inesperado no Servidor")
-//    })
-
     @RequestMapping(method = RequestMethod.GET, value = "/rotas", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<GenericResponse<RotaResponse>> getRota(
             @RequestParam String linha,
             @RequestParam String atendimento,
             @RequestParam String municipio) {
-
-        // Log the parameters for debugging
-        System.out.println("municipio: " + municipio);
-        System.out.println("linha: " + linha);
-        System.out.println("atendimento: " + atendimento);
 
         return rotaService.getRota(linha, atendimento, municipio);
     }
@@ -57,11 +43,6 @@ public class RotaController {
             @RequestParam String atendimento,
             @RequestParam String municipio,
             @RequestBody RotaRecord itinerario) {
-
-        // Log the parameters for debugging
-        System.out.println("municipio: " + municipio);
-        System.out.println("linha: " + linha);
-        System.out.println("atendimento: " + atendimento);
 
         return rotaService.createRota(linha, atendimento, municipio, itinerario);
     }

@@ -1,5 +1,7 @@
 package neo.com.br.CitMobi.models.linha;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -12,11 +14,12 @@ import java.util.List;
 
 @Entity
 @Table(name = "T_LIN_LINHA")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
+@ToString(exclude = {"rotas", "municipio", "operador"})
 public class Linha {
 
     @Id
@@ -42,10 +45,12 @@ public class Linha {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "GLB_MUNICIPIO_COD", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Municipio municipio;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "GLB_OPERADOR_ID", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Operador operador;
 
     @Column(name = "LIN_LINHA_FLAGINTERMUNICIPAL", nullable = false, length = 1)
@@ -61,6 +66,7 @@ public class Linha {
     private String flagAtiva = "S";
 
     @OneToMany(mappedBy = "linha", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Rota> rotas = new ArrayList<>();
 
     public Linha(String codigoLinha,
@@ -98,4 +104,3 @@ public class Linha {
         );
     }
 }
-

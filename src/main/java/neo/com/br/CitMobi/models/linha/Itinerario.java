@@ -1,15 +1,18 @@
 package neo.com.br.CitMobi.models.linha;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
 @Table(name = "T_LIN_ITINERARIO")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
+@ToString(exclude = {"rota"})
 public class Itinerario {
 
     @Id
@@ -19,10 +22,12 @@ public class Itinerario {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "LIN_ROTA_ID", nullable = false)
+    @JsonIgnore
     private Rota rota;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "LIN_PARADA_ID", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Parada parada;
 
     @Column(name = "LIN_ITINERARIO_SEQUENCIA", nullable = false)
@@ -34,4 +39,3 @@ public class Itinerario {
         this.sequencia = sequencia;
     }
 }
-

@@ -1,8 +1,5 @@
 package neo.com.br.CitMobi.controller.linha;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import neo.com.br.CitMobi.models.records.linha.LinhaRecord;
@@ -20,12 +17,14 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/v1/api")
 @CrossOrigin(value = "*")
 @Tag(name = "Linha", description = "Controller to manage Linhas")
-@PreAuthorize("!hasRole('MOTORISTA')")
+@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
 public class LinhaController {
 
     private static final Logger logger = LoggerFactory.getLogger(LinhaController.class);
@@ -50,11 +49,6 @@ public class LinhaController {
             @RequestParam String municipio,
             @RequestParam String linha,
             @RequestParam String atendimento) {
-
-        // Log the parameters for debugging
-        System.out.println("municipio: " + municipio);
-        System.out.println("linha: " + linha);
-        System.out.println("atendimento: " + atendimento);
 
         return linhaService.getLinha(municipio, linha, atendimento);
     }
@@ -94,23 +88,4 @@ public class LinhaController {
 
         return linhaService.editLinha(linha);
     }
-
-//    @RequestMapping(method = RequestMethod.GET, value = "/linha/addOperador", produces = MediaType.APPLICATION_JSON_VALUE)
-//    @ResponseBody
-//    public ResponseEntity<GenericResponse<LinhaResponse>> addOperador(
-//            @RequestParam String cnpj,
-//            @RequestParam String municipio,
-//            @RequestParam String linha,
-//            @RequestParam String atendimento) {
-//
-//        // Log the parameters for debugging
-//        System.out.println("cnpj: " + cnpj);
-//        System.out.println("municipio: " + municipio);
-//        System.out.println("linha: " + linha);
-//        System.out.println("atendimento: " + atendimento);
-//
-//        return linhaService.getLinha(cnpj, municipio, linha, atendimento);
-//    }
-
-
 }
