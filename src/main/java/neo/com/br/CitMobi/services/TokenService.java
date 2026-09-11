@@ -121,6 +121,16 @@ public class TokenService {
         return decoded != null ? decoded.getClaim("role").asString() : null;
     }
 
+    public String getLoginFromToken(String authHeader) {
+        if (authHeader == null || !authHeader.toLowerCase().startsWith("bearer ")) {
+            return null;
+        }
+
+        String token = authHeader.substring(7);
+        DecodedJWT decoded = decodeToken(token);
+        return decoded != null ? decoded.getSubject() : null;
+    }
+
 
     private Instant getExpirationDate() {
         return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));

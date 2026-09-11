@@ -1,6 +1,7 @@
 package neo.com.br.CitMobi.repository.telemetria;
 
 import neo.com.br.CitMobi.models.telemetria.Telemetria;
+import neo.com.br.CitMobi.models.viagem.ViagemStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,4 +12,7 @@ import java.util.Optional;
 public interface TelemetriaRepository extends JpaRepository<Telemetria, Long> {
     Optional<Telemetria> findByVeiculoId(Long veiculoId);
     List<Telemetria> findByViagem_Id(Long viagemId);
+    List<Telemetria> findByViagem_Linha_Id(Long linhaId);
+    List<Telemetria> findByViagem_Linha_Operador_Id(Long operadorId);
+    List<Telemetria> findByViagem_Status(ViagemStatus status);
 }

@@ -35,6 +35,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, java.util.UUID
     @Query(value = "SELECT b FROM Usuario b where b.login = :login AND b.operador.cnpj = :cnpj")
     Optional<Usuario> findUserByLogin(String login, String cnpj);
 
+    Optional<Usuario> findFirstByLoginIgnoreCase(String login);
     Optional<Usuario> findByOperadorCnpjAndLoginAndFlagAtivo(String cnpj, String login,  String flagAtivo);
     List<Usuario> findByOperadorCnpjAndFlagAtivo(String cnpj, String flagAtivo);
     List<Usuario> findByOperadorCnpjAndRoleAndFlagAtivo(String cnpj, UsuarioRole role, String flagAtivo);

@@ -99,5 +99,7 @@
     <PostResources base="C:/Users/Erick/.m2/repository/org/springframework/spring-jcl/6.1.14/spring-jcl-6.1.14.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/spring-jcl-6.1.14.jar"/>
     <PostResources base="C:/Users/Erick/.m2/repository/org/postgresql/postgresql/42.7.4/postgresql-42.7.4.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/postgresql-42.7.4.jar"/>
     <PostResources base="C:/Users/Erick/.m2/repository/org/checkerframework/checker-qual/3.42.0/checker-qual-3.42.0.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/checker-qual-3.42.0.jar"/>
+    <PostResources base="C:/Users/Erick/.m2/repository/org/mobilitydata/gtfs-realtime-bindings/0.0.8/gtfs-realtime-bindings-0.0.8.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/gtfs-realtime-bindings-0.0.8.jar"/>
+    <PostResources base="C:/Users/Erick/.m2/repository/com/google/protobuf/protobuf-java/3.16.1/protobuf-java-3.16.1.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/protobuf-java-3.16.1.jar"/>
   </Resources>
 </Context>

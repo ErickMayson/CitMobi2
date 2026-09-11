@@ -21,6 +21,10 @@ public class Parada {
     @Column(name = "LIN_PARADA_ID", nullable = false)
     private Long paradaId;
 
+    public Long getId() {
+        return paradaId;
+    }
+
     @Column(name = "LIN_PARADA_LOGRADOURO", nullable = false, length = 255)
     private String logradouro;
 

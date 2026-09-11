@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface TelemetriaHistoricoRepository extends JpaRepository<TelemetriaHistorico, Long> {
     List<TelemetriaHistorico> findByViagem_IdOrderByDataRegistroDesc(Long viagemId);
+    List<TelemetriaHistorico> findByViagem_IdOrderByDataRegistroAsc(Long viagemId);
 }

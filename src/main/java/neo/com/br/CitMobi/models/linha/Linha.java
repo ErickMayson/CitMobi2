@@ -36,6 +36,10 @@ public class Linha {
     @Column(name = "LIN_LINHA_DESCRICAO", nullable = false)
     private String linhaDescricao;
 
+    public String getDescricao() {
+        return linhaDescricao;
+    }
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "GLB_MUNICIPIO_COD", nullable = false)
     private Municipio municipio;
