@@ -34,8 +34,7 @@ public class VeiculoService {
     private final VeiculoRepository veiculoRepository;
     private final VeiculoModeloRepository veiculoModeloRepository;
     private final GaragemRepository garagemRepository;
-    private final LinhaPlacaRepository linhaPlacaRepository;
-    private final MotoristaPlacaRepository motoristaPlacaRepository;
+    private final VeiculoEscalaRepository veiculoEscalaRepository;
     private final OperadorRepository operadorRepository;
     private final UsuarioRepository usuarioRepository;
     private final LinhaRepository linhaRepository;
@@ -44,8 +43,7 @@ public class VeiculoService {
     public VeiculoService(VeiculoRepository veiculoRepository,
                           VeiculoModeloRepository veiculoModeloRepository,
                           GaragemRepository garagemRepository,
-                          LinhaPlacaRepository linhaPlacaRepository,
-                          MotoristaPlacaRepository motoristaPlacaRepository,
+                          VeiculoEscalaRepository veiculoEscalaRepository,
                           OperadorRepository operadorRepository,
                           UsuarioRepository usuarioRepository,
                           LinhaRepository linhaRepository,
@@ -53,8 +51,7 @@ public class VeiculoService {
         this.veiculoRepository = veiculoRepository;
         this.veiculoModeloRepository = veiculoModeloRepository;
         this.garagemRepository = garagemRepository;
-        this.linhaPlacaRepository = linhaPlacaRepository;
-        this.motoristaPlacaRepository = motoristaPlacaRepository;
+        this.veiculoEscalaRepository = veiculoEscalaRepository;
         this.operadorRepository = operadorRepository;
         this.usuarioRepository = usuarioRepository;
         this.linhaRepository = linhaRepository;
@@ -126,34 +123,33 @@ public class VeiculoService {
     }
 
     public VeiculoRecord mapToRecord(Veiculo v) {
-        List<LinhaPlaca> lpList = linhaPlacaRepository.findByVeiculo_Placa(v.getPlaca());
+        List<VeiculoEscala> escalasList = veiculoEscalaRepository.findByVeiculo_Placa(v.getPlaca());
+        
         Map<String, List<String>> routesGrouped = new HashMap<>();
-        for (LinhaPlaca lp : lpList) {
-            String routeName = lp.getLinha() != null
-                    ? "Linha " + lp.getLinha().getCodigoLinha() + " - " + lp.getLinha().getAtendimento()
+        Map<String, List<String>> driversGrouped = new HashMap<>();
+
+        for (VeiculoEscala escala : escalasList) {
+            String routeName = escala.getLinha() != null
+                    ? "Linha " + escala.getLinha().getCodigoLinha() + " - " + escala.getLinha().getAtendimento()
                     : "Linha Indefinida";
-            String startTime = lp.getHoraInicio() != null ? lp.getHoraInicio().toString().substring(0, 5) : "00:00";
-            String endTime = lp.getHoraFim() != null ? lp.getHoraFim().toString().substring(0, 5) : "23:59";
-            String key = routeName + "|" + startTime + "|" + endTime;
-            String uiDay = DB_TO_UI_DAYS.getOrDefault(lp.getDiaSemana(), "SEG");
-            routesGrouped.computeIfAbsent(key, k -> new ArrayList<>()).add(uiDay);
+            String startTime = escala.getHoraInicio() != null ? escala.getHoraInicio().toString().substring(0, 5) : "00:00";
+            String endTime = escala.getHoraFim() != null ? escala.getHoraFim().toString().substring(0, 5) : "23:59";
+            String uiDay = DB_TO_UI_DAYS.getOrDefault(escala.getDiaSemana(), "SEG");
+
+            String routeKey = routeName + "|" + startTime + "|" + endTime;
+            routesGrouped.computeIfAbsent(routeKey, k -> new ArrayList<>()).add(uiDay);
+
+            if (escala.getMotorista() != null) {
+                String driverName = escala.getMotorista().getNome() != null ? escala.getMotorista().getNome() : escala.getMotorista().getLogin();
+                String driverKey = driverName + "|" + startTime + "|" + endTime;
+                driversGrouped.computeIfAbsent(driverKey, k -> new ArrayList<>()).add(uiDay);
+            }
         }
 
         List<RouteBlockRecord> routes = routesGrouped.entrySet().stream().map(entry -> {
             String[] parts = entry.getKey().split("\\|");
             return new RouteBlockRecord(parts[0], parts[1], parts[2], entry.getValue());
         }).collect(Collectors.toList());
-
-        List<MotoristaPlaca> mpList = motoristaPlacaRepository.findByVeiculo_Placa(v.getPlaca());
-        Map<String, List<String>> driversGrouped = new HashMap<>();
-        for (MotoristaPlaca mp : mpList) {
-            String name = mp.getMotorista() != null ? mp.getMotorista().getNome() : "Desconhecido";
-            String startTime = mp.getHoraInicio() != null ? mp.getHoraInicio().toString().substring(0, 5) : "00:00";
-            String endTime = mp.getHoraFim() != null ? mp.getHoraFim().toString().substring(0, 5) : "23:59";
-            String key = name + "|" + startTime + "|" + endTime;
-            String uiDay = DB_TO_UI_DAYS.getOrDefault(mp.getDiaSemana(), "SEG");
-            driversGrouped.computeIfAbsent(key, k -> new ArrayList<>()).add(uiDay);
-        }
 
         List<DriverBlockRecord> drivers = driversGrouped.entrySet().stream().map(entry -> {
             String[] parts = entry.getKey().split("\\|");
@@ -257,7 +253,7 @@ public class VeiculoService {
             Optional<Veiculo> optionalV = veiculoRepository.findByPlaca(plate);
             if (optionalV.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(new GenericResponse<>("404", "Vehicle not found with plate: " + plate, null));
+                    .body(new GenericResponse<>("404", "Vehicle not found with plate: " + plate, null));
             }
 
             Veiculo v = optionalV.get();
@@ -297,8 +293,7 @@ public class VeiculoService {
 
             Veiculo savedVeiculo = veiculoRepository.save(v);
 
-            linhaPlacaRepository.deleteAll(linhaPlacaRepository.findByVeiculo_Placa(savedVeiculo.getPlaca()));
-            motoristaPlacaRepository.deleteAll(motoristaPlacaRepository.findByVeiculo_Placa(savedVeiculo.getPlaca()));
+            veiculoEscalaRepository.deleteAll(veiculoEscalaRepository.findByVeiculo_Placa(savedVeiculo.getPlaca()));
 
             saveSchedules(savedVeiculo, record.routes(), record.drivers());
 
@@ -319,8 +314,7 @@ public class VeiculoService {
                         .body(new GenericResponse<>("404", "Vehicle not found with plate: " + plate, null));
             }
 
-            linhaPlacaRepository.deleteAll(linhaPlacaRepository.findByVeiculo_Placa(plate));
-            motoristaPlacaRepository.deleteAll(motoristaPlacaRepository.findByVeiculo_Placa(plate));
+            veiculoEscalaRepository.deleteAll(veiculoEscalaRepository.findByVeiculo_Placa(plate));
             veiculoRepository.delete(optionalV.get());
 
             return ResponseEntity.ok(new GenericResponse<>("200", "Vehicle deleted successfully", null));
@@ -332,6 +326,24 @@ public class VeiculoService {
     }
 
     private void saveSchedules(Veiculo v, List<RouteBlockRecord> routes, List<DriverBlockRecord> drivers) {
+        Linha defaultLinha = linhaRepository.findAll().stream().findFirst().orElse(null);
+
+        Map<String, Usuario> driverMap = new HashMap<>();
+        if (drivers != null) {
+            for (DriverBlockRecord d : drivers) {
+                Usuario driver = usuarioRepository.findAll().stream()
+                        .filter(u -> u.getNome() != null && u.getNome().equalsIgnoreCase(d.name()))
+                        .findFirst()
+                        .orElse(null);
+                if (driver != null && d.days() != null) {
+                    for (String day : d.days()) {
+                        String key = day.toUpperCase() + "|" + (d.startTime() != null ? d.startTime().substring(0, 5) : "06:00");
+                        driverMap.put(key, driver);
+                    }
+                }
+            }
+        }
+
         if (routes != null) {
             for (RouteBlockRecord r : routes) {
                 String lineId = "3301";
@@ -353,38 +365,27 @@ public class VeiculoService {
                 Linha linha = linhaRepository.findAll().stream()
                         .filter(l -> l.getCodigoLinha().equalsIgnoreCase(finalLineId) && l.getAtendimento().equalsIgnoreCase(finalAtendimento))
                         .findFirst()
-                        .orElseGet(() -> linhaRepository.findAll().stream().findFirst().orElse(null));
+                        .orElse(defaultLinha);
 
-                if (linha != null) {
+                if (linha != null && r.days() != null) {
                     LocalTime start = r.startTime() != null ? LocalTime.parse(r.startTime().length() == 5 ? r.startTime() + ":00" : r.startTime()) : LocalTime.of(6, 0);
                     LocalTime end = r.endTime() != null ? LocalTime.parse(r.endTime().length() == 5 ? r.endTime() + ":00" : r.endTime()) : LocalTime.of(22, 0);
                     for (String day : r.days()) {
                         String dbDay = UI_TO_DB_DAYS.getOrDefault(day.toUpperCase(), "SEGUNDA");
-                        LinhaPlaca lp = new LinhaPlaca(linha, v, dbDay, start, end);
-                        linhaPlacaRepository.save(lp);
-                    }
-                }
-            }
-        }
-
-        if (drivers != null) {
-            for (DriverBlockRecord d : drivers) {
-                List<Usuario> users = usuarioRepository.findAll();
-                Usuario driver = users.stream()
-                        .filter(u -> u.getNome() != null && u.getNome().equalsIgnoreCase(d.name()))
-                        .findFirst()
-                        .orElse(null);
-
-                if (driver != null) {
-                    LocalTime start = d.startTime() != null ? LocalTime.parse(d.startTime().length() == 5 ? d.startTime() + ":00" : d.startTime()) : LocalTime.of(6, 0);
-                    LocalTime end = d.endTime() != null ? LocalTime.parse(d.endTime().length() == 5 ? d.endTime() + ":00" : d.endTime()) : LocalTime.of(14, 0);
-                    for (String day : d.days()) {
-                        String dbDay = UI_TO_DB_DAYS.getOrDefault(day.toUpperCase(), "SEGUNDA");
-                        MotoristaPlaca mp = new MotoristaPlaca(driver, v, dbDay, start, end);
-                        motoristaPlacaRepository.save(mp);
+                        String driverKey = day.toUpperCase() + "|" + (r.startTime() != null ? r.startTime().substring(0, 5) : "06:00");
+                        Usuario driver = driverMap.get(driverKey);
+                        if (driver == null && drivers != null && !drivers.isEmpty()) {
+                            driver = usuarioRepository.findAll().stream()
+                                    .filter(u -> u.getNome() != null && u.getNome().equalsIgnoreCase(drivers.get(0).name()))
+                                    .findFirst()
+                                    .orElse(null);
+                        }
+                        VeiculoEscala escala = new VeiculoEscala(v, linha, driver, dbDay, start, end);
+                        veiculoEscalaRepository.save(escala);
                     }
                 }
             }
         }
     }
 }
+

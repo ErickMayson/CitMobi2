@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import neo.com.br.CitMobi.models.linha.Linha;
 import neo.com.br.CitMobi.models.usuario.Usuario;
 
 import java.time.LocalDate;
@@ -11,39 +12,44 @@ import java.time.LocalTime;
 
 @Data
 @Entity
-@Table(name = "T_VEI_MOTORISTAPLACA")
+@Table(name = "T_VEI_ESCALA")
 @AllArgsConstructor
 @NoArgsConstructor
-public class MotoristaPlaca {
+public class VeiculoEscala {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "VEI_MOTORISTAPLACA_ID")
+    @Column(name = "VEI_ESCALA_ID")
     private Long id;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USU_USUARIO_ID", nullable = false)
-    private Usuario motorista;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "VEI_VEICULO_ID", nullable = false)
     private Veiculo veiculo;
 
-    @Column(name = "VEI_MOTORISTAPLACA_DIASEMANA", nullable = false, length = 30)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "LIN_LINHA_ID", nullable = false)
+    private Linha linha;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USU_USUARIO_ID", nullable = true)
+    private Usuario motorista;
+
+    @Column(name = "VEI_ESCALA_DIASEMANA", nullable = false, length = 30)
     private String diaSemana;
 
-    @Column(name = "VEI_MOTORISTAPLACA_HORAINICIO", nullable = false)
+    @Column(name = "VEI_ESCALA_HORAINICIO", nullable = false)
     private LocalTime horaInicio;
 
-    @Column(name = "VEI_MOTORISTAPLACA_HORAFIM", nullable = false)
+    @Column(name = "VEI_ESCALA_HORAFIM", nullable = false)
     private LocalTime horaFim;
 
-    @Column(name = "VEI_MOTORISTAPLACA_DTGRAV")
+    @Column(name = "VEI_ESCALA_DTGRAV")
     private LocalDate dataGravacao = LocalDate.now();
 
-    public MotoristaPlaca(Usuario motorista, Veiculo veiculo, String diaSemana, LocalTime horaInicio, LocalTime horaFim) {
-        this.motorista = motorista;
+    public VeiculoEscala(Veiculo veiculo, Linha linha, Usuario motorista, String diaSemana, LocalTime horaInicio, LocalTime horaFim) {
         this.veiculo = veiculo;
+        this.linha = linha;
+        this.motorista = motorista;
         this.diaSemana = diaSemana;
         this.horaInicio = horaInicio;
         this.horaFim = horaFim;

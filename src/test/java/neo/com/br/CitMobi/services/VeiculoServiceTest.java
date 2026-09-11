@@ -41,10 +41,7 @@ class VeiculoServiceTest {
     private GaragemRepository garagemRepository;
 
     @Mock
-    private LinhaPlacaRepository linhaPlacaRepository;
-
-    @Mock
-    private MotoristaPlacaRepository motoristaPlacaRepository;
+    private VeiculoEscalaRepository veiculoEscalaRepository;
 
     @Mock
     private OperadorRepository operadorRepository;
@@ -89,8 +86,7 @@ class VeiculoServiceTest {
     @DisplayName("Should retrieve all vehicles mapped to VeiculoRecord")
     void shouldGetAllVeiculos() {
         when(veiculoRepository.findAll()).thenReturn(List.of(sampleVeiculo));
-        when(linhaPlacaRepository.findByVeiculo_Placa("ABC1D23")).thenReturn(Collections.emptyList());
-        when(motoristaPlacaRepository.findByVeiculo_Placa("ABC1D23")).thenReturn(Collections.emptyList());
+        when(veiculoEscalaRepository.findByVeiculo_Placa("ABC1D23")).thenReturn(Collections.emptyList());
 
         ResponseEntity<GenericResponse<List<VeiculoRecord>>> response = veiculoService.getAllVeiculos();
 
@@ -165,8 +161,7 @@ class VeiculoServiceTest {
     @DisplayName("Should delete vehicle and its associated schedules")
     void shouldDeleteVeiculoSuccessfully() {
         when(veiculoRepository.findByPlaca("ABC1D23")).thenReturn(Optional.of(sampleVeiculo));
-        when(linhaPlacaRepository.findByVeiculo_Placa("ABC1D23")).thenReturn(Collections.emptyList());
-        when(motoristaPlacaRepository.findByVeiculo_Placa("ABC1D23")).thenReturn(Collections.emptyList());
+        when(veiculoEscalaRepository.findByVeiculo_Placa("ABC1D23")).thenReturn(Collections.emptyList());
 
         ResponseEntity<GenericResponse<Void>> response = veiculoService.deleteVeiculo("ABC1D23");
 
@@ -175,3 +170,4 @@ class VeiculoServiceTest {
         verify(veiculoRepository, times(1)).delete(sampleVeiculo);
     }
 }
+

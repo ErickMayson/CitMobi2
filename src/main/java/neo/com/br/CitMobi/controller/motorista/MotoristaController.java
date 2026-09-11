@@ -43,6 +43,14 @@ public class MotoristaController {
         return motoristaService.updateMotorista(id, record, authHeader);
     }
 
+    @PatchMapping("/motoristas/{id}/operador")
+    public ResponseEntity<GenericResponse<MotoristaRecord>> transferOperador(
+            @PathVariable String id,
+            @RequestParam("novoOperadorId") Long novoOperadorId,
+            @RequestHeader(value = "Authorization", required = false) String authHeader) {
+        return motoristaService.transferDriverOperator(id, novoOperadorId, authHeader);
+    }
+
     @DeleteMapping("/motoristas/{id}")
     public ResponseEntity<GenericResponse<Void>> deleteMotorista(@PathVariable String id) {
         return motoristaService.deleteMotorista(id);

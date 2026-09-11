@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -44,6 +45,12 @@ public class Usuario implements UserDetails {
 
     @Column(name = "USU_USUARIO_CPF", length = 11)
     private String cpf;
+
+    @Column(name = "USU_USUARIO_CNH_NUMERO", length = 20)
+    private String cnhNumero;
+
+    @Column(name = "USU_USUARIO_CNH_VALIDADE")
+    private LocalDate cnhValidade;
 
     @Column(name = "USU_USUARIO_TELEFONE", length = 20, unique = true)
     private String telefone;
