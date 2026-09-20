@@ -26,6 +26,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -64,6 +65,16 @@ public class MotoristaService {
             "SEX", "SEXTA",
             "SAB", "SABADO",
             "DOM", "DOMINGO"
+    );
+
+    private static final Map<DayOfWeek, String> DAY_OF_WEEK_TO_DB = Map.of(
+            DayOfWeek.MONDAY, "SEGUNDA",
+            DayOfWeek.TUESDAY, "TERCA",
+            DayOfWeek.WEDNESDAY, "QUARTA",
+            DayOfWeek.THURSDAY, "QUINTA",
+            DayOfWeek.FRIDAY, "SEXTA",
+            DayOfWeek.SATURDAY, "SABADO",
+            DayOfWeek.SUNDAY, "DOMINGO"
     );
 
     public MotoristaService(UsuarioRepository usuarioRepository,
@@ -182,20 +193,41 @@ public class MotoristaService {
             );
         }).collect(Collectors.toList());
 
-        String status = "FORA DE TURNO";
-        boolean hasActiveTrip = viagemRepository.findFirstByMotorista_IdAndStatus(u.getId(), ViagemStatus.EM_ANDAMENTO).isPresent();
-        if (hasActiveTrip) {
-            status = "EM ATENDIMENTO";
+        String status;
+        if (!"S".equalsIgnoreCase(u.getFlagAtivo())) {
+            status = "INATIVO";
         } else {
+            String todayDbDay = DAY_OF_WEEK_TO_DB.getOrDefault(LocalDate.now().getDayOfWeek(), "SEGUNDA");
+
+            List<VeiculoEscala> todayEscalas = escalasList.stream()
+                    .filter(e -> todayDbDay.equalsIgnoreCase(e.getDiaSemana()))
+                    .collect(Collectors.toList());
+
+            List<MotoristaHora> todayHoras = horas.stream()
+                    .filter(h -> todayDbDay.equalsIgnoreCase(h.getDiaSemana()))
+                    .collect(Collectors.toList());
+
             LocalTime now = LocalTime.now();
-            boolean isBreak = horas.stream().anyMatch(h ->
-                    h.getPausaInicio() != null && h.getPausaFim() != null &&
-                    !now.isBefore(h.getPausaInicio()) && !now.isAfter(h.getPausaFim())
-            );
-            if (isBreak) {
-                status = "PAUSA";
-            } else if (!horarios.isEmpty()) {
-                status = "AGUARDANDO";
+
+            boolean isShiftNow = todayEscalas.stream()
+                    .anyMatch(e -> isTimeWithin(now, e.getHoraInicio(), e.getHoraFim()))
+                    || todayHoras.stream()
+                    .anyMatch(h -> isTimeWithin(now, h.getHoraInicio(), h.getHoraFim()));
+
+            boolean hasActiveTrip = u.getId() != null && viagemRepository.findFirstByMotorista_IdAndStatus(u.getId(), ViagemStatus.EM_ANDAMENTO).isPresent();
+
+            if (hasActiveTrip && isShiftNow) {
+                status = "EM ATENDIMENTO";
+            } else if (!isShiftNow) {
+                status = "FORA DE TURNO";
+            } else {
+                boolean isBreak = todayHoras.stream()
+                        .anyMatch(h -> isTimeWithin(now, h.getPausaInicio(), h.getPausaFim()));
+                if (isBreak) {
+                    status = "PAUSA";
+                } else {
+                    status = "AGUARDANDO";
+                }
             }
         }
 
@@ -535,5 +567,18 @@ public class MotoristaService {
             }
         }
         return null;
+    }
+
+    boolean isTimeWithin(LocalTime now, LocalTime start, LocalTime end) {
+        if (now == null || start == null || end == null) return false;
+        if (start.equals(end)) {
+            return now.equals(start);
+        }
+        if (start.isBefore(end)) {
+            return !now.isBefore(start) && !now.isAfter(end);
+        } else {
+            // Overnight shift crossing midnight (e.g. 22:00 to 06:00)
+            return !now.isBefore(start) || !now.isAfter(end);
+        }
     }
 }

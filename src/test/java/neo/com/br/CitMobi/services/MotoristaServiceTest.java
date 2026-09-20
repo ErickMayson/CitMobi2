@@ -29,6 +29,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
@@ -350,5 +351,144 @@ class MotoristaServiceTest {
 
         assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
         assertEquals("403", response.getBody().status());
+    }
+
+    private String getTodayDbDay() {
+        DayOfWeek dow = LocalDate.now().getDayOfWeek();
+        switch (dow) {
+            case MONDAY: return "SEGUNDA";
+            case TUESDAY: return "TERCA";
+            case WEDNESDAY: return "QUARTA";
+            case THURSDAY: return "QUINTA";
+            case FRIDAY: return "SEXTA";
+            case SATURDAY: return "SABADO";
+            case SUNDAY: return "DOMINGO";
+            default: return "SEGUNDA";
+        }
+    }
+
+    private String getAnotherDayDbDay() {
+        DayOfWeek dow = LocalDate.now().getDayOfWeek();
+        return dow == DayOfWeek.SUNDAY ? "SEGUNDA" : "DOMINGO";
+    }
+
+    @Test
+    @DisplayName("Should return INATIVO status when driver flagAtivo is not 'S'")
+    void shouldReturnInativoWhenDriverIsInactive() {
+        sampleDriver.setFlagAtivo("N");
+
+        MotoristaRecord record = motoristaService.mapToRecord(sampleDriver);
+
+        assertEquals("INATIVO", record.status());
+    }
+
+    @Test
+    @DisplayName("Should return FORA DE TURNO when driver has schedule only on a different day")
+    void shouldReturnForaDeTurnoWhenDriverShiftIsNotToday() {
+        String otherDay = getAnotherDayDbDay();
+        VeiculoEscala escala = new VeiculoEscala(sampleVeiculo1, sampleLinha, sampleDriver, otherDay, LocalTime.of(0, 0), LocalTime.of(23, 59));
+        when(veiculoEscalaRepository.findByMotorista_Id(sampleDriver.getId())).thenReturn(List.of(escala));
+        when(motoristaHoraRepository.findByMotorista_Id(sampleDriver.getId())).thenReturn(Collections.emptyList());
+
+        MotoristaRecord record = motoristaService.mapToRecord(sampleDriver);
+
+        assertEquals("FORA DE TURNO", record.status());
+    }
+
+    @Test
+    @DisplayName("Should return FORA DE TURNO even if active trip exists when driver is off-shift")
+    void shouldReturnForaDeTurnoEvenWithActiveTripIfOffShift() {
+        String otherDay = getAnotherDayDbDay();
+        VeiculoEscala escala = new VeiculoEscala(sampleVeiculo1, sampleLinha, sampleDriver, otherDay, LocalTime.of(0, 0), LocalTime.of(23, 59));
+        when(veiculoEscalaRepository.findByMotorista_Id(sampleDriver.getId())).thenReturn(List.of(escala));
+        when(motoristaHoraRepository.findByMotorista_Id(sampleDriver.getId())).thenReturn(Collections.emptyList());
+
+        Viagem activeTrip = new Viagem();
+        activeTrip.setStatus(ViagemStatus.EM_ANDAMENTO);
+        when(viagemRepository.findFirstByMotorista_IdAndStatus(sampleDriver.getId(), ViagemStatus.EM_ANDAMENTO))
+                .thenReturn(Optional.of(activeTrip));
+
+        MotoristaRecord record = motoristaService.mapToRecord(sampleDriver);
+
+        assertEquals("FORA DE TURNO", record.status());
+    }
+
+    @Test
+    @DisplayName("Should return EM ATENDIMENTO when driver is in shift and has active trip")
+    void shouldReturnEmAtendimentoWhenInShiftAndActiveTrip() {
+        String today = getTodayDbDay();
+        VeiculoEscala escala = new VeiculoEscala(sampleVeiculo1, sampleLinha, sampleDriver, today, LocalTime.of(0, 0), LocalTime.of(23, 59));
+        when(veiculoEscalaRepository.findByMotorista_Id(sampleDriver.getId())).thenReturn(List.of(escala));
+        when(motoristaHoraRepository.findByMotorista_Id(sampleDriver.getId())).thenReturn(Collections.emptyList());
+
+        Viagem activeTrip = new Viagem();
+        activeTrip.setStatus(ViagemStatus.EM_ANDAMENTO);
+        when(viagemRepository.findFirstByMotorista_IdAndStatus(sampleDriver.getId(), ViagemStatus.EM_ANDAMENTO))
+                .thenReturn(Optional.of(activeTrip));
+
+        MotoristaRecord record = motoristaService.mapToRecord(sampleDriver);
+
+        assertEquals("EM ATENDIMENTO", record.status());
+    }
+
+    @Test
+    @DisplayName("Should return PAUSA when driver is in shift, no active trip, and current time is within break interval")
+    void shouldReturnPausaWhenInShiftAndWithinBreak() {
+        String today = getTodayDbDay();
+        VeiculoEscala escala = new VeiculoEscala(sampleVeiculo1, sampleLinha, sampleDriver, today, LocalTime.of(0, 0), LocalTime.of(23, 59));
+        when(veiculoEscalaRepository.findByMotorista_Id(sampleDriver.getId())).thenReturn(List.of(escala));
+
+        MotoristaHora hora = new MotoristaHora(sampleDriver, today, LocalTime.of(0, 0), LocalTime.of(23, 59), LocalTime.of(0, 0), LocalTime.of(23, 59));
+        when(motoristaHoraRepository.findByMotorista_Id(sampleDriver.getId())).thenReturn(List.of(hora));
+        when(viagemRepository.findFirstByMotorista_IdAndStatus(sampleDriver.getId(), ViagemStatus.EM_ANDAMENTO))
+                .thenReturn(Optional.empty());
+
+        MotoristaRecord record = motoristaService.mapToRecord(sampleDriver);
+
+        assertEquals("PAUSA", record.status());
+    }
+
+    @Test
+    @DisplayName("Should return AGUARDANDO when driver is in shift, no active trip, and not within break interval")
+    void shouldReturnAguardandoWhenInShiftAndNotOnBreak() {
+        String today = getTodayDbDay();
+        VeiculoEscala escala = new VeiculoEscala(sampleVeiculo1, sampleLinha, sampleDriver, today, LocalTime.of(0, 0), LocalTime.of(23, 59));
+        when(veiculoEscalaRepository.findByMotorista_Id(sampleDriver.getId())).thenReturn(List.of(escala));
+        when(motoristaHoraRepository.findByMotorista_Id(sampleDriver.getId())).thenReturn(Collections.emptyList());
+        when(viagemRepository.findFirstByMotorista_IdAndStatus(sampleDriver.getId(), ViagemStatus.EM_ANDAMENTO))
+                .thenReturn(Optional.empty());
+
+        MotoristaRecord record = motoristaService.mapToRecord(sampleDriver);
+
+        assertEquals("AGUARDANDO", record.status());
+    }
+
+    @Test
+    @DisplayName("Should correctly evaluate isTimeWithin for daytime and overnight shifts")
+    void shouldCorrectlyEvaluateIsTimeWithin() {
+        // Normal daytime window: 06:00 to 14:00
+        LocalTime dayStart = LocalTime.of(6, 0);
+        LocalTime dayEnd = LocalTime.of(14, 0);
+        assertTrue(motoristaService.isTimeWithin(LocalTime.of(10, 0), dayStart, dayEnd));
+        assertTrue(motoristaService.isTimeWithin(LocalTime.of(6, 0), dayStart, dayEnd));
+        assertTrue(motoristaService.isTimeWithin(LocalTime.of(14, 0), dayStart, dayEnd));
+        assertFalse(motoristaService.isTimeWithin(LocalTime.of(5, 59), dayStart, dayEnd));
+        assertFalse(motoristaService.isTimeWithin(LocalTime.of(14, 1), dayStart, dayEnd));
+
+        // Overnight window: 22:00 to 06:00
+        LocalTime nightStart = LocalTime.of(22, 0);
+        LocalTime nightEnd = LocalTime.of(6, 0);
+        assertTrue(motoristaService.isTimeWithin(LocalTime.of(23, 0), nightStart, nightEnd));
+        assertTrue(motoristaService.isTimeWithin(LocalTime.of(22, 0), nightStart, nightEnd));
+        assertTrue(motoristaService.isTimeWithin(LocalTime.of(6, 0), nightStart, nightEnd));
+        assertTrue(motoristaService.isTimeWithin(LocalTime.of(2, 0), nightStart, nightEnd));
+        assertFalse(motoristaService.isTimeWithin(LocalTime.of(12, 0), nightStart, nightEnd));
+        assertFalse(motoristaService.isTimeWithin(LocalTime.of(21, 59), nightStart, nightEnd));
+        assertFalse(motoristaService.isTimeWithin(LocalTime.of(6, 1), nightStart, nightEnd));
+
+        // Null checks
+        assertFalse(motoristaService.isTimeWithin(null, dayStart, dayEnd));
+        assertFalse(motoristaService.isTimeWithin(LocalTime.of(10, 0), null, dayEnd));
+        assertFalse(motoristaService.isTimeWithin(LocalTime.of(10, 0), dayStart, null));
     }
 }

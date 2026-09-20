@@ -1,0 +1,447 @@
+﻿// ==============================================================================
+// CitMobi Database Schema - DBML Specification for dbdiagram.io
+// Engine: PostgreSQL
+// ==============================================================================
+
+Project CitMobi {
+  database_type: 'PostgreSQL'
+  Note: '''
+    # CitMobi - Sistema de Gestão de Transporte Público Urbano e Intermunicipal
+    Esquema relacional com chaves substitutas (surrogate keys), escopo IBGE,
+    rastreamento de telemetria operacional e ciclo de vida de frota.
+  '''
+}
+
+// ==============================================================================
+// ENUMS
+// ==============================================================================
+
+Enum UsuarioRole {
+  ADMIN
+  USER
+  MODERATOR
+  MOTORISTA
+}
+
+Enum VeiculoStatus {
+  ATIVO
+  MANUTENCAO
+  INATIVO
+  SUCATEADO
+  VENDIDO
+}
+
+Enum ViagemStatus {
+  EM_ANDAMENTO
+  FINALIZADA
+  CANCELADA
+}
+
+Enum DiaSemana {
+  SEGUNDA
+  TERCA
+  QUARTA
+  QUINTA
+  SEXTA
+  SABADO
+  DOMINGO
+}
+
+Enum RotaSentido {
+  IDA
+  VOLTA
+}
+
+Enum FlagSimNao {
+  S
+  N
+}
+
+// ==============================================================================
+// 1. IBGE SCHEMA (Hierarquia Territorial Brasileira)
+// ==============================================================================
+
+Table ibge.T_GLB_REGIAO {
+  GLB_REGIAO_COD bigint [pk, note: 'Código IBGE da Região']
+  GLB_REGIAO_NOME varchar(100) [note: 'Nome da grande região (ex: Sudeste)']
+  GLB_REGIAO_SIGLA varchar(4) [note: 'Sigla da região (ex: SE)']
+
+  Note: 'Grandes Regiões do Brasil segundo o IBGE'
+}
+
+Table ibge.T_GLB_UF {
+  GLB_UF_COD bigint [pk, note: 'Código numérico IBGE do Estado']
+  GLB_UF_NOME varchar(100) [note: 'Nome da Unidade Federativa']
+  GLB_UF_SIGLA varchar(2) [unique, not null, note: 'Sigla do Estado (ex: SP)']
+  GLB_REGIAO_COD bigint [ref: > ibge.T_GLB_REGIAO.GLB_REGIAO_COD, note: 'FK para a grande região']
+
+  Note: 'Unidades Federativas (Estados)'
+}
+
+Table ibge.T_GLB_REGIAOINTERMEDIARIA {
+  GLB_REGIAOINTERMEDIARIA_COD bigint [pk, note: 'Código IBGE da Região Geográfica Intermediária']
+  GLB_REGIAOINTERMEDIARIA_NOME varchar(150) [note: 'Nome da região intermediária']
+  GLB_UF_COD bigint [ref: > ibge.T_GLB_UF.GLB_UF_COD, note: 'FK para a UF']
+
+  Note: 'Regiões Geográficas Intermediárias do IBGE'
+}
+
+Table ibge.T_GLB_REGIAOIMEDIATA {
+  GLB_REGIAOIMEDIATA_COD bigint [pk, note: 'Código IBGE da Região Geográfica Imediata']
+  GLB_REGIAOIMEDIATA_NOME varchar(150) [note: 'Nome da região imediata']
+  GLB_REGIAOINTERMEDIARIA_COD bigint [ref: > ibge.T_GLB_REGIAOINTERMEDIARIA.GLB_REGIAOINTERMEDIARIA_COD, note: 'FK para região intermediária']
+
+  Note: 'Regiões Geográficas Imediatas do IBGE'
+}
+
+Table ibge.T_GLB_MUNICIPIO {
+  GLB_MUNICIPIO_COD bigint [pk, note: 'Código IBGE de 7 dígitos do Município']
+  GLB_MUNICIPIO_NOME varchar(150) [note: 'Nome oficial do município']
+  GLB_UF_SIGLA varchar(2) [ref: > ibge.T_GLB_UF.GLB_UF_SIGLA, note: 'FK para a sigla da UF']
+  GLB_REGIAOIMEDIATA_COD bigint [ref: > ibge.T_GLB_REGIAOIMEDIATA.GLB_REGIAOIMEDIATA_COD, note: 'FK para região imediata']
+
+  Note: 'Municípios brasileiros oficiais do IBGE'
+}
+
+Table ibge.T_GLB_DISTRITO {
+  GLB_DISTRITO_COD bigint [pk, note: 'Código IBGE do Distrito']
+  GLB_DISTRITO_NOME varchar(150) [note: 'Nome do distrito municipal']
+  GLB_MUNICIPIO_COD bigint [ref: > ibge.T_GLB_MUNICIPIO.GLB_MUNICIPIO_COD, note: 'FK para município']
+
+  Note: 'Distritos municipais'
+}
+
+Table ibge.T_GLB_SUBDISTRITO {
+  GLB_SUBDISTRITO_COD bigint [pk, note: 'Código IBGE do Subdistrito']
+  GLB_SUBDISTRITO_NOME varchar(150) [note: 'Nome do subdistrito']
+  GLB_DISTRITO_COD bigint [ref: > ibge.T_GLB_DISTRITO.GLB_DISTRITO_COD, note: 'FK para distrito']
+
+  Note: 'Subdistritos municipais'
+}
+
+// ==============================================================================
+// 2. OPERADOR E ACESSO GLOBAL
+// ==============================================================================
+
+Table T_GLB_OPERADOR {
+  GLB_OPERADOR_ID bigserial [pk, note: 'Chave primária substituta']
+  GLB_OPERADOR_CNPJ varchar(14) [unique, not null, note: 'CNPJ do operador (apenas números)']
+  GLB_OPERADOR_RAZAOSOCIAL varchar(255) [not null, note: 'Razão social da empresa de transporte']
+  GLB_OPERADOR_FLAGREGULADOR varchar(1) [not null, default: 'S', note: 'Flag regulador S/N']
+
+  Note: 'Operadores concessionários de transporte público ou órgãos reguladores'
+}
+
+Table T_USU_USUARIO {
+  USU_USUARIO_ID uuid [pk, default: `gen_random_uuid()`, note: 'UUID do usuário']
+  USU_USUARIO_LOGIN varchar(50) [unique, not null, note: 'Identificador de login único']
+  GLB_OPERADOR_ID bigint [not null, ref: > T_GLB_OPERADOR.GLB_OPERADOR_ID, note: 'FK do operador ao qual o usuário pertence']
+  USU_USUARIO_EMAIL varchar(255) [unique, not null, note: 'Email válido do usuário']
+  USU_USUARIO_SENHA text [not null, note: 'Hash BCrypt da senha']
+  USU_USUARIO_NOME varchar(100) [note: 'Nome completo do usuário']
+  USU_USUARIO_TELEFONE varchar(20) [unique, note: 'Telefone com DDD (apenas números)']
+  USU_USUARIO_CPF varchar(11) [unique, note: 'CPF do usuário']
+  USU_USUARIO_CNH_NUMERO varchar(20) [note: 'Número da CNH (obrigatório se motorista)']
+  USU_USUARIO_CNH_VALIDADE date [note: 'Data de validade da CNH']
+  USU_USUARIO_ROLE varchar(25) [not null, note: 'Perfil: ADMIN, USER, MODERATOR, MOTORISTA']
+  USU_USUARIO_FLAGATIVO text [not null, default: 'S', note: 'Status de ativação S/N']
+  USU_USUARIO_DTCRIACAO timestamptz [default: `now()`, note: 'Data/hora de cadastro']
+  USU_USUARIO_DTUPDATE timestamptz [note: 'Data/hora da última alteração']
+  USU_USUARIO_DTULTIMOLOGIN timestamptz [note: 'Data/hora do último login realizado']
+
+  indexes {
+    USU_USUARIO_LOGIN [name: 'idx_usuario_login']
+    USU_USUARIO_EMAIL [name: 'idx_usuario_email']
+    USU_USUARIO_ROLE [name: 'idx_usuario_role']
+    USU_USUARIO_FLAGATIVO [name: 'idx_usuario_status']
+    GLB_OPERADOR_ID [name: 'idx_usu_operador_id']
+  }
+
+  Note: 'Usuários do sistema: administradores, funcionários dos operadores e motoristas'
+}
+
+Table T_USU_USUARIO_ACESSO {
+  USU_ACESSO_ID bigserial [pk, note: 'Chave primária substituta']
+  USU_USUARIO_ID uuid [not null, ref: > T_USU_USUARIO.USU_USUARIO_ID, note: 'FK do usuário']
+  GLB_MUNICIPIO_COD bigint [ref: > ibge.T_GLB_MUNICIPIO.GLB_MUNICIPIO_COD, note: 'FK para IBGE município permitido']
+  GLB_UF_COD bigint [ref: > ibge.T_GLB_UF.GLB_UF_COD, note: 'FK para IBGE estado permitido']
+
+  indexes {
+    USU_USUARIO_ID [name: 'idx_usuario_acesso_user']
+  }
+
+  Note: 'Escopo territorial de acesso baseado em códigos IBGE por usuário'
+}
+
+// ==============================================================================
+// 3. MALHA DE TRANSPORTE (LINHAS, ROTAS, PARADAS E TERMINAIS)
+// ==============================================================================
+
+Table T_LIN_TIPO {
+  LIN_TIPO_ID int [pk, note: 'ID do tipo de ponto/terminal']
+  LIN_TIPO_DESCRICAO varchar(150) [not null, note: 'Descrição (ex: Urbano, Metrô, Terminal)']
+
+  Note: 'Tipologia de terminais e paradas'
+}
+
+Table T_LIN_TERMINAL {
+  LIN_TERMINAL_ID bigserial [pk, note: 'Chave primária do terminal']
+  LIN_TERMINAL_NOME varchar(255) [not null, note: 'Nome do terminal']
+  LIN_TERMINAL_LOGRADOURO varchar(255) [not null, note: 'Logradouro / Endereço']
+  LIN_TERMINAL_NUMERO varchar(255) [not null, note: 'Número ou S/N']
+  LIN_TERMINAL_LATITUDE decimal(8,6) [not null, note: 'Latitude em WGS84']
+  LIN_TERMINAL_LONGITUDE decimal(9,6) [not null, note: 'Longitude em WGS84']
+  GLB_MUNICIPIO_COD bigint [not null, ref: > ibge.T_GLB_MUNICIPIO.GLB_MUNICIPIO_COD, note: 'FK IBGE município']
+  GLB_UF_SIGLA varchar(2) [not null, ref: > ibge.T_GLB_UF.GLB_UF_SIGLA, note: 'FK Sigla UF']
+  LIN_TIPO_ID int [not null, ref: > T_LIN_TIPO.LIN_TIPO_ID, note: 'FK tipo de terminal']
+
+  indexes {
+    (LIN_TERMINAL_NOME, GLB_MUNICIPIO_COD) [unique, name: 'uk_terminal_nome_municipio']
+  }
+
+  Note: 'Terminais de transporte público municipais ou intermunicipais'
+}
+
+Table T_LIN_PARADA {
+  LIN_PARADA_ID bigserial [pk, note: 'Chave primária do ponto de parada']
+  LIN_PARADA_LOGRADOURO varchar(255) [not null, note: 'Logradouro da parada']
+  LIN_PARADA_NUMERO varchar(255) [note: 'Número de referência']
+  LIN_PARADA_OBS varchar(255) [note: 'Observação ou ponto de referência']
+  LIN_PARADA_LATITUDE decimal(8,6) [not null, note: 'Latitude em WGS84']
+  LIN_PARADA_LONGITUDE decimal(9,6) [not null, note: 'Longitude em WGS84']
+  GLB_MUNICIPIO_COD bigint [not null, ref: > ibge.T_GLB_MUNICIPIO.GLB_MUNICIPIO_COD, note: 'FK IBGE município']
+  GLB_UF_SIGLA varchar(2) [not null, ref: > ibge.T_GLB_UF.GLB_UF_SIGLA, note: 'FK Sigla UF']
+  LIN_TIPO_ID int [not null, ref: > T_LIN_TIPO.LIN_TIPO_ID, note: 'FK tipo da parada']
+  LIN_PARADA_FLAGATIVA varchar(1) [not null, default: 'S', note: 'Status ativa S/N']
+
+  Note: 'Pontos de embarque/desembarque físicos nas vias públicas'
+}
+
+Table T_LIN_LINHA {
+  LIN_LINHA_ID bigserial [pk, note: 'Chave primária da linha']
+  LIN_LINHA_CODIGO varchar(30) [not null, note: 'Código operacional da linha (ex: 8000-10)']
+  LIN_LINHA_ATENDIMENTO varchar(15) [not null, note: 'Código de atendimento (ex: 10, 01)']
+  LIN_LINHA_DESCRICAO varchar(255) [not null, note: 'Nome/Letreiro descritivo']
+  GLB_MUNICIPIO_COD bigint [not null, ref: > ibge.T_GLB_MUNICIPIO.GLB_MUNICIPIO_COD, note: 'Município polo da linha']
+  GLB_OPERADOR_ID bigint [not null, ref: > T_GLB_OPERADOR.GLB_OPERADOR_ID, note: 'FK do operador responsável']
+  LIN_LINHA_FLAGINTERMUNICIPAL varchar(1) [not null, default: 'N', note: 'Flag intermunicipal S/N']
+  LIN_LINHA_FLAGATENDEMETRO varchar(1) [not null, default: 'N', note: 'Flag integração metrô S/N']
+  LIN_LINHA_FLAGATENDETREM varchar(1) [not null, default: 'N', note: 'Flag integração trem S/N']
+  LIN_LINHA_FLAGATIVA varchar(1) [not null, default: 'S', note: 'Flag linha ativa S/N']
+
+  indexes {
+    (LIN_LINHA_CODIGO, LIN_LINHA_ATENDIMENTO, GLB_MUNICIPIO_COD) [unique, name: 'uk_linha_cod_atend_mun']
+  }
+
+  Note: 'Linhas de transporte operadas por concessionárias'
+}
+
+Table T_LIN_ROTA {
+  LIN_ROTA_ID bigserial [pk, note: 'Chave primária da rota']
+  LIN_LINHA_ID bigint [not null, ref: > T_LIN_LINHA.LIN_LINHA_ID, note: 'FK da linha à qual pertence']
+  LIN_ROTA_PREFIXO varchar(255) [not null, note: 'Descrição ou nome da rota/sentido']
+  LIN_ROTA_SENTIDO varchar(12) [not null, note: 'Sentido: IDA ou VOLTA']
+
+  Note: 'Rotas direcionadas de uma linha (Ida/Volta)'
+}
+
+Table T_LIN_ITINERARIO {
+  LIN_ITINERARIO_ID bigserial [pk, note: 'Chave primária do passo de itinerário']
+  LIN_ROTA_ID bigint [not null, ref: > T_LIN_ROTA.LIN_ROTA_ID, note: 'FK da rota']
+  LIN_PARADA_ID bigint [not null, ref: > T_LIN_PARADA.LIN_PARADA_ID, note: 'FK do ponto de parada']
+  LIN_ITINERARIO_SEQUENCIA int [not null, note: 'Ordem sequencial do ponto na rota (1, 2, 3...)']
+
+  indexes {
+    (LIN_ROTA_ID, LIN_ITINERARIO_SEQUENCIA) [unique, name: 'uk_itinerario_rota_seq']
+  }
+
+  Note: 'Sequência ordenada de paradas que compõem uma rota'
+}
+
+// ==============================================================================
+// 4. FROTA, GARAGEM E MODELOS DE VEÍCULOS
+// ==============================================================================
+
+Table T_VEI_GARAGEM {
+  VEI_GARAGEM_ID bigserial [pk, note: 'Chave primária da garagem']
+  VEI_GARAGEM_DESCRICAO varchar(155) [not null, note: 'Nome ou identificação da garagem']
+  GLB_MUNICIPIO_COD bigint [not null, ref: > ibge.T_GLB_MUNICIPIO.GLB_MUNICIPIO_COD, note: 'FK IBGE município']
+  GLB_OPERADOR_ID bigint [not null, ref: > T_GLB_OPERADOR.GLB_OPERADOR_ID, note: 'FK do operador dono da garagem']
+  VEI_GARAGEM_LOGRADOURO varchar(255) [not null, note: 'Endereço da garagem']
+  VEI_GARAGEM_NUMERO varchar(24) [not null, note: 'Número']
+  VEI_GARAGEM_CEP varchar(8) [not null, note: 'CEP (8 dígitos)']
+
+  Note: 'Garagens e pátios de estacionamento dos operadores'
+}
+
+Table T_VEI_VEICULOMODELO {
+  VEI_VEICULOMODELO_ID bigserial [pk, note: 'Chave primária do modelo']
+  VEI_VEICULO_MARCA varchar(256) [not null, note: 'Fabricante do chassi/carroceria']
+  VEI_VEICULO_MODELO varchar(256) [not null, note: 'Nome comercial do modelo']
+  VEI_VEICULO_EIXO int [not null, note: 'Quantidade de eixos (ex: 2, 3)']
+  VEI_VEICULO_TIPO varchar(128) [not null, note: 'Tipo (ex: Padron, Articulado, Micro)']
+
+  Note: 'Catálogo de especificações de modelos de veículos'
+}
+
+Table T_VEI_VEICULO {
+  VEI_VEICULO_ID bigserial [pk, note: 'Chave primária do veículo']
+  VEI_VEICULO_PLACA varchar(16) [unique, not null, note: 'Placa veicular (Mercosul ou antiga)']
+  VEI_VEICULO_CODIGO varchar(100) [not null, note: 'Prefixo/número de ordem operacional']
+  GLB_OPERADOR_ID bigint [not null, ref: > T_GLB_OPERADOR.GLB_OPERADOR_ID, note: 'FK operador proprietário']
+  VEI_VEICULOMODELO_ID bigint [not null, ref: > T_VEI_VEICULOMODELO.VEI_VEICULOMODELO_ID, note: 'FK modelo']
+  VEI_VEICULO_CAPACIDADE int [not null, note: 'Capacidade de passageiros (sentados + em pé)']
+  VEI_VEICULO_ANOFABRICACAO varchar(4) [not null, note: 'Ano de fabricação (YYYY)']
+  VEI_GARAGEM_ID bigint [not null, ref: > T_VEI_GARAGEM.VEI_GARAGEM_ID, note: 'FK garagem base']
+  VEI_VEICULO_STATUS varchar(20) [not null, default: 'ATIVO', note: 'Status: ATIVO, MANUTENCAO, INATIVO, SUCATEADO, VENDIDO']
+  VEI_VEICULO_DTCADASTRO date [default: `CURRENT_DATE`, note: 'Data de inclusão na frota']
+
+  indexes {
+    VEI_VEICULO_PLACA [name: 'idx_vei_placa']
+    GLB_OPERADOR_ID [name: 'idx_vei_operador']
+    VEI_VEICULO_STATUS [name: 'idx_vei_status']
+    VEI_GARAGEM_ID [name: 'idx_veiculo_garagem']
+  }
+
+  Note: 'Cadastro central de veículos da frota de transporte'
+}
+
+// ==============================================================================
+// 5. ESCALAS, JORNADA DE TRABALHO E OPERAÇÃO
+// ==============================================================================
+
+Table T_VEI_ESCALA {
+  VEI_ESCALA_ID bigserial [pk, note: 'Chave primária da escala operacional']
+  VEI_VEICULO_ID bigint [not null, ref: > T_VEI_VEICULO.VEI_VEICULO_ID, note: 'FK do ônibus escalado']
+  LIN_LINHA_ID bigint [not null, ref: > T_LIN_LINHA.LIN_LINHA_ID, note: 'FK da linha atribuída']
+  USU_USUARIO_ID uuid [ref: > T_USU_USUARIO.USU_USUARIO_ID, note: 'FK motorista escalado (opcional)']
+  VEI_ESCALA_DIASEMANA varchar(30) [not null, note: 'Dia da semana (SEGUNDA a DOMINGO)']
+  VEI_ESCALA_HORAINICIO time [not null, note: 'Horário previsto de início da escala']
+  VEI_ESCALA_HORAFIM time [not null, note: 'Horário previsto de término da escala']
+  VEI_ESCALA_DTGRAV date [default: `CURRENT_DATE`, note: 'Data de registro do slot']
+
+  indexes {
+    (VEI_VEICULO_ID, VEI_ESCALA_DIASEMANA, VEI_ESCALA_HORAINICIO) [unique, name: 'uk_veiculo_escala_slot']
+    VEI_VEICULO_ID [name: 'idx_escala_veiculo']
+    LIN_LINHA_ID [name: 'idx_escala_linha']
+    USU_USUARIO_ID [name: 'idx_escala_driver']
+    VEI_ESCALA_DIASEMANA [name: 'idx_escala_dia']
+  }
+
+  Note: 'Escala de serviço vinculando veículo, linha, motorista e horário'
+}
+
+Table T_USU_MOTORISTAHORA {
+  USU_MOTORISTAHORA_ID bigserial [pk, note: 'Chave primária da jornada']
+  USU_USUARIO_ID uuid [not null, ref: > T_USU_USUARIO.USU_USUARIO_ID, note: 'FK do motorista']
+  USU_MOTORISTAHORA_DIASEMANA varchar(30) [not null, note: 'Dia da semana da jornada']
+  USU_MOTORISTAHORA_HORAINICIO time [not null, note: 'Horário de início da jornada de trabalho']
+  USU_MOTORISTAHORA_HORAFIM time [not null, note: 'Horário de encerramento da jornada']
+  USU_MOTORISTAHORA_PAUSAINICIO time [not null, note: 'Horário de início do intervalo de refeição']
+  USU_MOTORISTAHORA_PAUSAFIM time [not null, note: 'Horário de retorno do intervalo']
+
+  indexes {
+    (USU_USUARIO_ID, USU_MOTORISTAHORA_DIASEMANA) [unique, name: 'uk_motoristahora_escala']
+    USU_MOTORISTAHORA_DIASEMANA [name: 'idx_motoristahora_dia']
+  }
+
+  Note: 'Jornada contratual e horários de intervalo dos motoristas'
+}
+
+// ==============================================================================
+// 6. VIAGENS OPERACIONAIS E TELEMETRIA EM TEMPO REAL
+// ==============================================================================
+
+Table T_USU_VIAGEM {
+  USU_VIAGEM_ID bigserial [pk, note: 'Chave primária da viagem operacional']
+  USU_USUARIO_ID uuid [not null, ref: > T_USU_USUARIO.USU_USUARIO_ID, note: 'FK do motorista em trânsito']
+  VEI_VEICULO_ID bigint [not null, ref: > T_VEI_VEICULO.VEI_VEICULO_ID, note: 'FK do veículo utilizado']
+  LIN_LINHA_ID bigint [not null, ref: > T_LIN_LINHA.LIN_LINHA_ID, note: 'FK da linha percorrida']
+  LIN_ROTA_ID bigint [not null, ref: > T_LIN_ROTA.LIN_ROTA_ID, note: 'FK da rota/sentido percorrido']
+  USU_VIAGEM_DTINICIO timestamptz [not null, default: `now()`, note: 'Horário efetivo de partida']
+  USU_VIAGEM_DTFIM timestamptz [note: 'Horário efetivo de encerramento']
+  USU_VIAGEM_STATUS varchar(20) [not null, default: 'EM_ANDAMENTO', note: 'Status: EM_ANDAMENTO, FINALIZADA, CANCELADA']
+
+  indexes {
+    USU_VIAGEM_STATUS [name: 'idx_viagem_status']
+    USU_USUARIO_ID [name: 'idx_viagem_driver']
+  }
+
+  Note: 'Sessão operacional de viagem iniciada pelo motorista no aplicativo de bordo'
+}
+
+Table T_VEI_TELEMETRIA {
+  VEI_VEICULO_ID bigint [pk, ref: - T_VEI_VEICULO.VEI_VEICULO_ID, note: 'PK e 1:1 com o veículo em circulação']
+  USU_VIAGEM_ID bigint [not null, ref: > T_USU_VIAGEM.USU_VIAGEM_ID, note: 'FK da viagem ativa associada']
+  VEI_TELEMETRIA_LATITUDE decimal(8,6) [not null, note: 'Última latitude conhecida (WGS84)']
+  VEI_TELEMETRIA_LONGITUDE decimal(9,6) [not null, note: 'Última longitude conhecida (WGS84)']
+  VEI_TELEMETRIA_VELOCIDADE decimal(6,2) [default: 0.00, note: 'Velocidade instantânea em km/h']
+  VEI_TELEMETRIA_BEARING decimal(5,2) [default: 0.00, note: 'Ângulo de orientação (0-360 graus)']
+  VEI_TELEMETRIA_ODOMETER decimal(10,2) [default: 0.00, note: 'Odômetro acumulado em km']
+  VEI_TELEMETRIA_SEQPARADA int [note: 'Sequência da próxima parada prevista']
+  VEI_TELEMETRIA_STATUSPARADA varchar(30) [note: 'Situação com relação à parada (EM_TRANSITO, CHEGANDO, NO_PONTO)']
+  LIN_PARADA_ID bigint [ref: > T_LIN_PARADA.LIN_PARADA_ID, note: 'FK da parada mais recente ou destino']
+  VEI_TELEMETRIA_DTUPDATE timestamptz [default: `now()`, note: 'Data/hora do último ping de GPS']
+
+  Note: 'Cache de última posição e telemetria em tempo real (1 registro por ônibus em circulação)'
+}
+
+Table T_VEI_TELEMETRIA_HISTORICO {
+  VEI_TELEMETRIAHIST_ID bigserial [pk, note: 'Chave primária do log de rastreamento']
+  USU_VIAGEM_ID bigint [not null, ref: > T_USU_VIAGEM.USU_VIAGEM_ID, note: 'FK da viagem associada ao ping']
+  VEI_TELEMETRIA_LATITUDE decimal(8,6) [not null, note: 'Latitude registrada']
+  VEI_TELEMETRIA_LONGITUDE decimal(9,6) [not null, note: 'Longitude registrada']
+  VEI_TELEMETRIA_VELOCIDADE decimal(6,2) [default: 0.00, note: 'Velocidade instantânea em km/h']
+  VEI_TELEMETRIA_BEARING decimal(5,2) [default: 0.00, note: 'Ângulo de direção']
+  VEI_TELEMETRIA_ODOMETER decimal(10,2) [default: 0.00, note: 'Odômetro acumulado no instante']
+  VEI_TELEMETRIA_DTREGISTRO timestamptz [default: `now()`, note: 'Data/hora da captura']
+
+  indexes {
+    (USU_VIAGEM_ID, VEI_TELEMETRIA_DTREGISTRO) [name: 'idx_telemhist_viagem_time']
+  }
+
+  Note: 'Ledger de pontos históricos de telemetria para auditoria e mapas de calor'
+}
+
+// ==============================================================================
+// TABLE GROUPS (Visual grouping for dbdiagram.io)
+// ==============================================================================
+
+TableGroup IBGE {
+  ibge.T_GLB_REGIAO
+  ibge.T_GLB_UF
+  ibge.T_GLB_REGIAOINTERMEDIARIA
+  ibge.T_GLB_REGIAOIMEDIATA
+  ibge.T_GLB_MUNICIPIO
+  ibge.T_GLB_DISTRITO
+  ibge.T_GLB_SUBDISTRITO
+}
+
+TableGroup Usuarios_e_Acesso {
+  T_GLB_OPERADOR
+  T_USU_USUARIO
+  T_USU_USUARIO_ACESSO
+  T_USU_MOTORISTAHORA
+}
+
+TableGroup Malha_de_Transporte {
+  T_LIN_TIPO
+  T_LIN_TERMINAL
+  T_LIN_PARADA
+  T_LIN_LINHA
+  T_LIN_ROTA
+  T_LIN_ITINERARIO
+}
+
+TableGroup Frota_e_Garagens {
+  T_VEI_GARAGEM
+  T_VEI_VEICULOMODELO
+  T_VEI_VEICULO
+}
+
+TableGroup Operacao_e_Telemetria {
+  T_VEI_ESCALA
+  T_USU_VIAGEM
+  T_VEI_TELEMETRIA
+  T_VEI_TELEMETRIA_HISTORICO
+}
