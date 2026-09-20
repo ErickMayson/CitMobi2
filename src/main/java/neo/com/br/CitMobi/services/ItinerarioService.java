@@ -91,8 +91,23 @@ public class ItinerarioService {
 
     @Transactional
     public ResponseEntity<GenericResponse<ItinerarioRecord>> createItinerario(ItinerarioRecord itinerario, String linha, String atendimento, String prefixo) {
+        Optional<Rota> optionalRota = rotaRepository.findById(itinerario.itinerarioId());
+        if (optionalRota.isEmpty()) {
+            return new ResponseEntity<>(new GenericResponse<>("404", "Rota não encontrada com id: " + itinerario.itinerarioId(), null), HttpStatus.NOT_FOUND);
+        }
+        return replaceItinerario(optionalRota.get(), itinerario.paradas(), linha, atendimento, prefixo);
+    }
+
+    @Transactional
+    public ResponseEntity<GenericResponse<ItinerarioRecord>> replaceItinerario(
+            Rota rota,
+            List<ParadaRecord> paradas,
+            String linha,
+            String atendimento,
+            String prefixo
+    ) {
         try {
-            if (itinerario.paradas() == null || itinerario.paradas().isEmpty()) {
+            if (paradas == null || paradas.isEmpty()) {
                 String message = String.format(
                         "Nao é possivel criar itinerarios vazios para a rota %s-%s %s",
                         linha, atendimento, prefixo
@@ -101,7 +116,7 @@ public class ItinerarioService {
                 return new ResponseEntity<>(new GenericResponse<>("400", message, null), HttpStatus.BAD_REQUEST);
             }
 
-            if (itinerario.paradas().size() == 1) {
+            if (paradas.size() == 1) {
                 String message = String.format(
                         "Não é possível concluir essa rota com apenas 1 parada para a rota %s-%s %s",
                         linha, atendimento, prefixo
@@ -110,17 +125,15 @@ public class ItinerarioService {
                 return new ResponseEntity<>(new GenericResponse<>("400", message, null), HttpStatus.BAD_REQUEST);
             }
 
-            Optional<Rota> optionalRota = rotaRepository.findById(itinerario.itinerarioId());
-            if (optionalRota.isEmpty()) {
-                return new ResponseEntity<>(new GenericResponse<>("404", "Rota não encontrada com id: " + itinerario.itinerarioId(), null), HttpStatus.NOT_FOUND);
-            }
-            Rota rota = optionalRota.get();
+            // Clean previous stops for this route and flush to avoid UK_ITINERARIO_ROTA_SEQ conflict
+            itinerarioRepository.deleteByRota_Id(rota.getId());
+            itinerarioRepository.flush();
 
             List<ParadaRecord> paradasACriar = new ArrayList<>();
             Map<Integer, ParadaRecord> indexedParadas = new HashMap<>();
 
             AtomicInteger index = new AtomicInteger(0);
-            itinerario.paradas().forEach(paradaRecord -> {
+            paradas.forEach(paradaRecord -> {
                 int pos = index.getAndIncrement();
                 if (paradaRecord.paradaId() == null) {
                     paradasACriar.add(paradaRecord);
@@ -144,11 +157,11 @@ public class ItinerarioService {
             }
 
             ItinerarioRecord rotaItinerario = new ItinerarioRecord(rota.getId(), paradasItinerario);
-            return ResponseEntity.ok(new GenericResponse<>("200", "Itinerario criado.", rotaItinerario));
+            return ResponseEntity.ok(new GenericResponse<>("200", "Itinerario atualizado com sucesso.", rotaItinerario));
 
         } catch (Exception e) {
-            logger.error("Erro ao criar itinerario", e);
-            GenericResponse<ItinerarioRecord> errorResponse = new GenericResponse<>("500", "Erro ao criar itinerario: " + e.getMessage(), null);
+            logger.error("Erro ao salvar itinerario", e);
+            GenericResponse<ItinerarioRecord> errorResponse = new GenericResponse<>("500", "Erro ao salvar itinerario: " + e.getMessage(), null);
             return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

@@ -46,4 +46,24 @@ public class RotaController {
 
         return rotaService.createRota(linha, atendimento, municipio, itinerario);
     }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/rotas", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<GenericResponse<RotaResponse>> updateRota(
+            @RequestParam String linha,
+            @RequestParam String atendimento,
+            @RequestParam String municipio,
+            @RequestBody RotaRecord rotaRecord) {
+
+        return rotaService.updateRota(linha, atendimento, municipio, rotaRecord);
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/rotas/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<GenericResponse<RotaResponse>> updateRotaById(
+            @PathVariable Long id,
+            @RequestBody RotaRecord rotaRecord) {
+
+        return rotaService.updateRotaById(id, rotaRecord);
+    }
 }

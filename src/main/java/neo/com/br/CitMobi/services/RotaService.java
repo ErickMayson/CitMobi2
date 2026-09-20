@@ -111,11 +111,11 @@ public class RotaService {
             }
 
             Linha linhaEntity = optionalLinha.get();
-            if (rotaRepository.existsByLinha_IdAndSentido(linhaEntity.getId(), novaRota.linhaSentido())) {
-                String message = "A linha " + linha + "/" + atendimento + " ja possui uma rota com o sentido " + novaRota.linhaSentido() + ".";
-                logger.error(message);
-                GenericResponse<RotaResponse> errorResponse = new GenericResponse<>("409", message, null);
-                return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+            Optional<Rota> existingRota = rotaRepository.findByLinha_IdAndSentido(linhaEntity.getId(), novaRota.linhaSentido());
+            if (existingRota.isPresent()) {
+                logger.info("A linha {}/{} já possui uma rota com o sentido {}. Atualizando rota e itinerário (upsert).",
+                        linha, atendimento, novaRota.linhaSentido());
+                return executeUpdateRota(linhaEntity, existingRota.get(), novaRota, municipioCod);
             }
 
             Rota rota = new Rota(linhaEntity, novaRota.prefixo().trim(), novaRota.linhaSentido().trim());
@@ -161,5 +161,101 @@ public class RotaService {
             GenericResponse<RotaResponse> errorResponse = new GenericResponse<>("500", "Erro ao criar rota: " + e.getMessage(), null);
             return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @Transactional
+    public ResponseEntity<GenericResponse<RotaResponse>> updateRota(String linha, String atendimento, String municipio, RotaRecord rotaRecord) {
+        try {
+            Long municipioCod = Long.parseLong(municipio);
+            Optional<Linha> optionalLinha = linhaRepository.findByCodigoLinhaAndAtendimentoAndMunicipio_CodIbge(
+                    linha, atendimento, municipioCod
+            );
+
+            if (optionalLinha.isEmpty()) {
+                String message = "A linha " + linha + "/" + atendimento + " não foi encontrada.";
+                logger.error(message);
+                return new ResponseEntity<>(new GenericResponse<>("404", message, null), HttpStatus.NOT_FOUND);
+            }
+
+            Linha linhaEntity = optionalLinha.get();
+            Optional<Rota> optionalRota = rotaRepository.findByLinha_IdAndSentido(linhaEntity.getId(), rotaRecord.linhaSentido());
+            if (optionalRota.isEmpty()) {
+                String message = "A rota com sentido " + rotaRecord.linhaSentido() + " não foi encontrada para a linha " + linha + "/" + atendimento + ".";
+                logger.error(message);
+                return new ResponseEntity<>(new GenericResponse<>("404", message, null), HttpStatus.NOT_FOUND);
+            }
+
+            return executeUpdateRota(linhaEntity, optionalRota.get(), rotaRecord, municipioCod);
+        } catch (Exception e) {
+            logger.error("Erro ao atualizar rota: ", e);
+            return new ResponseEntity<>(new GenericResponse<>("500", "Erro ao atualizar rota: " + e.getMessage(), null), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Transactional
+    public ResponseEntity<GenericResponse<RotaResponse>> updateRotaById(Long id, RotaRecord rotaRecord) {
+        try {
+            Optional<Rota> optionalRota = rotaRepository.findById(id);
+            if (optionalRota.isEmpty()) {
+                String message = "Rota não encontrada com ID: " + id;
+                logger.error(message);
+                return new ResponseEntity<>(new GenericResponse<>("404", message, null), HttpStatus.NOT_FOUND);
+            }
+
+            Rota rota = optionalRota.get();
+            Linha linha = rota.getLinha();
+            Long municipioCod = linha.getMunicipio() != null ? linha.getMunicipio().getCodigoIbge() : null;
+            return executeUpdateRota(linha, rota, rotaRecord, municipioCod);
+        } catch (Exception e) {
+            logger.error("Erro ao atualizar rota por ID: ", e);
+            return new ResponseEntity<>(new GenericResponse<>("500", "Erro ao atualizar rota: " + e.getMessage(), null), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    private ResponseEntity<GenericResponse<RotaResponse>> executeUpdateRota(Linha linhaEntity, Rota rota, RotaRecord rotaRecord, Long municipioCod) {
+        if (rotaRecord.prefixo() != null && !rotaRecord.prefixo().isBlank()) {
+            rota.setPrefixo(rotaRecord.prefixo().trim());
+        }
+        if (rotaRecord.linhaSentido() != null && !rotaRecord.linhaSentido().isBlank()) {
+            rota.setSentido(rotaRecord.linhaSentido().trim());
+        }
+        rota = rotaRepository.save(rota);
+
+        ItinerarioRecord itinerarioResult = null;
+        if (rotaRecord.itinerario() != null) {
+            if (rotaRecord.itinerario().paradas() != null && !rotaRecord.itinerario().paradas().isEmpty()) {
+                ResponseEntity<GenericResponse<ItinerarioRecord>> replaceResp = itinerarioService.replaceItinerario(
+                        rota, rotaRecord.itinerario().paradas(), linhaEntity.getCodigoLinha(), linhaEntity.getAtendimento(), rota.getPrefixo()
+                );
+                if (!replaceResp.getStatusCode().is2xxSuccessful() || replaceResp.getBody() == null) {
+                    return new ResponseEntity<>(new GenericResponse<>("500", "Erro ao atualizar itinerário da rota.", null), HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+                itinerarioResult = replaceResp.getBody().data();
+            } else {
+                itinerarioRepository.deleteByRota_Id(rota.getId());
+                itinerarioRepository.flush();
+            }
+        } else {
+            // Keep existing itinerario if field was omitted
+            List<Itinerario> existingItinerarios = itinerarioRepository.findByRota_IdOrderBySequenciaAsc(rota.getId());
+            if (!existingItinerarios.isEmpty()) {
+                List<ParadaRecord> paradasRota = existingItinerarios.stream()
+                        .map(it -> it.getParada().toRecord())
+                        .toList();
+                itinerarioResult = new ItinerarioRecord(rota.getId(), paradasRota);
+            }
+        }
+
+        RotaRecord updatedRecord = new RotaRecord(
+                rota.getId(),
+                linhaEntity.getCodigoLinha(),
+                linhaEntity.getAtendimento(),
+                rota.getPrefixo(),
+                municipioCod,
+                rota.getSentido(),
+                itinerarioResult
+        );
+        GenericResponse<RotaResponse> response = new GenericResponse<>("200", "Rota e itinerário atualizados com sucesso.", new RotaResponse(List.of(updatedRecord)));
+        return ResponseEntity.ok(response);
     }
 }

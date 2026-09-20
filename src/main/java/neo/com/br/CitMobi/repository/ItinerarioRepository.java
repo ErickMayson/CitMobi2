@@ -14,4 +14,8 @@ public interface ItinerarioRepository extends JpaRepository<Itinerario, Long> {
     List<Itinerario> findByRota_IdInOrderByRota_IdAscSequenciaAsc(List<Long> rotaIds);
 
     List<Itinerario> findByRota_Linha_IdOrderByRota_SentidoAscSequenciaAsc(Long linhaId);
+
+    @org.springframework.data.jpa.repository.Modifying
+    @org.springframework.data.jpa.repository.Query("DELETE FROM Itinerario i WHERE i.rota.id = :rotaId")
+    void deleteByRota_Id(@org.springframework.data.repository.query.Param("rotaId") Long rotaId);
 }

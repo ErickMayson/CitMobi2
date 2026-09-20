@@ -6,6 +6,8 @@ import neo.com.br.CitMobi.models.linha.Linha;
 import neo.com.br.CitMobi.models.linha.Operador;
 import neo.com.br.CitMobi.models.linha.Parada;
 import neo.com.br.CitMobi.models.linha.Rota;
+import neo.com.br.CitMobi.models.records.linha.ItinerarioRecord;
+import neo.com.br.CitMobi.models.records.linha.ParadaRecord;
 import neo.com.br.CitMobi.models.records.linha.RotaRecord;
 import neo.com.br.CitMobi.models.records.response.GenericResponse;
 import neo.com.br.CitMobi.models.records.response.RotaResponse;
@@ -109,7 +111,7 @@ class RotaServiceTest {
 
         when(linhaRepository.findByCodigoLinhaAndAtendimentoAndMunicipio_CodIbge("3301", "10", 3550308L))
                 .thenReturn(Optional.of(sampleLinha));
-        when(rotaRepository.existsByLinha_IdAndSentido(10L, "VOLTA")).thenReturn(false);
+        when(rotaRepository.findByLinha_IdAndSentido(10L, "VOLTA")).thenReturn(Optional.empty());
         when(rotaRepository.save(any(Rota.class))).thenAnswer(invocation -> {
             Rota r = invocation.getArgument(0);
             r.setId(21L);
@@ -124,17 +126,82 @@ class RotaServiceTest {
     }
 
     @Test
-    @DisplayName("Should return 409 when creating a duplicate route sense")
-    void shouldReturn409WhenRouteAlreadyExists() {
-        RotaRecord duplicateRota = new RotaRecord("3301", "10", "3301-10", 3550308L, "IDA", null);
+    @DisplayName("Should upsert existing Rota when route already exists on createRota")
+    void shouldUpsertRotaWhenRouteAlreadyExists() {
+        RotaRecord duplicateRota = new RotaRecord("3301", "10", "3301-10 Atualizado", 3550308L, "IDA", null);
 
         when(linhaRepository.findByCodigoLinhaAndAtendimentoAndMunicipio_CodIbge("3301", "10", 3550308L))
                 .thenReturn(Optional.of(sampleLinha));
-        when(rotaRepository.existsByLinha_IdAndSentido(10L, "IDA")).thenReturn(true);
+        when(rotaRepository.findByLinha_IdAndSentido(10L, "IDA")).thenReturn(Optional.of(sampleRota));
+        when(rotaRepository.save(any(Rota.class))).thenReturn(sampleRota);
 
         ResponseEntity<GenericResponse<RotaResponse>> response = rotaService.createRota("3301", "10", "3550308", duplicateRota);
 
-        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
-        assertEquals("409", response.getBody().status());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("200", response.getBody().status());
+        assertEquals("3301-10 Atualizado", response.getBody().data().rotaRecords().get(0).prefixo());
+    }
+
+    @Test
+    @DisplayName("Should update Rota and replace itinerario successfully via updateRota")
+    void shouldUpdateRotaSuccessfully() {
+        ParadaRecord pRecord = new ParadaRecord(50L, "Rua Nova", "100", "", List.of(BigDecimal.valueOf(-23.5), BigDecimal.valueOf(-46.6)), 3550308L, "SP", 1L, "S");
+        ItinerarioRecord itRecord = new ItinerarioRecord(20L, List.of(pRecord));
+        RotaRecord updatePayload = new RotaRecord("3301", "10", "3301-10 Novo Prefixo", 3550308L, "IDA", itRecord);
+
+        when(linhaRepository.findByCodigoLinhaAndAtendimentoAndMunicipio_CodIbge("3301", "10", 3550308L))
+                .thenReturn(Optional.of(sampleLinha));
+        when(rotaRepository.findByLinha_IdAndSentido(10L, "IDA")).thenReturn(Optional.of(sampleRota));
+        when(rotaRepository.save(any(Rota.class))).thenReturn(sampleRota);
+        when(itinerarioService.replaceItinerario(eq(sampleRota), anyList(), eq("3301"), eq("10"), anyString()))
+                .thenReturn(ResponseEntity.ok(new GenericResponse<>("200", "Itinerario atualizado com sucesso.", itRecord)));
+
+        ResponseEntity<GenericResponse<RotaResponse>> response = rotaService.updateRota("3301", "10", "3550308", updatePayload);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("200", response.getBody().status());
+        assertEquals("3301-10 Novo Prefixo", response.getBody().data().rotaRecords().get(0).prefixo());
+        assertNotNull(response.getBody().data().rotaRecords().get(0).itinerario());
+    }
+
+    @Test
+    @DisplayName("Should update Rota by ID successfully")
+    void shouldUpdateRotaByIdSuccessfully() {
+        RotaRecord updatePayload = new RotaRecord("3301", "10", "Prefixo Por ID", 3550308L, "IDA", null);
+
+        when(rotaRepository.findById(20L)).thenReturn(Optional.of(sampleRota));
+        when(rotaRepository.save(any(Rota.class))).thenReturn(sampleRota);
+
+        ResponseEntity<GenericResponse<RotaResponse>> response = rotaService.updateRotaById(20L, updatePayload);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("200", response.getBody().status());
+        assertEquals("Prefixo Por ID", response.getBody().data().rotaRecords().get(0).prefixo());
+    }
+
+    @Test
+    @DisplayName("Should return 404 when updating non-existent Rota")
+    void shouldReturn404WhenUpdatingNonExistentRota() {
+        RotaRecord updatePayload = new RotaRecord("3301", "10", "Prefixo", 3550308L, "VOLTA", null);
+
+        when(linhaRepository.findByCodigoLinhaAndAtendimentoAndMunicipio_CodIbge("3301", "10", 3550308L))
+                .thenReturn(Optional.of(sampleLinha));
+        when(rotaRepository.findByLinha_IdAndSentido(10L, "VOLTA")).thenReturn(Optional.empty());
+
+        ResponseEntity<GenericResponse<RotaResponse>> response = rotaService.updateRota("3301", "10", "3550308", updatePayload);
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+    @Test
+    @DisplayName("Should return 404 when updating Rota by non-existent ID")
+    void shouldReturn404WhenUpdatingRotaByNonExistentId() {
+        RotaRecord updatePayload = new RotaRecord("3301", "10", "Prefixo", 3550308L, "IDA", null);
+
+        when(rotaRepository.findById(999L)).thenReturn(Optional.empty());
+
+        ResponseEntity<GenericResponse<RotaResponse>> response = rotaService.updateRotaById(999L, updatePayload);
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 }
