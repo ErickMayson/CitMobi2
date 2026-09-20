@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import neo.com.br.CitMobi.models.records.linha.LinhaRecord;
 import neo.com.br.CitMobi.models.records.response.GenericResponse;
+import neo.com.br.CitMobi.models.records.response.LinhaDetalhesResponse;
 import neo.com.br.CitMobi.models.records.response.LinhaEditResponse;
 import neo.com.br.CitMobi.models.records.response.LinhaResponse;
 import neo.com.br.CitMobi.services.LinhaService;
@@ -41,6 +42,14 @@ public class LinhaController {
             @RequestParam(required = false) Long municipio,
             @RequestParam(required = false) Long operadorId) {
         return linhaService.getAllLinhas(municipio, operadorId);
+    }
+
+    @GetMapping(value = "/linhas/detalhes", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<GenericResponse<List<LinhaDetalhesResponse>>> getAllLinhasComDetalhes(
+            @RequestParam(required = false) Long municipio,
+            @RequestParam(required = false) Long operadorId) {
+        return linhaService.getAllLinhasComDetalhes(municipio, operadorId);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/linha", produces = MediaType.APPLICATION_JSON_VALUE)

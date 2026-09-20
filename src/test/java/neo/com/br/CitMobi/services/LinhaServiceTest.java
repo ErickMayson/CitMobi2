@@ -1,15 +1,21 @@
 package neo.com.br.CitMobi.services;
 
 import neo.com.br.CitMobi.models.ibge.Municipio;
+import neo.com.br.CitMobi.models.linha.Itinerario;
 import neo.com.br.CitMobi.models.linha.Linha;
 import neo.com.br.CitMobi.models.linha.Operador;
+import neo.com.br.CitMobi.models.linha.Parada;
+import neo.com.br.CitMobi.models.linha.Rota;
 import neo.com.br.CitMobi.models.records.glb.OperadorRecord;
 import neo.com.br.CitMobi.models.records.linha.LinhaRecord;
 import neo.com.br.CitMobi.models.records.response.GenericResponse;
+import neo.com.br.CitMobi.models.records.response.LinhaDetalhesResponse;
 import neo.com.br.CitMobi.models.records.response.LinhaEditResponse;
 import neo.com.br.CitMobi.models.records.response.LinhaResponse;
+import neo.com.br.CitMobi.repository.ItinerarioRepository;
 import neo.com.br.CitMobi.repository.LinhaRepository;
 import neo.com.br.CitMobi.repository.OperadorRepository;
+import neo.com.br.CitMobi.repository.RotaRepository;
 import neo.com.br.CitMobi.repository.ibge.MunicipioRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -21,6 +27,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -38,6 +45,12 @@ class LinhaServiceTest {
 
     @Mock
     private MunicipioRepository municipioRepository;
+
+    @Mock
+    private RotaRepository rotaRepository;
+
+    @Mock
+    private ItinerarioRepository itinerarioRepository;
 
     @InjectMocks
     private LinhaService linhaService;
@@ -171,5 +184,42 @@ class LinhaServiceTest {
         assertNotNull(response.getBody());
         assertEquals("200", response.getBody().status());
         assertEquals("Linha Descricao Atualizada", response.getBody().data().linhaAtualizada().linha().getLinhaDescricao());
+    }
+
+    @Test
+    @DisplayName("Should get all Linhas with Rotas and Itinerarios successfully")
+    void shouldGetAllLinhasComDetalhesSuccessfully() {
+        when(linhaRepository.findByMunicipio_CodIbge(3550308L)).thenReturn(List.of(sampleLinha));
+
+        Rota sampleRota = new Rota(sampleLinha, "TERMINAL SÃO MIGUEL", "IDA");
+        sampleRota.setId(10L);
+        when(rotaRepository.findByLinha_IdIn(List.of(100L))).thenReturn(List.of(sampleRota));
+
+        Parada sampleParada = new Parada("Rua Teste", "100", "Obs", java.math.BigDecimal.valueOf(-46.6), java.math.BigDecimal.valueOf(-23.5), 3550308L, "SP", 1L);
+        sampleParada.setParadaId(50L);
+        sampleParada.setAtiva("S");
+
+        Itinerario sampleItinerario = new Itinerario(sampleRota, sampleParada, 1);
+        sampleItinerario.setId(500L);
+
+        when(itinerarioRepository.findByRota_IdInOrderByRota_IdAscSequenciaAsc(List.of(10L)))
+                .thenReturn(List.of(sampleItinerario));
+
+        ResponseEntity<GenericResponse<List<LinhaDetalhesResponse>>> response =
+                linhaService.getAllLinhasComDetalhes(3550308L, null);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals("200", response.getBody().status());
+        assertEquals(1, response.getBody().data().size());
+
+        LinhaDetalhesResponse detalhe = response.getBody().data().get(0);
+        assertEquals(100L, detalhe.linha().id());
+        assertEquals("3301", detalhe.linha().codigoLinha());
+        assertEquals(1, detalhe.linha().rotas().size());
+        assertEquals("IDA", detalhe.linha().rotas().get(0).linhaSentido());
+        assertNotNull(detalhe.linha().rotas().get(0).itinerario());
+        assertEquals(1, detalhe.linha().rotas().get(0).itinerario().paradas().size());
+        assertEquals("Rua Teste", detalhe.linha().rotas().get(0).itinerario().paradas().get(0).logradouro());
     }
 }

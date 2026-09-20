@@ -1,14 +1,19 @@
 package neo.com.br.CitMobi.services;
 
 import neo.com.br.CitMobi.models.ibge.Municipio;
+import neo.com.br.CitMobi.models.linha.Itinerario;
 import neo.com.br.CitMobi.models.linha.Linha;
 import neo.com.br.CitMobi.models.linha.Operador;
-import neo.com.br.CitMobi.models.records.linha.LinhaRecord;
+import neo.com.br.CitMobi.models.linha.Rota;
+import neo.com.br.CitMobi.models.records.linha.*;
 import neo.com.br.CitMobi.models.records.response.GenericResponse;
+import neo.com.br.CitMobi.models.records.response.LinhaDetalhesResponse;
 import neo.com.br.CitMobi.models.records.response.LinhaEditResponse;
 import neo.com.br.CitMobi.models.records.response.LinhaResponse;
+import neo.com.br.CitMobi.repository.ItinerarioRepository;
 import neo.com.br.CitMobi.repository.LinhaRepository;
 import neo.com.br.CitMobi.repository.OperadorRepository;
+import neo.com.br.CitMobi.repository.RotaRepository;
 import neo.com.br.CitMobi.repository.ibge.MunicipioRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,9 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,13 +33,19 @@ public class LinhaService {
     private final LinhaRepository linhaRepository;
     private final OperadorRepository operadorRepository;
     private final MunicipioRepository municipioRepository;
+    private final RotaRepository rotaRepository;
+    private final ItinerarioRepository itinerarioRepository;
 
     public LinhaService(LinhaRepository linhaRepository,
                         OperadorRepository operadorRepository,
-                        MunicipioRepository municipioRepository) {
+                        MunicipioRepository municipioRepository,
+                        RotaRepository rotaRepository,
+                        ItinerarioRepository itinerarioRepository) {
         this.linhaRepository = linhaRepository;
         this.operadorRepository = operadorRepository;
         this.municipioRepository = municipioRepository;
+        this.rotaRepository = rotaRepository;
+        this.itinerarioRepository = itinerarioRepository;
     }
 
     @Transactional(readOnly = true)
@@ -65,6 +74,91 @@ public class LinhaService {
             logger.error("Erro ao buscar linhas: ", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new GenericResponse<>("500", "Erro ao buscar linhas: " + e.getMessage(), null));
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public ResponseEntity<GenericResponse<List<LinhaDetalhesResponse>>> getAllLinhasComDetalhes(Long municipioCod, Long operadorId) {
+        try {
+            List<Linha> linhas;
+            if (municipioCod != null && operadorId != null) {
+                linhas = linhaRepository.findByMunicipio_CodIbge(municipioCod).stream()
+                        .filter(l -> l.getOperador() != null && l.getOperador().getId().equals(operadorId))
+                        .collect(Collectors.toList());
+            } else if (municipioCod != null) {
+                linhas = linhaRepository.findByMunicipio_CodIbge(municipioCod);
+            } else if (operadorId != null) {
+                linhas = linhaRepository.findByOperador_Id(operadorId);
+            } else {
+                linhas = linhaRepository.findAll();
+            }
+
+            if (linhas.isEmpty()) {
+                return ResponseEntity.ok(new GenericResponse<>("200", "Nenhuma linha encontrada", Collections.emptyList()));
+            }
+
+            List<Long> linhaIds = linhas.stream().map(Linha::getId).collect(Collectors.toList());
+
+            // 1. Batch fetch all routes for these lines
+            List<Rota> rotas = rotaRepository.findByLinha_IdIn(linhaIds);
+
+            // 2. Batch fetch all itineraries with stops for these routes
+            List<Long> rotaIds = rotas.stream().map(Rota::getId).collect(Collectors.toList());
+            Map<Long, List<ParadaRecord>> paradasPorRota = new HashMap<>();
+
+            if (!rotaIds.isEmpty()) {
+                List<Itinerario> itinerarios = itinerarioRepository.findByRota_IdInOrderByRota_IdAscSequenciaAsc(rotaIds);
+                for (Itinerario it : itinerarios) {
+                    Long rId = it.getRota().getId();
+                    paradasPorRota.computeIfAbsent(rId, k -> new ArrayList<>())
+                            .add(it.getParada().toRecord());
+                }
+            }
+
+            // 3. Group routes by line ID
+            Map<Long, List<RotaRecord>> rotasPorLinha = new HashMap<>();
+            for (Rota rota : rotas) {
+                Long lId = rota.getLinha().getId();
+                List<ParadaRecord> paradas = paradasPorRota.getOrDefault(rota.getId(), Collections.emptyList());
+                ItinerarioRecord itinerarioRecord = paradas.isEmpty() ? null : new ItinerarioRecord(rota.getId(), paradas);
+
+                RotaRecord rotaRecord = new RotaRecord(
+                        rota.getId(),
+                        rota.getLinha().getCodigoLinha(),
+                        rota.getLinha().getAtendimento(),
+                        rota.getPrefixo(),
+                        rota.getLinha().getMunicipio() != null ? rota.getLinha().getMunicipio().getCodigoIbge() : null,
+                        rota.getSentido(),
+                        itinerarioRecord
+                );
+                rotasPorLinha.computeIfAbsent(lId, k -> new ArrayList<>()).add(rotaRecord);
+            }
+
+            // 4. Assemble LinhaDetalhesResponse
+            List<LinhaDetalhesResponse> responseList = linhas.stream().map(linha -> {
+                List<Operador> operadores = linha.getOperador() != null ? List.of(linha.getOperador()) : Collections.emptyList();
+                List<RotaRecord> linhaRotas = rotasPorLinha.getOrDefault(linha.getId(), Collections.emptyList());
+                LinhaComRotasRecord linhaRecord = new LinhaComRotasRecord(
+                        linha.getId(),
+                        linha.getCodigoLinha(),
+                        linha.getAtendimento(),
+                        linha.getLinhaDescricao(),
+                        linha.getMunicipio(),
+                        linha.getOperador(),
+                        linha.getFlagIntermunicipal(),
+                        linha.getFlagMetro(),
+                        linha.getFlagTrem(),
+                        linha.getFlagAtiva(),
+                        linhaRotas
+                );
+                return new LinhaDetalhesResponse(linhaRecord, operadores);
+            }).collect(Collectors.toList());
+
+            return ResponseEntity.ok(new GenericResponse<>("200", "Linhas detalhadas recuperadas com sucesso", responseList));
+        } catch (Exception e) {
+            logger.error("Erro ao buscar linhas detalhadas: ", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new GenericResponse<>("500", "Erro ao buscar linhas detalhadas: " + e.getMessage(), null));
         }
     }
 

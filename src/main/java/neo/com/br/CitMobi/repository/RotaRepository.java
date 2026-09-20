@@ -12,6 +12,8 @@ public interface RotaRepository extends JpaRepository<Rota, Long> {
 
     List<Rota> findByLinha_Id(Long linhaId);
 
+    List<Rota> findByLinha_IdIn(List<Long> linhaIds);
+
     Optional<Rota> findByLinha_IdAndSentido(Long linhaId, String sentido);
 
     boolean existsByLinha_IdAndSentido(Long linhaId, String sentido);

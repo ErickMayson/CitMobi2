@@ -1,5 +1,6 @@
 package neo.com.br.CitMobi.models.ibge;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -10,6 +11,7 @@ import neo.com.br.CitMobi.models.records.ibge.MunicipioRecord;
 
 @Entity
 @Table(name = "T_GLB_MUNICIPIO", schema = "ibge")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Data
 @NoArgsConstructor
 public class Municipio {
