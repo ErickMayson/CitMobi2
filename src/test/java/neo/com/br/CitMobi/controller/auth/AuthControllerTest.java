@@ -252,4 +252,51 @@ class AuthControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value("200"));
     }
+
+    @Test
+    @DisplayName("Should login successfully even when request contains an expired or invalid Bearer token header")
+    void testLoginWithStaleBearerTokenHeader() throws Exception {
+        AuthRecord payload = new AuthRecord("admin", "amarelo1");
+
+        mockMvc.perform(post("/v1/auth/login")
+                        .header("Authorization", "Bearer invalid.or.expired.jwt.token")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(payload)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.token").isString())
+                .andExpect(jsonPath("$.refreshToken").isString());
+    }
+
+    @Test
+    @DisplayName("Should refresh token successfully even when request contains an expired or invalid Bearer token header")
+    void testRefreshWithStaleBearerTokenHeader() throws Exception {
+        AuthRecord loginPayload = new AuthRecord("emferreira", "1234");
+
+        MvcResult result = mockMvc.perform(post("/v1/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(loginPayload)))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String responseJson = result.getResponse().getContentAsString();
+        var jsonNode = objectMapper.readTree(responseJson);
+        String refreshToken = jsonNode.get("refreshToken").asText();
+        RefreshTokenRequest refreshPayload = new RefreshTokenRequest(refreshToken);
+
+        mockMvc.perform(post("/v1/auth/refresh")
+                        .header("Authorization", "Bearer expired.or.stale.header.token")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(refreshPayload)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.token").isString())
+                .andExpect(jsonPath("$.refreshToken").isString());
+    }
+
+    @Test
+    @DisplayName("Should reject protected endpoint with 401 when token is invalid")
+    void testProtectedEndpointWithInvalidBearerToken() throws Exception {
+        mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get("/v1/api/usuarios?login=Mobiadm")
+                        .header("Authorization", "Bearer invalid.token.value"))
+                .andExpect(status().isUnauthorized());
+    }
 }
