@@ -151,7 +151,12 @@ public class MotoristaService {
             if (escala.getLinha() != null) {
                 Linha l = escala.getLinha();
                 rotaId = String.valueOf(l.getId());
-                rotaNome = "Linha " + l.getCodigoLinha() + " - " + l.getAtendimento();
+                String cod = l.getCodigoLinha() + "-" + l.getAtendimento();
+                if (l.getLinhaDescricao() != null && !l.getLinhaDescricao().isBlank()) {
+                    rotaNome = cod + " " + l.getLinhaDescricao();
+                } else {
+                    rotaNome = "Linha " + cod;
+                }
             }
 
             String startTime = escala.getHoraInicio() != null ? escala.getHoraInicio().toString().substring(0, 5) : "06:00";
