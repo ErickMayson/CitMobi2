@@ -77,7 +77,6 @@ public class TelemetriaService {
         Telemetria telemetria = telemetriaRepository.findByVeiculoId(veiculo.getId())
                 .orElseGet(() -> {
                     Telemetria nova = new Telemetria();
-                    nova.setVeiculoId(veiculo.getId());
                     nova.setVeiculo(veiculo);
                     return nova;
                 });
