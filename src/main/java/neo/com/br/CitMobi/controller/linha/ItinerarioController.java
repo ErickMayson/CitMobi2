@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping(value = "/v1/api")
 @CrossOrigin(value = "*")
 @Tag(name = "Rota", description = "Controller to manage Itinerarios (stops).")
-@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+@PreAuthorize("hasAnyRole('ADMIN', 'USER', 'MOTORISTA')")
 public class ItinerarioController {
 
     private static final Logger logger = LoggerFactory.getLogger(ItinerarioController.class);

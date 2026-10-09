@@ -4,17 +4,20 @@ import neo.com.br.CitMobi.models.linha.Linha;
 import neo.com.br.CitMobi.models.linha.Operador;
 import neo.com.br.CitMobi.models.linha.Rota;
 import neo.com.br.CitMobi.models.records.response.GenericResponse;
+import neo.com.br.CitMobi.models.records.viagem.MotoristaVinculoRecord;
 import neo.com.br.CitMobi.models.records.viagem.ViagemRecord;
 import neo.com.br.CitMobi.models.records.viagem.ViagemRequest;
 import neo.com.br.CitMobi.models.usuario.Usuario;
 import neo.com.br.CitMobi.models.usuario.UsuarioRole;
 import neo.com.br.CitMobi.models.veiculo.Veiculo;
+import neo.com.br.CitMobi.models.veiculo.VeiculoEscala;
 import neo.com.br.CitMobi.models.veiculo.VeiculoStatus;
 import neo.com.br.CitMobi.models.viagem.Viagem;
 import neo.com.br.CitMobi.models.viagem.ViagemStatus;
 import neo.com.br.CitMobi.repository.LinhaRepository;
 import neo.com.br.CitMobi.repository.RotaRepository;
 import neo.com.br.CitMobi.repository.UsuarioRepository;
+import neo.com.br.CitMobi.repository.veiculo.VeiculoEscalaRepository;
 import neo.com.br.CitMobi.repository.veiculo.VeiculoRepository;
 import neo.com.br.CitMobi.repository.viagem.ViagemRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -49,6 +52,8 @@ class ViagemServiceTest {
     private LinhaRepository linhaRepository;
     @Mock
     private RotaRepository rotaRepository;
+    @Mock
+    private VeiculoEscalaRepository veiculoEscalaRepository;
     @Mock
     private TokenService tokenService;
 
@@ -185,5 +190,66 @@ class ViagemServiceTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(1, response.getBody().data().size());
         assertEquals("ABC1234", response.getBody().data().get(0).veiculoPlaca());
+    }
+
+    @Test
+    @DisplayName("Should return active trip for driver if one is in progress")
+    void shouldReturnActiveTripWhenDriverHasOne() {
+        Viagem trip = new Viagem(motorista, veiculo, linha, rota);
+        trip.setId(500L);
+        trip.setStatus(ViagemStatus.EM_ANDAMENTO);
+
+        when(tokenService.getLoginFromToken("Bearer token")).thenReturn(motorista.getLogin());
+        when(usuarioRepository.findFirstByLoginIgnoreCase(motorista.getLogin())).thenReturn(Optional.of(motorista));
+        when(viagemRepository.findFirstByMotorista_IdAndStatus(motorista.getId(), ViagemStatus.EM_ANDAMENTO))
+                .thenReturn(Optional.of(trip));
+
+        ResponseEntity<GenericResponse<MotoristaVinculoRecord>> response = viagemService.getVinculoAtualMotorista("Bearer token");
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody().data());
+        assertTrue(response.getBody().data().hasViagemAtiva());
+        assertEquals(500L, response.getBody().data().viagemId());
+        assertEquals(veiculo.getId(), response.getBody().data().veiculoId());
+        assertEquals(linha.getId(), response.getBody().data().linhaId());
+    }
+
+    @Test
+    @DisplayName("Should return scheduled assignment if no active trip exists")
+    void shouldReturnScheduledAssignmentWhenDriverHasNoActiveTrip() {
+        when(tokenService.getLoginFromToken("Bearer token")).thenReturn(motorista.getLogin());
+        when(usuarioRepository.findFirstByLoginIgnoreCase(motorista.getLogin())).thenReturn(Optional.of(motorista));
+        when(viagemRepository.findFirstByMotorista_IdAndStatus(motorista.getId(), ViagemStatus.EM_ANDAMENTO))
+                .thenReturn(Optional.empty());
+
+        VeiculoEscala escala = new VeiculoEscala(veiculo, linha, motorista, "SEGUNDA", null, null);
+        when(veiculoEscalaRepository.findByMotorista_Id(motorista.getId())).thenReturn(List.of(escala));
+        when(rotaRepository.findByLinha_Id(linha.getId())).thenReturn(List.of(rota));
+
+        ResponseEntity<GenericResponse<MotoristaVinculoRecord>> response = viagemService.getVinculoAtualMotorista("Bearer token");
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody().data());
+        assertFalse(response.getBody().data().hasViagemAtiva());
+        assertNull(response.getBody().data().viagemId());
+        assertEquals(veiculo.getId(), response.getBody().data().veiculoId());
+        assertEquals(linha.getId(), response.getBody().data().linhaId());
+        assertEquals(rota.getId(), response.getBody().data().rotaId());
+    }
+
+    @Test
+    @DisplayName("Should return null data when driver has neither active trip nor scheduled shift")
+    void shouldReturnNullDataWhenNoTripNorScheduleFound() {
+        when(tokenService.getLoginFromToken("Bearer token")).thenReturn(motorista.getLogin());
+        when(usuarioRepository.findFirstByLoginIgnoreCase(motorista.getLogin())).thenReturn(Optional.of(motorista));
+        when(viagemRepository.findFirstByMotorista_IdAndStatus(motorista.getId(), ViagemStatus.EM_ANDAMENTO))
+                .thenReturn(Optional.empty());
+        when(veiculoEscalaRepository.findByMotorista_Id(motorista.getId())).thenReturn(List.of());
+
+        ResponseEntity<GenericResponse<MotoristaVinculoRecord>> response = viagemService.getVinculoAtualMotorista("Bearer token");
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNull(response.getBody().data());
+        assertTrue(response.getBody().message().contains("Nenhum vínculo ou viagem encontrada"));
     }
 }

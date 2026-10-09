@@ -32,7 +32,16 @@ public class UsuarioService {
     }
 
     public ResponseEntity<GenericResponse> getUsuarioByLogin(String authHeader, String login) {
-        Optional<Usuario> usuario = usuarioRepository.findByOperadorCnpjAndLoginAndFlagAtivo(tokenService.getOperadorIdFromToken(authHeader), login, "S");
+        String operadorCnpj = tokenService.getOperadorIdFromToken(authHeader);
+        String role = tokenService.getRoleFromToken(authHeader);
+        String tokenLogin = tokenService.getLoginFromToken(authHeader);
+
+        Optional<Usuario> usuario;
+        if ((login != null && login.equalsIgnoreCase(tokenLogin)) || "ROLE_ADMIN".equalsIgnoreCase(role)) {
+            usuario = usuarioRepository.findFirstByLoginIgnoreCase(login);
+        } else {
+            usuario = usuarioRepository.findByOperadorCnpjAndLoginAndFlagAtivo(operadorCnpj, login, "S");
+        }
 
         List<UsuarioLiteRecord> liteUsuarios = usuario.stream()
                 .map(UsuarioLiteRecord::fromUsuario)

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/v1/api")
 @CrossOrigin(value = "*")
 @Tag(name = "Usuarios", description = "Controller to manage Users.")
-@PreAuthorize("!hasRole('MOTORISTA')")
 @AllArgsConstructor
 public class UsuarioController {
 
@@ -32,11 +31,13 @@ public class UsuarioController {
     }
 
     @PostMapping("/usuarios")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity register(@RequestHeader("Authorization") String authHeader, @RequestBody UsuarioRecord novoUsuario) {
         return usuarioService.createUsuario(novoUsuario, authHeader);
     }
 
     @PatchMapping("/usuarios/{login}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity updateUsuario(
             @RequestHeader("Authorization") String authHeader,
             @PathVariable String login,

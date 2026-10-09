@@ -15,7 +15,6 @@ import java.util.List;
 @RequestMapping(value = "/v1/api")
 @CrossOrigin(value = "*")
 @Tag(name = "Veiculos", description = "Controller to manage Vehicles")
-@PreAuthorize("!hasRole('MOTORISTA')")
 @AllArgsConstructor
 public class VeiculoController {
 
@@ -27,11 +26,13 @@ public class VeiculoController {
     }
 
     @PostMapping("/veiculos")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<GenericResponse<VeiculoRecord>> createVeiculo(@RequestBody VeiculoRecord dto) {
         return veiculoService.createVeiculo(dto);
     }
 
     @PutMapping("/veiculos/{plate}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<GenericResponse<VeiculoRecord>> updateVeiculo(
             @PathVariable String plate,
             @RequestBody VeiculoRecord dto) {
@@ -39,6 +40,7 @@ public class VeiculoController {
     }
 
     @DeleteMapping("/veiculos/{plate}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<GenericResponse<Void>> deleteVeiculo(@PathVariable String plate) {
         return veiculoService.deleteVeiculo(plate);
     }

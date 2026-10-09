@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/v1/api")
 @CrossOrigin(value = "*")
 @Tag(name = "Itinerario", description = "Controller to manage rotas.")
-@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
 public class RotaController {
     private static final Logger logger = LoggerFactory.getLogger(RotaController.class);
 
@@ -28,6 +27,7 @@ public class RotaController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/rotas", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER', 'MOTORISTA')")
     public ResponseEntity<GenericResponse<RotaResponse>> getRota(
             @RequestParam String linha,
             @RequestParam String atendimento,
@@ -38,6 +38,7 @@ public class RotaController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/rotas", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<GenericResponse<RotaResponse>> createRota(
             @RequestParam String linha,
             @RequestParam String atendimento,
@@ -49,6 +50,7 @@ public class RotaController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "/rotas", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<GenericResponse<RotaResponse>> updateRota(
             @RequestParam String linha,
             @RequestParam String atendimento,
@@ -60,6 +62,7 @@ public class RotaController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "/rotas/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<GenericResponse<RotaResponse>> updateRotaById(
             @PathVariable Long id,
             @RequestBody RotaRecord rotaRecord) {

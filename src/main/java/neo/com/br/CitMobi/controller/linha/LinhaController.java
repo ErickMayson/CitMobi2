@@ -25,7 +25,6 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/v1/api")
 @CrossOrigin(value = "*")
 @Tag(name = "Linha", description = "Controller to manage Linhas")
-@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
 public class LinhaController {
 
     private static final Logger logger = LoggerFactory.getLogger(LinhaController.class);
@@ -38,6 +37,7 @@ public class LinhaController {
 
     @GetMapping(value = "/linhas", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER', 'MOTORISTA')")
     public ResponseEntity<GenericResponse<List<LinhaResponse>>> getAllLinhas(
             @RequestParam(required = false) Long municipio,
             @RequestParam(required = false) Long operadorId) {
@@ -46,6 +46,7 @@ public class LinhaController {
 
     @GetMapping(value = "/linhas/detalhes", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER', 'MOTORISTA')")
     public ResponseEntity<GenericResponse<List<LinhaDetalhesResponse>>> getAllLinhasComDetalhes(
             @RequestParam(required = false) Long municipio,
             @RequestParam(required = false) Long operadorId) {
@@ -54,6 +55,7 @@ public class LinhaController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/linha", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER', 'MOTORISTA')")
     public ResponseEntity<GenericResponse<LinhaResponse>> getLinha(
             @RequestParam String municipio,
             @RequestParam String linha,
@@ -64,6 +66,7 @@ public class LinhaController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/linha", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<GenericResponse<LinhaResponse>> createLinha(@Valid @RequestBody LinhaRecord linha, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             String errorMessages = bindingResult.getAllErrors().stream()
@@ -82,6 +85,7 @@ public class LinhaController {
 
     @RequestMapping(method = RequestMethod.PATCH, value = "/linha", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<GenericResponse<LinhaEditResponse>> editLinha(@RequestBody LinhaRecord linha, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             String errorMessages = bindingResult.getAllErrors().stream()

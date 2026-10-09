@@ -5,17 +5,20 @@ import lombok.extern.slf4j.Slf4j;
 import neo.com.br.CitMobi.models.linha.Linha;
 import neo.com.br.CitMobi.models.linha.Rota;
 import neo.com.br.CitMobi.models.records.response.GenericResponse;
+import neo.com.br.CitMobi.models.records.viagem.MotoristaVinculoRecord;
 import neo.com.br.CitMobi.models.records.viagem.ViagemRecord;
 import neo.com.br.CitMobi.models.records.viagem.ViagemRequest;
 import neo.com.br.CitMobi.models.usuario.Usuario;
 import neo.com.br.CitMobi.models.usuario.UsuarioRole;
 import neo.com.br.CitMobi.models.veiculo.Veiculo;
+import neo.com.br.CitMobi.models.veiculo.VeiculoEscala;
 import neo.com.br.CitMobi.models.veiculo.VeiculoStatus;
 import neo.com.br.CitMobi.models.viagem.Viagem;
 import neo.com.br.CitMobi.models.viagem.ViagemStatus;
 import neo.com.br.CitMobi.repository.LinhaRepository;
 import neo.com.br.CitMobi.repository.RotaRepository;
 import neo.com.br.CitMobi.repository.UsuarioRepository;
+import neo.com.br.CitMobi.repository.veiculo.VeiculoEscalaRepository;
 import neo.com.br.CitMobi.repository.veiculo.VeiculoRepository;
 import neo.com.br.CitMobi.repository.viagem.ViagemRepository;
 import org.springframework.http.HttpStatus;
@@ -23,6 +26,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -39,6 +45,7 @@ public class ViagemService {
     private final VeiculoRepository veiculoRepository;
     private final LinhaRepository linhaRepository;
     private final RotaRepository rotaRepository;
+    private final VeiculoEscalaRepository veiculoEscalaRepository;
     private final TokenService tokenService;
 
     @Transactional
@@ -266,5 +273,114 @@ public class ViagemService {
                 v.getDataFim(),
                 v.getStatus() != null ? v.getStatus().name() : null
         );
+    }
+
+    public ResponseEntity<GenericResponse<MotoristaVinculoRecord>> getVinculoAtualMotorista(String authHeader) {
+        String login = tokenService.getLoginFromToken(authHeader);
+        if (login == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new GenericResponse<>("401", "Token inválido ou não autenticado", null));
+        }
+
+        Optional<Usuario> motoristaOpt = usuarioRepository.findFirstByLoginIgnoreCase(login);
+        if (motoristaOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new GenericResponse<>("404", "Motorista não encontrado", null));
+        }
+
+        Usuario motorista = motoristaOpt.get();
+
+        // 1. Verificar se possui viagem ativa (EM_ANDAMENTO)
+        Optional<Viagem> activeTrip = viagemRepository.findFirstByMotorista_IdAndStatus(motorista.getId(), ViagemStatus.EM_ANDAMENTO);
+        if (activeTrip.isPresent()) {
+            Viagem v = activeTrip.get();
+            MotoristaVinculoRecord record = new MotoristaVinculoRecord(
+                    motorista.getId(),
+                    motorista.getNome(),
+                    true,
+                    v.getId(),
+                    v.getVeiculo() != null ? v.getVeiculo().getId() : null,
+                    v.getVeiculo() != null ? v.getVeiculo().getCodigoVeiculo() : null,
+                    v.getVeiculo() != null ? v.getVeiculo().getPlaca() : null,
+                    v.getLinha() != null ? v.getLinha().getId() : null,
+                    v.getLinha() != null ? v.getLinha().getCodigoLinha() : null,
+                    v.getLinha() != null ? v.getLinha().getDescricao() : null,
+                    v.getRota() != null ? v.getRota().getId() : null,
+                    v.getRota() != null ? v.getRota().getSentido() : null
+            );
+            return ResponseEntity.ok(new GenericResponse<>("200", "Viagem ativa encontrada", record));
+        }
+
+        // 2. Se não houver viagem ativa, buscar na escala operacional do motorista
+        List<VeiculoEscala> escalas = veiculoEscalaRepository.findByMotorista_Id(motorista.getId());
+        if (escalas.isEmpty() && motorista.getCpf() != null) {
+            escalas = veiculoEscalaRepository.findByMotorista_Cpf(motorista.getCpf());
+        }
+
+        if (!escalas.isEmpty()) {
+            String diaHoje = getDiaSemanaPt(LocalDate.now().getDayOfWeek());
+            LocalTime agora = LocalTime.now();
+
+            List<VeiculoEscala> escalasHoje = escalas.stream()
+                    .filter(e -> diaHoje.equalsIgnoreCase(e.getDiaSemana()))
+                    .toList();
+
+            VeiculoEscala escalaEscolhida;
+            if (!escalasHoje.isEmpty()) {
+                escalaEscolhida = escalasHoje.stream()
+                        .filter(e -> e.getHoraInicio() != null && e.getHoraFim() != null &&
+                                !agora.isBefore(e.getHoraInicio()) && !agora.isAfter(e.getHoraFim()))
+                        .findFirst()
+                        .orElse(escalasHoje.get(0));
+            } else {
+                escalaEscolhida = escalas.get(0);
+            }
+
+            if (escalaEscolhida != null) {
+                Linha linha = escalaEscolhida.getLinha();
+                Veiculo veiculo = escalaEscolhida.getVeiculo();
+
+                Long rotaId = null;
+                String sentido = null;
+                if (linha != null) {
+                    List<Rota> rotas = rotaRepository.findByLinha_Id(linha.getId());
+                    if (!rotas.isEmpty()) {
+                        Rota primeiraRota = rotas.get(0);
+                        rotaId = primeiraRota.getId();
+                        sentido = primeiraRota.getSentido();
+                    }
+                }
+
+                MotoristaVinculoRecord record = new MotoristaVinculoRecord(
+                        motorista.getId(),
+                        motorista.getNome(),
+                        false,
+                        null,
+                        veiculo != null ? veiculo.getId() : null,
+                        veiculo != null ? veiculo.getCodigoVeiculo() : null,
+                        veiculo != null ? veiculo.getPlaca() : null,
+                        linha != null ? linha.getId() : null,
+                        linha != null ? linha.getCodigoLinha() : null,
+                        linha != null ? linha.getDescricao() : null,
+                        rotaId,
+                        sentido
+                );
+                return ResponseEntity.ok(new GenericResponse<>("200", "Vínculo obtido com sucesso", record));
+            }
+        }
+
+        return ResponseEntity.ok(new GenericResponse<>("200", "Nenhum vínculo ou viagem encontrada para o motorista", null));
+    }
+
+    private String getDiaSemanaPt(DayOfWeek dow) {
+        return switch (dow) {
+            case MONDAY -> "SEGUNDA";
+            case TUESDAY -> "TERCA";
+            case WEDNESDAY -> "QUARTA";
+            case THURSDAY -> "QUINTA";
+            case FRIDAY -> "SEXTA";
+            case SATURDAY -> "SABADO";
+            case SUNDAY -> "DOMINGO";
+        };
     }
 }

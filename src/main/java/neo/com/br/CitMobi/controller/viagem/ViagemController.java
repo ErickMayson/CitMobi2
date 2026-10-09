@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import neo.com.br.CitMobi.models.records.response.GenericResponse;
+import neo.com.br.CitMobi.models.records.viagem.MotoristaVinculoRecord;
 import neo.com.br.CitMobi.models.records.viagem.ViagemRecord;
 import neo.com.br.CitMobi.models.records.viagem.ViagemRequest;
 import neo.com.br.CitMobi.services.ViagemService;
@@ -21,6 +22,13 @@ import java.util.List;
 public class ViagemController {
 
     private final ViagemService viagemService;
+
+    @GetMapping("/motorista/atual")
+    @Operation(summary = "Obtém a viagem ativa ou veículo/linha da escala vinculada ao motorista autenticado")
+    public ResponseEntity<GenericResponse<MotoristaVinculoRecord>> getVinculoAtualMotorista(
+            @RequestHeader(value = "Authorization", required = false) String authHeader) {
+        return viagemService.getVinculoAtualMotorista(authHeader);
+    }
 
     @PostMapping("/iniciar")
     @Operation(summary = "Inicia uma nova viagem operacional para um motorista e veículo")

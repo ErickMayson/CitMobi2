@@ -4,7 +4,10 @@ import neo.com.br.CitMobi.models.linha.Operador;
 import neo.com.br.CitMobi.models.usuario.Usuario;
 import neo.com.br.CitMobi.models.usuario.UsuarioRole;
 
+import java.util.UUID;
+
 public record UsuarioLiteRecord(
+        UUID id,
         String login,
         String email,
         String nome,
@@ -25,6 +28,7 @@ public record UsuarioLiteRecord(
             );
         }
         return new UsuarioLiteRecord(
+                usuario.getId(),
                 usuario.getLogin(),
                 usuario.getEmail(),
                 usuario.getNome(),
@@ -38,6 +42,7 @@ public record UsuarioLiteRecord(
     // Optionally convert back to entity if needed
     public Usuario toUsuario() {
         Usuario usuario = new Usuario();
+        usuario.setId(id);
         usuario.setLogin(login);
         usuario.setEmail(email);
         usuario.setNome(nome);

@@ -75,7 +75,7 @@ public class LinhaService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new GenericResponse<>("500", "Erro ao buscar linhas: " + e.getMessage(), null));
         }
-    }
+    }  
 
     @Transactional(readOnly = true)
     public ResponseEntity<GenericResponse<List<LinhaDetalhesResponse>>> getAllLinhasComDetalhes(Long municipioCod, Long operadorId) {
