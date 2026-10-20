@@ -368,42 +368,50 @@ public class VeiculoService {
         }
     }
 
-    private static class EscalaDraft {
+    private static class ShiftInterval {
+        LocalTime start;
+        LocalTime end;
+        Usuario driver;
+
+        ShiftInterval(LocalTime start, LocalTime end, Usuario driver) {
+            this.start = start;
+            this.end = end;
+            this.driver = driver;
+        }
+    }
+
+    private static class RouteInterval {
+        LocalTime start;
+        LocalTime end;
+        Linha linha;
+
+        RouteInterval(LocalTime start, LocalTime end, Linha linha) {
+            this.start = start;
+            this.end = end;
+            this.linha = linha;
+        }
+    }
+
+    private static class FinalSlot {
         String dbDay;
-        LocalTime startTime;
-        LocalTime endTime;
+        LocalTime start;
+        LocalTime end;
         Linha linha;
         Usuario driver;
 
-        EscalaDraft(String dbDay, LocalTime startTime, LocalTime endTime) {
+        FinalSlot(String dbDay, LocalTime start, LocalTime end, Linha linha, Usuario driver) {
             this.dbDay = dbDay;
-            this.startTime = startTime;
-            this.endTime = endTime;
+            this.start = start;
+            this.end = end;
+            this.linha = linha;
+            this.driver = driver;
         }
     }
 
     private void saveSchedules(Veiculo v, List<RouteBlockRecord> routes, List<DriverBlockRecord> drivers) {
         Linha defaultLinha = linhaRepository.findAll().stream().findFirst().orElse(null);
-        Map<String, EscalaDraft> slotMap = new LinkedHashMap<>();
 
-        if (routes != null) {
-            for (RouteBlockRecord r : routes) {
-                if (r.days() == null || r.days().isEmpty()) continue;
-
-                Linha linha = findLinhaByName(r.routeName(), defaultLinha);
-                LocalTime start = parseTimeSafe(r.startTime(), LocalTime.of(6, 0));
-                LocalTime end = parseTimeSafe(r.endTime(), LocalTime.of(22, 0));
-
-                for (String day : r.days()) {
-                    String dbDay = UI_TO_DB_DAYS.getOrDefault(day.toUpperCase(), "SEGUNDA");
-                    String slotKey = dbDay + "|" + start;
-                    EscalaDraft draft = slotMap.computeIfAbsent(slotKey, k -> new EscalaDraft(dbDay, start, end));
-                    draft.linha = linha;
-                    draft.endTime = end;
-                }
-            }
-        }
-
+        Map<String, List<ShiftInterval>> driversByDay = new HashMap<>();
         if (drivers != null) {
             for (DriverBlockRecord d : drivers) {
                 if (d.days() == null || d.days().isEmpty()) continue;
@@ -416,33 +424,115 @@ public class VeiculoService {
                             .orElse(null);
                 }
 
-                LocalTime start = parseTimeSafe(d.startTime(), LocalTime.of(6, 0));
-                LocalTime end = parseTimeSafe(d.endTime(), LocalTime.of(14, 0));
+                LocalTime dStart = parseTimeSafe(d.startTime(), LocalTime.of(6, 0));
+                LocalTime dEnd = parseTimeSafe(d.endTime(), LocalTime.of(14, 0));
 
                 for (String day : d.days()) {
                     String dbDay = UI_TO_DB_DAYS.getOrDefault(day.toUpperCase(), "SEGUNDA");
-                    String slotKey = dbDay + "|" + start;
-                    EscalaDraft draft = slotMap.get(slotKey);
-                    if (draft != null) {
-                        draft.driver = driver;
-                    } else {
-                        EscalaDraft newDraft = new EscalaDraft(dbDay, start, end);
-                        newDraft.driver = driver;
-                        newDraft.linha = null;
-                        slotMap.put(slotKey, newDraft);
-                    }
+                    driversByDay.computeIfAbsent(dbDay, k -> new ArrayList<>())
+                            .add(new ShiftInterval(dStart, dEnd, driver));
                 }
             }
         }
 
-        for (EscalaDraft draft : slotMap.values()) {
+        Map<String, List<RouteInterval>> routesByDay = new HashMap<>();
+        if (routes != null) {
+            for (RouteBlockRecord r : routes) {
+                if (r.days() == null || r.days().isEmpty()) continue;
+
+                Linha linha = findLinhaByName(r.routeName(), defaultLinha);
+                LocalTime rStart = parseTimeSafe(r.startTime(), LocalTime.of(6, 0));
+                LocalTime rEnd = parseTimeSafe(r.endTime(), LocalTime.of(22, 0));
+
+                for (String day : r.days()) {
+                    String dbDay = UI_TO_DB_DAYS.getOrDefault(day.toUpperCase(), "SEGUNDA");
+                    routesByDay.computeIfAbsent(dbDay, k -> new ArrayList<>())
+                            .add(new RouteInterval(rStart, rEnd, linha));
+                }
+            }
+        }
+
+        Set<String> allDays = new HashSet<>();
+        allDays.addAll(driversByDay.keySet());
+        allDays.addAll(routesByDay.keySet());
+
+        List<FinalSlot> generatedSlots = new ArrayList<>();
+
+        for (String dbDay : allDays) {
+            List<ShiftInterval> dayDrivers = new ArrayList<>(driversByDay.getOrDefault(dbDay, Collections.emptyList()));
+            dayDrivers.sort(Comparator.comparing(d -> d.start));
+
+            List<RouteInterval> dayRoutes = new ArrayList<>(routesByDay.getOrDefault(dbDay, Collections.emptyList()));
+            dayRoutes.sort(Comparator.comparing(r -> r.start));
+
+            Set<ShiftInterval> matchedDrivers = new HashSet<>();
+
+            if (!dayRoutes.isEmpty()) {
+                for (RouteInterval route : dayRoutes) {
+                    LocalTime rStart = route.start;
+                    LocalTime rEnd = route.end;
+
+                    List<ShiftInterval> overlappingDrivers = dayDrivers.stream()
+                            .filter(d -> d.start.isBefore(rEnd) && d.end.isAfter(rStart))
+                            .sorted(Comparator.comparing(d -> d.start))
+                            .collect(Collectors.toList());
+
+                    if (overlappingDrivers.isEmpty()) {
+                        generatedSlots.add(new FinalSlot(dbDay, rStart, rEnd, route.linha, null));
+                    } else {
+                        LocalTime cur = rStart;
+                        for (ShiftInterval d : overlappingDrivers) {
+                            matchedDrivers.add(d);
+
+                            if (d.start.isAfter(cur)) {
+                                generatedSlots.add(new FinalSlot(dbDay, cur, d.start, route.linha, null));
+                                cur = d.start;
+                            }
+
+                            LocalTime sliceStart = cur.isAfter(d.start) ? cur : d.start;
+                            LocalTime sliceEnd = d.end.isAfter(rEnd) ? rEnd : d.end;
+
+                            if (sliceStart.isBefore(sliceEnd)) {
+                                generatedSlots.add(new FinalSlot(dbDay, sliceStart, sliceEnd, route.linha, d.driver));
+                                cur = sliceEnd;
+                            }
+                        }
+
+                        if (cur.isBefore(rEnd)) {
+                            generatedSlots.add(new FinalSlot(dbDay, cur, rEnd, route.linha, null));
+                        }
+                    }
+                }
+            }
+
+            for (ShiftInterval d : dayDrivers) {
+                if (!matchedDrivers.contains(d)) {
+                    generatedSlots.add(new FinalSlot(dbDay, d.start, d.end, null, d.driver));
+                }
+            }
+        }
+
+        Map<String, FinalSlot> slotDeduplicator = new LinkedHashMap<>();
+        for (FinalSlot slot : generatedSlots) {
+            String key = slot.dbDay + "|" + slot.start;
+            if (!slotDeduplicator.containsKey(key)) {
+                slotDeduplicator.put(key, slot);
+            } else {
+                FinalSlot existing = slotDeduplicator.get(key);
+                if (existing.driver == null && slot.driver != null) {
+                    slotDeduplicator.put(key, slot);
+                }
+            }
+        }
+
+        for (FinalSlot slot : slotDeduplicator.values()) {
             VeiculoEscala escala = new VeiculoEscala(
                     v,
-                    draft.linha,
-                    draft.driver,
-                    draft.dbDay,
-                    draft.startTime,
-                    draft.endTime
+                    slot.linha,
+                    slot.driver,
+                    slot.dbDay,
+                    slot.start,
+                    slot.end
             );
             veiculoEscalaRepository.save(escala);
         }

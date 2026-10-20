@@ -198,6 +198,74 @@ class VeiculoServiceTest {
     }
 
     @Test
+    @DisplayName("Should split multi-shift route across drivers and preserve driver shift times")
+    void shouldSplitRouteAcrossMultipleDriversWithoutStretchingDriverShifts() {
+        neo.com.br.CitMobi.models.usuario.Usuario maria = new neo.com.br.CitMobi.models.usuario.Usuario();
+        maria.setNome("Maria Silva");
+        neo.com.br.CitMobi.models.usuario.Usuario thiago = new neo.com.br.CitMobi.models.usuario.Usuario();
+        thiago.setNome("Thiago Mendes");
+
+        neo.com.br.CitMobi.models.linha.Linha linha = new neo.com.br.CitMobi.models.linha.Linha();
+        linha.setId(10L);
+        linha.setCodigoLinha("9051");
+        linha.setAtendimento("10");
+
+        when(veiculoRepository.findByPlaca("ABC1D23")).thenReturn(Optional.of(sampleVeiculo));
+        when(veiculoRepository.save(any(Veiculo.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(veiculoEscalaRepository.findByVeiculo_Placa("ABC1D23")).thenReturn(Collections.emptyList());
+        when(usuarioRepository.findAll()).thenReturn(List.of(maria, thiago));
+        when(linhaRepository.findAll()).thenReturn(List.of(linha));
+
+        // Route runs full day from 06:00 to 23:00 on SEGUNDA
+        neo.com.br.CitMobi.models.records.veiculo.RouteBlockRecord routeRecord =
+                new neo.com.br.CitMobi.models.records.veiculo.RouteBlockRecord("Linha 9051 - 10", "06:00", "23:00", List.of("SEG"));
+
+        // Maria drives morning shift 06:00 to 14:00, Thiago drives afternoon/night 14:00 to 23:00
+        neo.com.br.CitMobi.models.records.veiculo.DriverBlockRecord mariaRecord =
+                new neo.com.br.CitMobi.models.records.veiculo.DriverBlockRecord("Maria Silva", "06:00", "14:00", List.of("SEG"));
+        neo.com.br.CitMobi.models.records.veiculo.DriverBlockRecord thiagoRecord =
+                new neo.com.br.CitMobi.models.records.veiculo.DriverBlockRecord("Thiago Mendes", "14:00", "23:00", List.of("SEG"));
+
+        VeiculoRecord updateRecord = new VeiculoRecord(
+                "BUS-01",
+                "ABC1D23",
+                "CAIO Apache VIP IV",
+                "Padrao",
+                80,
+                "ATIVO",
+                "Garagem Central",
+                List.of(routeRecord),
+                List.of(mariaRecord, thiagoRecord)
+        );
+
+        ResponseEntity<GenericResponse<VeiculoRecord>> response = veiculoService.updateVeiculo("ABC1D23", updateRecord);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        // Verify Maria slot: 06:00 to 14:00 on Linha 9051 (NOT stretched to 23:00)
+        verify(veiculoEscalaRepository, times(1)).save(argThat(escala ->
+                "SEGUNDA".equals(escala.getDiaSemana()) &&
+                escala.getHoraInicio().equals(java.time.LocalTime.of(6, 0)) &&
+                escala.getHoraFim().equals(java.time.LocalTime.of(14, 0)) &&
+                escala.getLinha() != null &&
+                "9051".equals(escala.getLinha().getCodigoLinha()) &&
+                escala.getMotorista() != null &&
+                "Maria Silva".equals(escala.getMotorista().getNome())
+        ));
+
+        // Verify Thiago slot: 14:00 to 23:00 on Linha 9051
+        verify(veiculoEscalaRepository, times(1)).save(argThat(escala ->
+                "SEGUNDA".equals(escala.getDiaSemana()) &&
+                escala.getHoraInicio().equals(java.time.LocalTime.of(14, 0)) &&
+                escala.getHoraFim().equals(java.time.LocalTime.of(23, 0)) &&
+                escala.getLinha() != null &&
+                "9051".equals(escala.getLinha().getCodigoLinha()) &&
+                escala.getMotorista() != null &&
+                "Thiago Mendes".equals(escala.getMotorista().getNome())
+        ));
+    }
+
+    @Test
     @DisplayName("Should delete vehicle and its associated schedules")
     void shouldDeleteVeiculoSuccessfully() {
         when(veiculoRepository.findByPlaca("ABC1D23")).thenReturn(Optional.of(sampleVeiculo));
