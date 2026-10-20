@@ -27,7 +27,7 @@ public class VeiculoEscala {
     private Veiculo veiculo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "LIN_LINHA_ID", nullable = false)
+    @JoinColumn(name = "LIN_LINHA_ID", nullable = true)
     private Linha linha;
 
     @ManyToOne(fetch = FetchType.LAZY)

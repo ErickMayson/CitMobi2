@@ -1,4 +1,4 @@
-﻿// ==============================================================================
+// ==============================================================================
 // CitMobi Database Schema - DBML Specification for dbdiagram.io
 // Engine: PostgreSQL
 // ==============================================================================
@@ -313,7 +313,7 @@ Table T_VEI_VEICULO {
 Table T_VEI_ESCALA {
   VEI_ESCALA_ID bigserial [pk, note: 'Chave primária da escala operacional']
   VEI_VEICULO_ID bigint [not null, ref: > T_VEI_VEICULO.VEI_VEICULO_ID, note: 'FK do ônibus escalado']
-  LIN_LINHA_ID bigint [not null, ref: > T_LIN_LINHA.LIN_LINHA_ID, note: 'FK da linha atribuída']
+  LIN_LINHA_ID bigint [ref: > T_LIN_LINHA.LIN_LINHA_ID, note: 'FK da linha atribuída (opcional)']
   USU_USUARIO_ID uuid [ref: > T_USU_USUARIO.USU_USUARIO_ID, note: 'FK motorista escalado (opcional)']
   VEI_ESCALA_DIASEMANA varchar(30) [not null, note: 'Dia da semana (SEGUNDA a DOMINGO)']
   VEI_ESCALA_HORAINICIO time [not null, note: 'Horário previsto de início da escala']

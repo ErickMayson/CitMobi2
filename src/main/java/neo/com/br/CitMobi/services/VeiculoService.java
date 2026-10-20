@@ -129,15 +129,15 @@ public class VeiculoService {
         Map<String, List<String>> driversGrouped = new HashMap<>();
 
         for (VeiculoEscala escala : escalasList) {
-            String routeName = escala.getLinha() != null
-                    ? "Linha " + escala.getLinha().getCodigoLinha() + " - " + escala.getLinha().getAtendimento()
-                    : "Linha Indefinida";
             String startTime = escala.getHoraInicio() != null ? escala.getHoraInicio().toString().substring(0, 5) : "00:00";
             String endTime = escala.getHoraFim() != null ? escala.getHoraFim().toString().substring(0, 5) : "23:59";
             String uiDay = DB_TO_UI_DAYS.getOrDefault(escala.getDiaSemana(), "SEG");
 
-            String routeKey = routeName + "|" + startTime + "|" + endTime;
-            routesGrouped.computeIfAbsent(routeKey, k -> new ArrayList<>()).add(uiDay);
+            if (escala.getLinha() != null) {
+                String routeName = "Linha " + escala.getLinha().getCodigoLinha() + " - " + escala.getLinha().getAtendimento();
+                String routeKey = routeName + "|" + startTime + "|" + endTime;
+                routesGrouped.computeIfAbsent(routeKey, k -> new ArrayList<>()).add(uiDay);
+            }
 
             if (escala.getMotorista() != null) {
                 String driverName = escala.getMotorista().getNome() != null ? escala.getMotorista().getNome() : escala.getMotorista().getLogin();
@@ -294,6 +294,7 @@ public class VeiculoService {
             Veiculo savedVeiculo = veiculoRepository.save(v);
 
             veiculoEscalaRepository.deleteAll(veiculoEscalaRepository.findByVeiculo_Placa(savedVeiculo.getPlaca()));
+            veiculoEscalaRepository.flush();
 
             saveSchedules(savedVeiculo, record.routes(), record.drivers());
 
@@ -315,6 +316,7 @@ public class VeiculoService {
             }
 
             veiculoEscalaRepository.deleteAll(veiculoEscalaRepository.findByVeiculo_Placa(plate));
+            veiculoEscalaRepository.flush();
             veiculoRepository.delete(optionalV.get());
 
             return ResponseEntity.ok(new GenericResponse<>("200", "Vehicle deleted successfully", null));
@@ -325,66 +327,124 @@ public class VeiculoService {
         }
     }
 
+    private Linha findLinhaByName(String routeName, Linha defaultLinha) {
+        if (routeName == null || routeName.trim().isEmpty() || routeName.contains("Linha Indefinida")) {
+            return null;
+        }
+        String lineId = "3301";
+        String atendimento = "10";
+        if (routeName.contains("Linha") && routeName.contains("-")) {
+            String[] routeParts = routeName.replace("Linha", "").trim().split("-");
+            lineId = routeParts[0].trim();
+            atendimento = routeParts[1].trim();
+        } else if (routeName.contains("-")) {
+            String[] routeParts = routeName.split("-");
+            lineId = routeParts[0].trim();
+            atendimento = routeParts[1].trim();
+        } else {
+            lineId = routeName.trim();
+        }
+
+        String finalLineId = lineId;
+        String finalAtendimento = atendimento;
+        return linhaRepository.findAll().stream()
+                .filter(l -> l.getCodigoLinha().equalsIgnoreCase(finalLineId) && (finalAtendimento == null || l.getAtendimento().equalsIgnoreCase(finalAtendimento)))
+                .findFirst()
+                .orElse(defaultLinha);
+    }
+
+    private LocalTime parseTimeSafe(String timeStr, LocalTime defaultTime) {
+        if (timeStr == null || timeStr.trim().isEmpty()) {
+            return defaultTime;
+        }
+        String clean = timeStr.trim();
+        if (clean.length() == 5) {
+            clean += ":00";
+        }
+        try {
+            return LocalTime.parse(clean);
+        } catch (Exception e) {
+            return defaultTime;
+        }
+    }
+
+    private static class EscalaDraft {
+        String dbDay;
+        LocalTime startTime;
+        LocalTime endTime;
+        Linha linha;
+        Usuario driver;
+
+        EscalaDraft(String dbDay, LocalTime startTime, LocalTime endTime) {
+            this.dbDay = dbDay;
+            this.startTime = startTime;
+            this.endTime = endTime;
+        }
+    }
+
     private void saveSchedules(Veiculo v, List<RouteBlockRecord> routes, List<DriverBlockRecord> drivers) {
         Linha defaultLinha = linhaRepository.findAll().stream().findFirst().orElse(null);
+        Map<String, EscalaDraft> slotMap = new LinkedHashMap<>();
 
-        Map<String, Usuario> driverMap = new HashMap<>();
+        if (routes != null) {
+            for (RouteBlockRecord r : routes) {
+                if (r.days() == null || r.days().isEmpty()) continue;
+
+                Linha linha = findLinhaByName(r.routeName(), defaultLinha);
+                LocalTime start = parseTimeSafe(r.startTime(), LocalTime.of(6, 0));
+                LocalTime end = parseTimeSafe(r.endTime(), LocalTime.of(22, 0));
+
+                for (String day : r.days()) {
+                    String dbDay = UI_TO_DB_DAYS.getOrDefault(day.toUpperCase(), "SEGUNDA");
+                    String slotKey = dbDay + "|" + start;
+                    EscalaDraft draft = slotMap.computeIfAbsent(slotKey, k -> new EscalaDraft(dbDay, start, end));
+                    draft.linha = linha;
+                    draft.endTime = end;
+                }
+            }
+        }
+
         if (drivers != null) {
             for (DriverBlockRecord d : drivers) {
-                Usuario driver = usuarioRepository.findAll().stream()
-                        .filter(u -> u.getNome() != null && u.getNome().equalsIgnoreCase(d.name()))
-                        .findFirst()
-                        .orElse(null);
-                if (driver != null && d.days() != null) {
-                    for (String day : d.days()) {
-                        String key = day.toUpperCase() + "|" + (d.startTime() != null ? d.startTime().substring(0, 5) : "06:00");
-                        driverMap.put(key, driver);
+                if (d.days() == null || d.days().isEmpty()) continue;
+
+                Usuario driver = null;
+                if (d.name() != null && !d.name().trim().isEmpty() && !d.name().equalsIgnoreCase("Desconhecido")) {
+                    driver = usuarioRepository.findAll().stream()
+                            .filter(u -> u.getNome() != null && u.getNome().equalsIgnoreCase(d.name().trim()))
+                            .findFirst()
+                            .orElse(null);
+                }
+
+                LocalTime start = parseTimeSafe(d.startTime(), LocalTime.of(6, 0));
+                LocalTime end = parseTimeSafe(d.endTime(), LocalTime.of(14, 0));
+
+                for (String day : d.days()) {
+                    String dbDay = UI_TO_DB_DAYS.getOrDefault(day.toUpperCase(), "SEGUNDA");
+                    String slotKey = dbDay + "|" + start;
+                    EscalaDraft draft = slotMap.get(slotKey);
+                    if (draft != null) {
+                        draft.driver = driver;
+                    } else {
+                        EscalaDraft newDraft = new EscalaDraft(dbDay, start, end);
+                        newDraft.driver = driver;
+                        newDraft.linha = null;
+                        slotMap.put(slotKey, newDraft);
                     }
                 }
             }
         }
 
-        if (routes != null) {
-            for (RouteBlockRecord r : routes) {
-                String lineId = "3301";
-                String atendimento = "10";
-                if (r.routeName().contains("Linha") && r.routeName().contains("-")) {
-                    String[] routeParts = r.routeName().replace("Linha", "").trim().split("-");
-                    lineId = routeParts[0].trim();
-                    atendimento = routeParts[1].trim();
-                } else if (r.routeName().contains("-")) {
-                    String[] routeParts = r.routeName().split("-");
-                    lineId = routeParts[0].trim();
-                    atendimento = routeParts[1].trim();
-                } else {
-                    lineId = r.routeName().trim();
-                }
-
-                String finalLineId = lineId;
-                String finalAtendimento = atendimento;
-                Linha linha = linhaRepository.findAll().stream()
-                        .filter(l -> l.getCodigoLinha().equalsIgnoreCase(finalLineId) && l.getAtendimento().equalsIgnoreCase(finalAtendimento))
-                        .findFirst()
-                        .orElse(defaultLinha);
-
-                if (linha != null && r.days() != null) {
-                    LocalTime start = r.startTime() != null ? LocalTime.parse(r.startTime().length() == 5 ? r.startTime() + ":00" : r.startTime()) : LocalTime.of(6, 0);
-                    LocalTime end = r.endTime() != null ? LocalTime.parse(r.endTime().length() == 5 ? r.endTime() + ":00" : r.endTime()) : LocalTime.of(22, 0);
-                    for (String day : r.days()) {
-                        String dbDay = UI_TO_DB_DAYS.getOrDefault(day.toUpperCase(), "SEGUNDA");
-                        String driverKey = day.toUpperCase() + "|" + (r.startTime() != null ? r.startTime().substring(0, 5) : "06:00");
-                        Usuario driver = driverMap.get(driverKey);
-                        if (driver == null && drivers != null && !drivers.isEmpty()) {
-                            driver = usuarioRepository.findAll().stream()
-                                    .filter(u -> u.getNome() != null && u.getNome().equalsIgnoreCase(drivers.get(0).name()))
-                                    .findFirst()
-                                    .orElse(null);
-                        }
-                        VeiculoEscala escala = new VeiculoEscala(v, linha, driver, dbDay, start, end);
-                        veiculoEscalaRepository.save(escala);
-                    }
-                }
-            }
+        for (EscalaDraft draft : slotMap.values()) {
+            VeiculoEscala escala = new VeiculoEscala(
+                    v,
+                    draft.linha,
+                    draft.driver,
+                    draft.dbDay,
+                    draft.startTime,
+                    draft.endTime
+            );
+            veiculoEscalaRepository.save(escala);
         }
     }
 }

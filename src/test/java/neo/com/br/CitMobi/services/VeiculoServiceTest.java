@@ -158,6 +158,46 @@ class VeiculoServiceTest {
     }
 
     @Test
+    @DisplayName("Should save driver on a day without line and flush previous scales")
+    void shouldSaveDriverOnDayWithoutLineAndFlushPreviousEscalas() {
+        neo.com.br.CitMobi.models.usuario.Usuario driver = new neo.com.br.CitMobi.models.usuario.Usuario();
+        driver.setNome("Carlos Silva");
+
+        VeiculoEscala oldEscala = new VeiculoEscala(sampleVeiculo, null, null, "SEGUNDA", java.time.LocalTime.of(6, 0), java.time.LocalTime.of(14, 0));
+
+        when(veiculoRepository.findByPlaca("ABC1D23")).thenReturn(Optional.of(sampleVeiculo));
+        when(veiculoRepository.save(any(Veiculo.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(veiculoEscalaRepository.findByVeiculo_Placa("ABC1D23")).thenReturn(List.of(oldEscala));
+        when(usuarioRepository.findAll()).thenReturn(List.of(driver));
+
+        neo.com.br.CitMobi.models.records.veiculo.DriverBlockRecord driverRecord =
+                new neo.com.br.CitMobi.models.records.veiculo.DriverBlockRecord("Carlos Silva", "06:00", "14:00", List.of("TER"));
+        VeiculoRecord updateRecord = new VeiculoRecord(
+                "BUS-01",
+                "ABC1D23",
+                "CAIO Apache VIP IV",
+                "Padrao",
+                80,
+                "ATIVO",
+                "Garagem Central",
+                Collections.emptyList(),
+                List.of(driverRecord)
+        );
+
+        ResponseEntity<GenericResponse<VeiculoRecord>> response = veiculoService.updateVeiculo("ABC1D23", updateRecord);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        verify(veiculoEscalaRepository, times(1)).deleteAll(anyList());
+        verify(veiculoEscalaRepository, atLeastOnce()).flush();
+        verify(veiculoEscalaRepository, times(1)).save(argThat(escala ->
+                "TERCA".equals(escala.getDiaSemana()) &&
+                escala.getLinha() == null &&
+                escala.getMotorista() != null &&
+                "Carlos Silva".equals(escala.getMotorista().getNome())
+        ));
+    }
+
+    @Test
     @DisplayName("Should delete vehicle and its associated schedules")
     void shouldDeleteVeiculoSuccessfully() {
         when(veiculoRepository.findByPlaca("ABC1D23")).thenReturn(Optional.of(sampleVeiculo));
