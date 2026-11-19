@@ -150,20 +150,26 @@
 				<groupId>org.flywaydb</groupId>
 				<artifactId>flyway-maven-plugin</artifactId>
 				<version>10.20.1</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>migrate</goal>
-							<goal>repair</goal>
-						</goals>
-					</execution>
-				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>org.postgresql</groupId>
+						<artifactId>postgresql</artifactId>
+						<version>42.7.4</version>
+					</dependency>
+				</dependencies>
 				<configuration>
 					<!-- Flyway Database Configuration -->
-					<url>jdbc:mysql://localhost:5432/dbmobi</url>
-					<user>postgres</user>
-					<password>1234</password>
+					<url>${flyway.url:jdbc:postgresql://localhost:5432/dbmobi}</url>
+					<user>${flyway.user:postgres}</user>
+					<password>${flyway.password:1234}</password>
+					<locations>
+						<location>filesystem:src/main/resources/db/migration</location>
+						<location>filesystem:src/main/resources/db/mocks</location>
+					</locations>
 					<cleanDisabled>true</cleanDisabled>
+					<baselineOnMigrate>true</baselineOnMigrate>
+					<baselineVersion>0</baselineVersion>
+					<validateOnMigrate>false</validateOnMigrate>
 				</configuration>
 			</plugin>
 		</plugins>

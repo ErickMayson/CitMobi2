@@ -15,6 +15,15 @@ if [ -n "$DATABASE_URL" ] && [ -z "$SPRING_DATASOURCE_URL" ]; then
                 DB_USER="${USER_PASS%%:*}"
                 DB_PASS="${USER_PASS#*:}"
 
+                # Ensure SSL if connecting to Render external domain and sslmode not yet set
+                if echo "$HOST_AND_DB" | grep -q "\.render\.com" && ! echo "$HOST_AND_DB" | grep -q "sslmode="; then
+                    if echo "$HOST_AND_DB" | grep -q "\?"; then
+                        HOST_AND_DB="${HOST_AND_DB}&sslmode=require"
+                    else
+                        HOST_AND_DB="${HOST_AND_DB}?sslmode=require"
+                    fi
+                fi
+
                 export SPRING_DATASOURCE_USERNAME="${SPRING_DATASOURCE_USERNAME:-$DB_USER}"
                 export SPRING_DATASOURCE_PASSWORD="${SPRING_DATASOURCE_PASSWORD:-$DB_PASS}"
                 export SPRING_DATASOURCE_URL="jdbc:postgresql://${HOST_AND_DB}"
