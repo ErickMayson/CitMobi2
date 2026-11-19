@@ -1,0 +1,31 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# IDE & Editor files
+.idea
+.settings
+.smarttomcat
+.project
+.classpath
+.factorypath
+*.iml
+
+# Build & Runtime artifacts
+target/
+work/
+webapps/
+logs/
+temp/
+conf/
+*.log
+
+# Documentation & Markdown
+*.md
+schema.dbml
+
+# Scripts
+mvnw
+mvnw.cmd
+.mvn/
